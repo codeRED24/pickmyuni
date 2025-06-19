@@ -1,0 +1,278 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  seed     = "ts-node prisma/seed.ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Colleges {
+  id                         Int      @id @default(autoincrement())
+  college_name               String
+  address                    String   @default("")
+  location                   String
+  established                DateTime
+  email                      String
+  contact                    String
+  logo_url                   String
+  bg_url                     String
+  media_url                  Json
+  rating                     Float // Must be between 1 and 10
+  score                      Int      @default(1) // Must be between 1 and 999
+  intake_start_date          DateTime
+  pr_pathway                 Boolean
+  slug                       String   @unique
+  total_students             Int      @default(0)
+  acceptance_rate            Float    @default(0)
+  international_student_rate Float    @default(0)
+  brochure_url               String?
+  avg_fees_in_aud            Float?
+  search_names               String?
+
+  streamId  Int @default(1)
+  cityId    Int @default(1)
+  stateId   Int @default(1)
+  countryId Int @default(1)
+
+  primary_stream Stream  @relation(fields: [streamId], references: [id])
+  city           City    @relation(fields: [cityId], references: [id])
+  state          State   @relation(fields: [stateId], references: [id])
+  country        Country @relation(fields: [countryId], references: [id])
+
+  CollegesCourses    CollegesCourses[]
+  CollegewiseContent CollegewiseContent[]
+
+  meta_desc String
+  og_img    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Courses {
+  id                 Int    @id @default(autoincrement())
+  course_name        String
+  duration_in_months Int
+  rating             Float // Must be between 1 and 10
+  score              Int    @default(1) // Must be between 1 and 999
+  stream             Stream @relation(fields: [streamId], references: [id])
+  streamId           Int
+  banner_img         String
+  img1               String
+  img2               String
+
+  CollegesCourses CollegesCourses[]
+
+  meta_desc String
+  og_img    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CollegesCourses {
+  id                 Int    @id @default(autoincrement())
+  name               String
+  duration_in_months Int
+  tution_fees        Float
+  hostel_fees        Float
+  one_time_fees      Float
+  other_fees         Json
+  score              Int    @default(1)
+
+  college_id Int
+  course_id  Int
+  streamId   Int
+
+  college Colleges @relation(fields: [college_id], references: [id])
+  course  Courses  @relation(fields: [course_id], references: [id])
+  stream  Stream   @relation(fields: [streamId], references: [id])
+
+  meta_desc String
+  og_img    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CollegewiseContent {
+  id         Int                     @id @default(autoincrement())
+  title      String
+  content    String
+  silos      CollegewiseContentSilos @default(info)
+  score      Int                     @default(1)
+  banner_img String
+  img1       String
+  img2       String
+
+  meta_desc String
+  og_img    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  college_id Int
+
+  college Colleges @relation(fields: [college_id], references: [id])
+}
+
+enum CollegewiseContentSilos {
+  info
+  course
+  department
+  career
+  ranking
+  fees
+  scholarship
+  placement
+  news
+  faq
+  other
+}
+
+model Articles {
+  id         Int           @id @default(autoincrement())
+  title      String
+  content    String
+  silos      ArticlesSilos @default(news)
+  score      Int           @default(1)
+  banner_img String        @default("")
+  img1       String        @default("")
+  img2       String        @default("")
+
+  meta_desc String
+  og_img    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ArticlesSilos {
+  news
+  exam
+  course
+  blog
+  other
+}
+
+model LeadForm {
+  id                Int     @id @default(autoincrement())
+  first_name        String?
+  last_name         String?
+  email             String?
+  phn_no            String?
+  course_preference String?
+  gender            String?
+  dob               String?
+  preffered_intake  String?
+  english_test      String?
+  visa              String?
+  preffered_state   String?
+  query             String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id     Int     @id @default(autoincrement())
+  name   String
+  phn_no String
+  email  String
+  query  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model City {
+  id         Int    @id @default(autoincrement())
+  name       String
+  slug       String @unique
+  score      Int    @default(1)
+  banner_img String @default("")
+  img1       String @default("")
+  img2       String @default("")
+
+  state_id   Int?
+  country_id Int?
+  content    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Colleges Colleges[]
+  State    State?     @relation(fields: [state_id], references: [id])
+  Country  Country?   @relation(fields: [country_id], references: [id])
+}
+
+model State {
+  id         Int    @id @default(autoincrement())
+  name       String
+  slug       String @unique
+  score      Int    @default(1)
+  banner_img String @default("")
+  img1       String @default("")
+  img2       String @default("")
+
+  Colleges Colleges[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  City      City[]
+}
+
+model Country {
+  id         Int    @id @default(autoincrement())
+  name       String
+  slug       String @unique
+  score      Int    @default(1)
+  banner_img String @default("")
+  img1       String @default("")
+  img2       String @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Colleges Colleges[]
+  City     City[]
+}
+
+model Stream {
+  id         Int    @id @default(autoincrement())
+  name       String
+  slug       String @unique
+  score      Int    @default(1)
+  banner_img String @default("")
+  img1       String @default("")
+  img2       String @default("")
+
+  Colleges        Colleges[]
+  Courses         Courses[]
+  CollegesCourses CollegesCourses[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactUs {
+  id         Int     @id @default(autoincrement())
+  first_name String
+  last_name  String?
+  phn_no     String
+  email      String
+  user_msg   String
+  text1      String?
+  text2      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
