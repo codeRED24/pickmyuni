@@ -103,7 +103,7 @@ const extractTabContent = (tab: string, data: any): any[] => {
                 .map(
                   (course: any) => `
                 <div class="border rounded-lg p-4">
-                  <h4 class="font-semibold text-blue-800">Course ID: ${course.course_id}</h4>
+                  <h4 class="font-semibold text-brand-primary">Course ID: ${course.course_id}</h4>
                   <p class="text-gray-600">College ID: ${course.college_id}</p>
                 </div>
               `

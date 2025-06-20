@@ -1,3 +1,5 @@
+import { fontFamily } from "tailwindcss/defaultTheme";
+
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -26,7 +28,30 @@ const config: Config = {
         "2xl": "1400px",
       },
     },
+    container2: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem", // Base padding for small screens
+        sm: "2rem",
+        md: "2rem",
+        lg: "3rem",
+        xl: "4rem",
+        "2xl": "5rem",
+      },
+      screens: {
+        sm: "320px",
+        md: "384px",
+        lg: "512px",
+        xl: "640px",
+        "2xl": "700px",
+      },
+    },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-roboto)", ...fontFamily.sans],
+        anton: ["var(--font-anton)"],
+        plus_jakarta: ["var(--font-jakarta)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

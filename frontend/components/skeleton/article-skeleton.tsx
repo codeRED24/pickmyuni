@@ -25,8 +25,8 @@ export function ArticlesLoadingSkeleton() {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">
-          <span className="text-blue-800">Recent</span>{" "}
-          <span className="text-orange-500">Articles</span>
+          <span className="text-brand-primary">Recent</span>{" "}
+          <span className="text-brand-secondary">Articles</span>
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {Array.from({ length: 3 }).map((_, index) => (

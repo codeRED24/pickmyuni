@@ -73,7 +73,7 @@ function PopularArticles() {
                         .replace(",", "")
                         .toUpperCase()}
                     </div>
-                    <h3 className="text-2xl font-medium text-blue-800 transition-colors leading-tight line-clamp-3">
+                    <h3 className="text-2xl font-medium text-brand-primary transition-colors leading-tight line-clamp-3">
                       {article.title}
                     </h3>
                   </div>

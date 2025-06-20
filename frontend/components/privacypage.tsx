@@ -36,7 +36,7 @@ export default function PrivacyPage() {
 
         <div className="space-y-8">
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               1. Information We Collect
             </h2>
             <p className="text-gray-600 mb-4">
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
             </p>
             <div className="space-y-4 ml-4">
               <div>
-                <h3 className="text-xl font-medium text-orange-500 mb-2">
+                <h3 className="text-xl font-medium text-brand-secondary mb-2">
                   a) Personal Information
                 </h3>
                 <ul className="list-disc list-inside text-gray-600 space-y-1">
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-medium text-orange-500 mb-2">
+                <h3 className="text-xl font-medium text-brand-secondary mb-2">
                   b) Non-Personal Information
                 </h3>
                 <ul className="list-disc list-inside text-gray-600 space-y-1">
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-medium text-orange-500 mb-2">
+                <h3 className="text-xl font-medium text-brand-secondary mb-2">
                   c) User Communications and Consent
                 </h3>
                 <ul className="list-disc list-inside text-gray-600 space-y-1">
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               2. How We Use Your Information
             </h2>
             <p className="text-gray-600 mb-2">
@@ -125,7 +125,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               3. Sharing of Information
             </h2>
             <p className="text-gray-600 mb-2">
@@ -149,7 +149,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               4. Cookies and Tracking Technologies
             </h2>
             <p className="text-gray-600">
@@ -161,7 +161,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               5. Data Security
             </h2>
             <p className="text-gray-600">
@@ -174,7 +174,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               6. Your Choices & Rights
             </h2>
             <p className="text-gray-600 mb-2">You have the right to:</p>
@@ -192,7 +192,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               7. Third-Party Links
             </h2>
             <p className="text-gray-600">
@@ -203,7 +203,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               8. Changes to This Privacy Policy
             </h2>
             <p className="text-gray-600">
@@ -214,14 +214,14 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+            <h2 className="text-2xl font-semibold text-brand-primary mb-4">
               9. Contact Us
             </h2>
             <p className="text-gray-600 mb-2">
               For any concerns regarding this Privacy Policy, please contact:
             </p>
-            <p className="text-orange-500">Support Team: PickMyUni</p>
-            <p className="text-orange-500">Email: contact@pickmyuni.com</p>
+            <p className="text-brand-secondary">Support Team: PickMyUni</p>
+            <p className="text-brand-secondary">Email: contact@pickmyuni.com</p>
           </section>
 
           <p className="text-gray-600 text-sm mt-8">

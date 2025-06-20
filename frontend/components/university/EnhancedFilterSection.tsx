@@ -252,7 +252,7 @@ export function EnhancedFilterSection({
 
         {/* State Filter */}
         {availableFilters?.state && availableFilters.state.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             <label className="text-sm font-medium text-gray-700">
               State/Province
             </label>
@@ -260,7 +260,7 @@ export function EnhancedFilterSection({
               value={selectedStateId?.toString() || "all"}
               onValueChange={handleStateChange}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select State" />
               </SelectTrigger>
               <SelectContent>
@@ -277,13 +277,13 @@ export function EnhancedFilterSection({
 
         {/* Stream Filter */}
         {availableFilters?.stream && availableFilters.stream.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             <label className="text-sm font-medium text-gray-700">Stream</label>
             <Select
               value={selectedStreamId?.toString() || "all"}
               onValueChange={handleStreamChange}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select Stream" />
               </SelectTrigger>
               <SelectContent>

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { ArticlesLoadingSkeleton } from "@/components/skeleton/article-skeleton";
 import { useTopArticles } from "@/hooks/useTopArticles";
+import { Button } from "../ui/button";
 
 interface Article {
   id: number;
@@ -29,8 +30,8 @@ export default function ArticlesSection() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
-            <span className="text-blue-800">Recent</span>{" "}
-            <span className="text-orange-500">Articles</span>
+            <span className="text-brand-primary">Recent</span>{" "}
+            <span className="text-brand-secondary">Articles</span>
           </h2>
           <div className="text-center text-red-500">Error: {error}</div>
         </div>
@@ -42,12 +43,12 @@ export default function ArticlesSection() {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">
-          <span className="text-blue-800">Recent</span>{" "}
-          <span className="text-orange-500">Articles</span>
+          <span className="text-brand-primary">Recent</span>{" "}
+          <span className="text-brand-secondary">Articles</span>
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {articles?.map((article: Article) => (
+          {articles?.splice(0, 3).map((article: Article) => (
             <div
               key={article.id}
               className="bg-[#F6F6F7] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
@@ -76,21 +77,27 @@ export default function ArticlesSection() {
                       : "DATE NOT AVAILABLE"}
                   </span>
                 </div>
-                <h3 className="font-bold text-lg text-blue-800 mb-2">
+                <h3 className="font-bold text-lg text-brand-primary mb-2">
                   {article.title}
                 </h3>
                 <p className="text-gray-600 text-sm mb-4">
                   {article.description}
                 </p>
                 <Link
-                  href={`/articles/${article._id}`}
-                  className="text-orange-500 font-medium text-sm hover:underline"
+                  href={`/student-resources/${article.slug}-${article.id}`}
+                  className="text-brand-secondary font-medium text-sm hover:underline"
                 >
                   Read More
                 </Link>
               </div>
             </div>
           ))}
+
+          {articles?.length > 3 && (
+            <div className="flex justify-center mt-8">
+              <Button>View All Articles</Button>
+            </div>
+          )}
         </div>
       </div>
     </section>

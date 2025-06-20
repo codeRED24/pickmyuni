@@ -7,6 +7,7 @@ import {
   Users,
 } from "lucide-react";
 import React from "react";
+import { Button } from "./ui/button";
 
 interface College {
   location?: string;
@@ -17,13 +18,16 @@ interface College {
   acceptance_rate?: number;
   total_students?: number;
   international_student_rate?: number;
+  address?: string;
 }
 
 function QuickFacts({ college }: { college: College }) {
+  console.log({ college });
+
   return (
     <div>
       <div className="bg-[#FAF4F0] p-4 sm:p-6 h-fit w-full lg:w-[320px] lg:min-w-[320px] flex flex-col shadow-sm">
-        <h1 className="text-xl sm:text-2xl font-semibold text-blue-800 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-brand-primary mb-4 sm:mb-6">
           QUICK FACTS
         </h1>
 
@@ -31,12 +35,12 @@ function QuickFacts({ college }: { college: College }) {
           {/* Location */}
           <div className="flex items-start gap-2 sm:gap-3">
             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-              <MapPinned className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+              <MapPinned className="w-4 h-4 sm:w-5 sm:h-5 text-brand-secondary" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs sm:text-sm text-gray-600 mb-1">Location:</p>
-              <p className="font-semibold text-blue-800 text-sm sm:text-base">
-                {college?.location}
+              <p className="font-semibold text-brand-primary text-sm sm:text-base">
+                {college?.address || "-"}
               </p>
             </div>
           </div>
@@ -44,12 +48,12 @@ function QuickFacts({ college }: { college: College }) {
           {/* Students */}
           <div className="flex items-start gap-2 sm:gap-3">
             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-              <Users className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+              <Users className="w-4 h-4 sm:w-5 sm:h-5 text-brand-secondary" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs sm:text-sm text-gray-600 mb-1">Students:</p>
-              <p className="font-semibold text-blue-800 text-sm sm:text-base">
-                {college?.total_students}
+              <p className="font-semibold text-brand-primary text-sm sm:text-base">
+                {college?.total_students || "-"}
               </p>
             </div>
           </div>
@@ -57,14 +61,14 @@ function QuickFacts({ college }: { college: College }) {
           {/* International Students */}
           <div className="flex items-start gap-2 sm:gap-3">
             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-              <Earth className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+              <Earth className="w-4 h-4 sm:w-5 sm:h-5 text-brand-secondary" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs sm:text-sm text-gray-600 mb-1">
                 International students rate:
               </p>
-              <p className="font-semibold text-blue-800 text-sm sm:text-base">
-                {college?.international_student_rate}%
+              <p className="font-semibold text-brand-primary text-sm sm:text-base">
+                {college?.international_student_rate || "-"}%
               </p>
             </div>
           </div>
@@ -72,14 +76,14 @@ function QuickFacts({ college }: { college: College }) {
           {/* Acceptance Rate */}
           <div className="flex items-start gap-2 sm:gap-3">
             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-              <UserRoundCheck className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+              <UserRoundCheck className="w-4 h-4 sm:w-5 sm:h-5 text-brand-secondary" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs sm:text-sm text-gray-600 mb-1">
                 Acceptance rate:
               </p>
-              <p className="font-semibold text-blue-800 text-sm sm:text-base">
-                {college?.acceptance_rate}%
+              <p className="font-semibold text-brand-primary text-sm sm:text-base">
+                {college?.acceptance_rate || "-"}%
               </p>
             </div>
           </div>
@@ -87,13 +91,13 @@ function QuickFacts({ college }: { college: College }) {
           {/* Courses Offered */}
           <div className="flex items-start gap-2 sm:gap-3">
             <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-              <LibraryBig className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+              <LibraryBig className="w-4 h-4 sm:w-5 sm:h-5 text-brand-secondary" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs sm:text-sm text-gray-600 mb-1">
                 Courses offered:
               </p>
-              <p className="font-semibold text-blue-800 text-sm sm:text-base">
+              <p className="font-semibold text-brand-primary text-sm sm:text-base">
                 500+ across 10 faculties
               </p>
             </div>
@@ -101,10 +105,10 @@ function QuickFacts({ college }: { college: College }) {
         </div>
 
         {/* Semester Dates Button */}
-        <button className="mt-4 sm:mt-6 bg-blue-800 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium hover:bg-blue-900 transition-colors flex items-center justify-center gap-2 text-sm sm:text-base">
+        <Button className=" flex items-center justify-center gap-2 text-sm sm:text-base mt-4">
           <span>Semester Dates</span>
           <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-        </button>
+        </Button>
       </div>
     </div>
   );

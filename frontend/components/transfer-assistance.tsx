@@ -78,7 +78,7 @@ export default function TransferAssistance() {
       {/* Hero Section */}
       <section className="relative w-full h-[400px] text-white">
         <Image
-          src="/transfer.svg"
+          src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_banner.webp"
           alt="University campus background"
           fill
           className="object-cover"
@@ -111,9 +111,9 @@ export default function TransferAssistance() {
         <section className="mt-20">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-2/3">
-              <h2 className="text-3xl font-bold text-blue-800 mb-4">
+              <h2 className="text-3xl font-bold text-brand-primary mb-4">
                 Why Transfer{" "}
-                <span className="text-orange-500">University?</span>
+                <span className="text-brand-secondary">University?</span>
               </h2>
               <p className="text-gray-600 mb-4">
                 Transferring to a university can happen due to academic or
@@ -137,7 +137,7 @@ export default function TransferAssistance() {
             </div>
             <div className="md:w-1/3">
               <Image
-                src="/transfer1.svg"
+                src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_1.webp"
                 alt="Graduate looking at an audience"
                 width={750}
                 height={420}
@@ -153,9 +153,9 @@ export default function TransferAssistance() {
         <section className="mt-20">
           <div className="flex flex-col md:flex-row-reverse items-center gap-12">
             <div className="md:w-2/3">
-              <h2 className="text-3xl font-bold text-blue-800 mb-4">
+              <h2 className="text-3xl font-bold text-brand-primary mb-4">
                 Universities Accept Transfer &{" "}
-                <span className="text-orange-500">Course Transfer</span>
+                <span className="text-brand-secondary">Course Transfer</span>
               </h2>
               <p className="text-gray-600 mb-4">
                 Many universities in Australia accept transfer students, giving
@@ -178,7 +178,7 @@ export default function TransferAssistance() {
             </div>
             <div className="md:w-1/3">
               <Image
-                src="/transfer2.svg"
+                src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_2.webp"
                 alt="Sydney Opera House at sunset"
                 width={500}
                 height={350}
@@ -199,9 +199,9 @@ export default function TransferAssistance() {
 
         {/* How to Transfer Section */}
         <section className="mt-20 text-center">
-          <h2 className="text-3xl font-bold text-blue-800">
+          <h2 className="text-3xl font-bold text-brand-primary">
             How to Transfer from University{" "}
-            <span className="text-orange-500">to University</span>?
+            <span className="text-brand-secondary">to University</span>?
           </h2>
           <p className="mt-4  mx-auto text-gray-600">
             If you are looking for how to transfer from one university to
@@ -213,11 +213,11 @@ export default function TransferAssistance() {
                 key={index}
                 className="flex gap-4 bg-gray-50 rounded-xl p-6 items-start shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-orange-500 text-white font-bold text-lg">
+                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-brand-secondary text-white font-bold text-lg">
                   {index + 1}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-blue-800 mb-2">
+                  <h3 className="font-semibold text-lg text-brand-primary mb-2">
                     {item.name}
                   </h3>
                   <p className="text-gray-600 text-sm">{item.Description}</p>
@@ -231,13 +231,13 @@ export default function TransferAssistance() {
         <section className="mt-20">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-2/3">
-              <h2 className="text-3xl font-bold text-blue-800 mb-6">
+              <h2 className="text-3xl font-bold text-brand-primary mb-6">
                 How We Help with University{" "}
-                <span className="text-orange-500">Transfer?</span>
+                <span className="text-brand-secondary">Transfer?</span>
               </h2>
               <div className="space-y-4">
                 <p>
-                  <span className="font-bold text-blue-800">
+                  <span className="font-bold text-brand-primary">
                     1. Meet with Your Student Advisor:
                   </span>{" "}
                   <span className="text-gray-600">
@@ -246,7 +246,7 @@ export default function TransferAssistance() {
                   </span>
                 </p>
                 <p>
-                  <span className="font-bold text-blue-800">
+                  <span className="font-bold text-brand-primary">
                     2. Check Visa Implications:
                   </span>{" "}
                   <span className="text-gray-600">
@@ -255,7 +255,7 @@ export default function TransferAssistance() {
                   </span>
                 </p>
                 <p>
-                  <span className="font-bold text-blue-800">
+                  <span className="font-bold text-brand-primary">
                     3. Plan Financially:
                   </span>{" "}
                   <span className="text-gray-600">
@@ -264,7 +264,7 @@ export default function TransferAssistance() {
                   </span>
                 </p>
                 <p>
-                  <span className="font-bold text-blue-800">
+                  <span className="font-bold text-brand-primary">
                     4. Choose Wisely:
                   </span>{" "}
                   <span className="text-gray-600">
@@ -273,7 +273,7 @@ export default function TransferAssistance() {
                   </span>
                 </p>
                 <p>
-                  <span className="font-bold text-blue-800">
+                  <span className="font-bold text-brand-primary">
                     5. Start the Transfer Process Early:
                   </span>{" "}
                   <span className="text-gray-600">
@@ -281,7 +281,7 @@ export default function TransferAssistance() {
                   </span>
                 </p>
                 <p>
-                  <span className="font-bold text-blue-800">
+                  <span className="font-bold text-brand-primary">
                     6. Update Your Visa:
                   </span>{" "}
                   <span className="text-gray-600">
@@ -298,7 +298,7 @@ export default function TransferAssistance() {
             </div>
             <div className="md:w-1/3">
               <Image
-                src="/transfer3.svg"
+                src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_3.webp"
                 alt="Student with an advisor"
                 width={500}
                 height={400}
@@ -315,7 +315,7 @@ export default function TransferAssistance() {
           <div className="flex flex-col md:flex-row items-center gap-12 mt-12">
             <div className="md:w-1/3">
               <Image
-                src="/transfer4.svg"
+                src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_4.webp"
                 alt="Graduation cap on books"
                 width={500}
                 height={400}
@@ -326,9 +326,9 @@ export default function TransferAssistance() {
               />
             </div>
             <div className="md:w-2/3 space-y-4">
-              <h2 className="text-3xl font-bold text-blue-800 mb-4">
+              <h2 className="text-3xl font-bold text-brand-primary mb-4">
                 How We Help with Course{" "}
-                <span className="text-orange-500">Transfer?</span>
+                <span className="text-brand-secondary">Transfer?</span>
               </h2>
               <p className="text-gray-600">
                 Navigating the course transfer process can be overwhelming, but
@@ -336,9 +336,9 @@ export default function TransferAssistance() {
               </p>
               {courseTransferHelp.map((item, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="w-2.5 h-2.5 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></div>
+                  <div className="w-2.5 h-2.5 bg-brand-secondary rounded-full mt-1.5 flex-shrink-0"></div>
                   <p className="text-gray-600">
-                    <span className="font-semibold text-blue-800">
+                    <span className="font-semibold text-brand-primary">
                       {item.title}
                     </span>{" "}
                     {item.description}
@@ -351,9 +351,9 @@ export default function TransferAssistance() {
 
         {/* CTA Section */}
         <section className="mt-20 text-center bg-gray-50 py-12 rounded-lg">
-          <h2 className="text-3xl font-bold text-blue-800">
+          <h2 className="text-3xl font-bold text-brand-primary">
             Start Your Course Transfer{" "}
-            <span className="text-orange-500">Today!</span>
+            <span className="text-brand-secondary">Today!</span>
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
             If you&apos;re considering transferring universities in Australia,
@@ -361,7 +361,7 @@ export default function TransferAssistance() {
             Our dedicated team will ensure your course transfer process is
             hassle-free, allowing you to focus on your education and future.
           </p>
-          <button className="mt-8 px-8 py-3 bg-white border-2 border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-colors">
+          <button className="mt-8 px-8 py-3 bg-white border-2 border-orange-500 text-brand-secondary font-semibold rounded-lg hover:bg-brand-secondary hover:text-white transition-colors">
             Get in touch with us today and make your university transfer journey
             smooth and successful!
           </button>
@@ -369,9 +369,9 @@ export default function TransferAssistance() {
 
         {/* FAQ Section */}
         <section className="mt-20 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-blue-800 mb-10">
+          <h2 className="text-3xl font-bold text-center text-brand-primary mb-10">
             FAQs on University and Course Transfers in{" "}
-            <span className="text-orange-500">Australia</span>
+            <span className="text-brand-secondary">Australia</span>
           </h2>
           <div className="space-y-4">
             {faqData.map((faq, index) => (

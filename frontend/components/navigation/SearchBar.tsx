@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useComprehensiveSearch } from "@/hooks/useComprehensiveSearch";
 import { College, Course, Article } from "@/types/search";
@@ -81,7 +81,7 @@ export default function SearchBar() {
     } else if (type === "article") {
       const article = item as Article;
       setShowDropdown(false);
-      router.push(`/student-resources/${article.id}`);
+      router.push(`/student-resources/${article.slug}-${article.id}`);
     }
   };
 
@@ -90,12 +90,16 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="bg-blue-900 py-4">
+    <div className="bg-brand-primary py-4">
       <div className="container mx-auto px-4">
         <div className="relative" ref={searchRef}>
-          <div className="relative flex items-center">
-            <button className="absolute left-4 text-gray-400 z-10">
-              <Search size={20} />
+          <div className="relative flex items-center bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button className="absolute left-4 text-gray-400 z-10 cursor-default">
+              <Filter
+                size={20}
+                fill="currentColor"
+                className="text-brand-primary"
+              />
             </button>
             <Input
               type="text"
@@ -106,7 +110,7 @@ export default function SearchBar() {
                 searchQuery.trim().length > 2 && setShowDropdown(true)
               }
               placeholder="Search for Universities, Courses and More"
-              className="pl-10 pr-4 py-2 w-full rounded-md bg-blue-700 border-blue-600 text-white placeholder-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-14 pr-4 py-2 min-h-[50px] w-full rounded-md bg-white border-blue-600 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {/* <Button
               className="ml-2 bg-blue-600 hover:bg-blue-700 text-white"

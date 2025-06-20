@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Roboto,
+  Anton,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
@@ -12,6 +18,24 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const anton = Anton({
+  weight: "400",
+  variable: "--font-anton",
+  subsets: ["latin"],
+});
+
+const roboto = Roboto({
+  weight: ["400", "700", "500", "600", "800"],
+  variable: "--font-roboto",
+  subsets: ["latin"],
+});
+
+const plus_jakarta = Plus_Jakarta_Sans({
+  weight: "500",
+  variable: "--font-jakarta",
   subsets: ["latin"],
 });
 
@@ -28,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${anton.variable} ${plus_jakarta.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <Navbar />
         <div className="fixed bottom-4 right-4 z-20 flex flex-col items-end gap-2">

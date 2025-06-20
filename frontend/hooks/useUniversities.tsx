@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const useUniversities = (stream: string = "All") => {
   const [universities, setUniversities] = useState<any[]>([]);
+  const [streams, setStreams] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +20,8 @@ export const useUniversities = (stream: string = "All") => {
           params: stream !== "All" ? { stream } : undefined,
         });
 
-        setUniversities(response.data);
+        setUniversities(response.data.data.colleges);
+        setStreams(response.data.data.streams);
         setError(null);
       } catch (err) {
         setError(
@@ -40,5 +42,5 @@ export const useUniversities = (stream: string = "All") => {
     fetchUniversities();
   }, [stream]);
 
-  return { universities, loading, error };
+  return { universities, streams, loading, error };
 };

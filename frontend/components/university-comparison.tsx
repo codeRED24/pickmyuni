@@ -51,7 +51,7 @@ export default function ComaprisonComponent() {
       {/* Hero Section */}
       <div className="relative h-64 md:h-80 lg:h-96">
         <Image
-          src="/compare.svg"
+          src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/compare_banner.webp"
           alt="Library with books on shelves"
           fill
           className="object-cover"
@@ -71,9 +71,9 @@ export default function ComaprisonComponent() {
       <div className="container mx-auto px-4 py-12 lg:py-16">
         {/* Header Section */}
         <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-800">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-brand-primary">
             Find the Best{" "}
-            <span className="text-orange-500">University for You</span>
+            <span className="text-brand-secondary">University for You</span>
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed">
             Whether it&apos;s a change in career interests, difficulty with the
@@ -140,9 +140,7 @@ export default function ComaprisonComponent() {
               <Plus className="w-4 h-4 mr-2" />
               Add Up To 2 More Uni
             </Button>
-            <Button className="h-12 px-8 bg-blue-600 hover:bg-blue-700">
-              Compare Now
-            </Button>
+            <Button className="h-12 px-8">Compare Now</Button>
           </div>
         </div>
 
@@ -180,12 +178,12 @@ export default function ComaprisonComponent() {
           })}
         </div>
       </div>
-      <section className="mt-16 bg-orange-500">
+      <section className="mt-16 bg-brand-secondary">
         <div className="container mx-auto px-4 py-12 lg:py-16 flex flex-col items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Compare. Choose. Succeed
           </h1>
-          <Button className="bg-blue-800 hover:bg-blue-900 text-white px-6 py-2 rounded-md font-medium flex items-center">
+          <Button className="flex items-center">
             Start Your University Search Today!{" "}
             <Image
               src="/logo-button.svg"

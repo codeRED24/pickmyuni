@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface University {
   id: number;
@@ -62,6 +62,7 @@ export function useUniversityList(initialParams: any = {}) {
         searchParams.append("min_fees", queryParams.min_fees.toString());
       if (queryParams.max_fees)
         searchParams.append("max_fees", queryParams.max_fees.toString());
+      if (queryParams.sortBy) searchParams.append("sortBy", queryParams.sortBy);
 
       const response = await fetch(
         `${API_BASE_URL}/api/v1/college/list?${searchParams.toString()}`
@@ -72,6 +73,8 @@ export function useUniversityList(initialParams: any = {}) {
       }
 
       const data: any = await response.json();
+
+      console.log(data.data.colleges);
 
       if (data.success) {
         setUniversities(data.data.colleges);
@@ -131,6 +134,14 @@ export function useUniversityList(initialParams: any = {}) {
     });
   }, []);
 
+  // Update sorting
+  const updateSorting = useCallback((sortBy: string) => {
+    setParams((prev: any) => ({
+      ...prev,
+      sortBy,
+    }));
+  }, []);
+
   // Refresh data
   const refresh = useCallback(() => {
     fetchUniversities(params);
@@ -146,6 +157,7 @@ export function useUniversityList(initialParams: any = {}) {
     updateSearch,
     updatePage,
     updateFilters,
+    updateSorting,
     clearFilters,
     refresh,
   };

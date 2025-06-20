@@ -1,64 +1,107 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useUniversities } from "@/hooks/useUniversities";
 import { UniversitiesLoadingSkeleton } from "@/components/skeleton/university-skeleton";
-
-const categories = [
-  "All",
-  "Computer Science",
-  "Software Engineering",
-  "Computer Engineering",
-  "Information Technology",
-  "Data Science",
-  "Social Science",
-  "Business Analytics",
-  "Artificial Intelligence",
-];
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function UniversitiesSection() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const { universities, loading, error } = useUniversities(activeCategory);
+  const { universities, streams, loading, error } =
+    useUniversities(activeCategory);
 
-  if (!loading) {
-    console.log("Rendering universities:", universities);
-  }
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(false);
 
-  if (error) {
-    return (
-      <div className="py-16 text-center text-red-600">
-        Error loading universities: {error}
-      </div>
-    );
-  }
+  const checkScrollPosition = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  React.useEffect(() => {
+    checkScrollPosition();
+    const handleResize = () => checkScrollPosition();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [streams]);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
+      setTimeout(checkScrollPosition, 300);
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
+      setTimeout(checkScrollPosition, 300);
+    }
+  };
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8">
-          <span className="text-blue-800">Top Affordable</span>{" "}
-          <span className="text-orange-500">Universities</span>
+          <span className="text-brand-primary">Top Affordable</span>{" "}
+          <span className="text-brand-secondary">Universities</span>
         </h2>
 
         {/* Categories */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {categories.map((category) => (
+        <div className="relative mb-8">
+          {/* Left Arrow */}
+          {canScrollLeft && (
             <button
-              key={category}
-              className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-colors",
-                activeCategory === category
-                  ? "bg-orange-500 text-white"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
-              )}
-              onClick={() => setActiveCategory(category)}
+              onClick={scrollLeft}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm border rounded-full p-2 shadow-sm hover:bg-background transition-colors"
+              aria-label="Scroll left"
             >
-              {category}
+              <ChevronLeft className="h-4 w-4" />
             </button>
-          ))}
+          )}
+
+          {/* Right Arrow */}
+          {canScrollRight && (
+            <button
+              onClick={scrollRight}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm border rounded-full p-2 shadow-sm hover:bg-background transition-colors"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          )}
+
+          {/* Scrollable Categories Container */}
+          <div
+            ref={scrollRef}
+            className="overflow-x-auto scrollbar-hide mx-8"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            onScroll={checkScrollPosition}
+          >
+            <div className="flex gap-4 w-max">
+              {streams?.map((category) => (
+                <button
+                  key={category.id}
+                  className={cn(
+                    "px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0",
+                    activeCategory === category.name
+                      ? "bg-brand-secondary text-white"
+                      : "bg-white text-gray-600 hover:bg-gray-100"
+                  )}
+                  onClick={() => setActiveCategory(category.name)}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* University Cards */}
@@ -88,7 +131,7 @@ export default function UniversitiesSection() {
                         />
                       </div>
                       <div>
-                        <h3 className="font-bold text-blue-800 text-lg">
+                        <h3 className="font-bold text-brand-primary text-lg">
                           {uni.college_name}
                         </h3>
                         <p className="text-sm text-gray-500">{uni.location}</p>
@@ -96,7 +139,7 @@ export default function UniversitiesSection() {
                     </div>
 
                     <div className="flex justify-between items-center rounded-sm overflow-hidden bg-orange-50 mb-2">
-                      <div className="text-orange-500 p-2 font-normal">
+                      <div className="text-brand-secondary p-2 font-normal">
                         Tuitions Start From
                       </div>
                       <div className="bg-orange-400 text-white p-2 font-medium">
@@ -117,12 +160,16 @@ export default function UniversitiesSection() {
 
                         <p className="text-gray-500">Intakes:</p>
                         <p className="font-medium">
-                          {new Date(uni.intake_start_date).toLocaleDateString()}
+                          {uni.intake_start_date
+                            ? new Date(
+                                uni.intake_start_date
+                              ).toLocaleDateString()
+                            : "N/A"}
                         </p>
 
                         <p className="text-gray-500">Courses:</p>
                         <p className="font-medium">
-                          {uni.count_collegewise_course}
+                          {uni.count_collegewise_course || "N/A"}
                         </p>
                       </div>
                     </div>
@@ -140,9 +187,7 @@ export default function UniversitiesSection() {
         </div>
 
         <div className="flex justify-center mt-8">
-          <Button className="bg-blue-800 hover:bg-blue-900 text-white">
-            View All Universities
-          </Button>
+          <Button>View All Universities</Button>
         </div>
       </div>
     </section>

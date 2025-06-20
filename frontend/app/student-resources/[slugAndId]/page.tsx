@@ -2,7 +2,7 @@
 import ArticlePageSkeleton from "@/components/skeleton/article-page-skeleton";
 import { useArticle } from "@/hooks/useArticle";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
@@ -13,16 +13,25 @@ export default function Page({
 }) {
   const { slugAndId } = React.use(params);
 
-  const id = slugAndId.split("-").pop();
+  // Split into slug and id
+  const parts = slugAndId.split("-");
+  const id = parts.pop(); // last part is ID
+  const slug = parts.join("-"); // rest is slug
 
   if (!id || isNaN(Number(id))) {
     notFound();
   }
+
   const { article, loading, error } = useArticle(Number(id));
 
   if (loading) return <ArticlePageSkeleton />;
   if (error) return <div>Error: {error}</div>;
-  if (!article) return notFound;
+  if (!article) return notFound();
+
+  // If the slug is incorrect, redirect to correct URL
+  if (article.slug && slug !== article.slug) {
+    redirect(`/student-resources/${article.slug}-${article.id}`);
+  }
 
   // Social media sharing functions
 

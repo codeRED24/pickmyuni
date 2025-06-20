@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "img.icons8.com",
       },
+      {
+        protocol: "https",
+        hostname: "pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com",
+      },
     ],
   },
 };
