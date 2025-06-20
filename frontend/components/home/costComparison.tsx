@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Student from "@/public/student-laptop.svg";
 import { DollarSign, RefreshCw, Globe, FileText } from "lucide-react";
+import { Card, CardContent } from "../ui/card";
 
 const costData = [
   {
@@ -55,47 +56,34 @@ const costData = [
 const benefits = [
   {
     title: "Save on Tuition Fees",
-    description:
-      "Our experts help you find universities with similar accreditation but significantly lower tuition fees.",
     icon: <DollarSign />,
   },
   {
     title: "Easy Credit Transfer Process",
-    description:
-      "We handle all paperwork and negotiations to ensure maximum credits transfer from your current institution.",
     icon: <RefreshCw />,
   },
   {
     title: "PR Pathway Courses",
-    description:
-      "We identify courses that qualify for post-study work visas and permanent residency pathways.",
     icon: <Globe />,
   },
   {
     title: "Expert Visa Support",
-    description:
-      "Our registered migration agents provide end-to-end visa assistance for your transfer process.",
     icon: <FileText />,
   },
 ];
 
 export default function CostComparisonSection() {
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <div className="mb-12">
+    <>
+      <section className="bg-brand-secondary py-16">
+        <div className="container mx-auto mb-12">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
               <h2 className="text-3xl font-bold mb-2">
-                <span className="text-blue-800">Compare Your Uni</span>{" "}
-                <span className="text-orange-500">Costs</span>
+                <span className="text-white">Compare Your Uni Costs</span>{" "}
               </h2>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                tincidunt placerat mollis, in interdum est non.
-              </p>
             </div>
-            <Button>See more savings</Button>
+            <Button className="hidden md:block">See more savings</Button>
           </div>
 
           <div className="mt-8 overflow-x-auto">
@@ -104,13 +92,13 @@ export default function CostComparisonSection() {
                 <tr>
                   <th
                     colSpan={3}
-                    className="bg-blue-100 p-4 text-left text-blue-800 font-medium border-b border-gray-200 w-1/2"
+                    className="bg-blue-100 p-4 text-left text-brand-primary font-medium border-b border-gray-200 w-1/2"
                   >
                     CURRENT UNIVERSITIES COST PER YEAR
                   </th>
                   <th
                     colSpan={4}
-                    className="bg-orange-100 p-4 text-left text-orange-500 font-medium border-b border-gray-200 w-1/2"
+                    className="bg-orange-100 p-4 text-left text-brand-secondary font-medium border-b border-gray-200 w-1/2"
                   >
                     UNIVERSITIES SUGGESTION FOR COST SAVING
                   </th>
@@ -159,78 +147,76 @@ export default function CostComparisonSection() {
               </tbody>
             </table>
           </div>
-
-          <div className="flex justify-end mt-4"></div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="flex justify-center">
-            <div className="relative">
-              <Image
-                src={Student}
-                alt="Student with laptop"
-                width={400}
-                height={300}
-              />
-            </div>
+          <div className="min-w-screen sm:hidden flex justify-center mt-8">
+            <Button className="">See more savings</Button>
           </div>
+        </div>
+      </section>
 
-          <div>
-            <h2 className="text-3xl font-bold mb-6">
-              <span className="text-blue-800">Why Choose</span>{" "}
-              <span className="text-orange-500">PickMyUni</span>
+      <section className="flex flex-col container mt-10">
+        <div className="flex flex-col md:flex-row items-center gap-12 mt-12 justify-center">
+          <div className="relative w-full md:w-1/3">
+            <Image
+              src={
+                "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/why_choose_us_image.webp"
+              }
+              alt="Student with laptop"
+              width={0}
+              height={0}
+              sizes="(max-width: 768px) 300px, (max-width: 1024px) 350px, 400px"
+              className="w-full h-auto max-w-sm mx-auto md:max-w-none"
+            />
+          </div>
+          <div className="flex flex-col md:w-2/3">
+            <h2 className="text-3xl font-bold mb-6 text-center md:text-left">
+              <span className="text-brand-primary">Why Choose</span>{" "}
+              <br className="md:hidden" />
+              <span className="text-brand-secondary">PickMyUni</span>
             </h2>
-            <p className="text-gray-600 mb-8">
-              We&apos;re here to help you find the best university for your and
-              save money on education in Australia.
+            <p className="text-brand-primary mb-8 font-normal text-center md:text-left">
+              We’ve helped{" "}
+              <span className="font-bold">1000+ international students</span>{" "}
+              successfully transfer and save money on education in Australia.”
             </p>
 
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {benefits.map((benefit, index) => (
                 <div key={index}>
-                  <div className="flex items-start">
-                    <div className="mr-4 bg-gray-100 p-2 rounded-full">
-                      {benefit.icon}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-blue-800">
+                  <Card className="flex items-start">
+                    <CardContent className="flex gap-2">
+                      <div className="text-brand-secondary">{benefit.icon}</div>
+                      <h3 className="font-bold text-brand-primary">
                         {benefit.title}
                       </h3>
-                      <p className="text-gray-600 text-sm">
-                        {benefit.description}
-                      </p>
-                    </div>
-                    <ChevronRight className="text-orange-500" />
-                  </div>
-                  {index < benefits.length - 1 && (
-                    <div className="border-t border-gray-200 my-4"></div>
-                  )}
+                    </CardContent>
+                  </Card>
                 </div>
               ))}
             </div>
           </div>
         </div>
-
         <div className="mt-24 mb-16 bg-[#FAF4F0] rounded-lg p-8 flex flex-col md:flex-row items-center justify-between">
           <div>
-            <h3 className="text-2xl font-bold text-blue-800 mb-2">
+            <h3 className="text-2xl font-bold text-brand-primary mb-2">
               Check Eligibility for Admission
             </h3>
           </div>
-          <div className="mt-4 md:mt-0 max-h-10 flex items-center">
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+          <div className="mt-4 md:mt-0 max-h-10 flex gap-24 sm:gap-0 sm:items-center">
+            <Button variant={"secondary"} size={"lg"}>
               Check Now
             </Button>
             <Image
               src="/logo.svg"
               alt="Graduation cap"
-              width={150}
-              height={150}
-              className="ml-4"
+              width={0}
+              height={0}
+              sizes="(max-width: 768px) 100px, (max-width: 1024px) 120px, 150px"
+              className="ml-4 md:flex w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44"
+              loading="lazy"
             />
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

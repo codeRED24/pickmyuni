@@ -156,7 +156,7 @@ export function ApplicationModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl w-full mx-4 p-8">
         <DialogHeader className="text-center mb-6">
-          <DialogTitle className="text-2xl font-bold text-blue-800 mb-4">
+          <DialogTitle className="text-2xl font-bold text-brand-primary mb-4">
             Apply Now
           </DialogTitle>
 
@@ -179,8 +179,8 @@ export function ApplicationModal({
               onClick={handleBack}
               className={`px-4 py-2 rounded-full cursor-pointer text-sm font-medium ${
                 step === 1
-                  ? "bg-orange-500 text-white"
-                  : "bg-blue-800 text-white"
+                  ? "bg-brand-secondary text-white"
+                  : "bg-brand-primary text-white"
               }`}
             >
               STEP 1
@@ -188,7 +188,7 @@ export function ApplicationModal({
             <div
               className={`px-4 py-2 rounded-full text-sm font-medium ${
                 step === 2
-                  ? "bg-orange-500 text-white"
+                  ? "bg-brand-secondary text-white"
                   : "bg-orange-200 text-orange-600"
               }`}
             >
@@ -268,7 +268,7 @@ export function ApplicationModal({
               <Button
                 onClick={handleNext}
                 disabled={!isStep1Complete()}
-                className="bg-blue-800 hover:bg-blue-900 text-white px-8 py-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Next
               </Button>
@@ -325,16 +325,15 @@ export function ApplicationModal({
               value={formData.preffered_state}
               onChange={(value) => handleInputChange("preffered_state", value)}
               options={[
-                "California",
-                "New York",
-                "Texas",
-                "Florida",
-                "Illinois",
-                "Pennsylvania",
-                "Ohio",
-                "Georgia",
-                "North Carolina",
-                "Michigan",
+                "New South Wales (NSW)",
+                "Victoria (VIC)",
+                "Queensland (QLD)",
+                "Western Australia (WA)",
+                "South Australia (SA)",
+                "Tasmania (TAS)",
+                "Australian Capital Territory (ACT)",
+                "Northern Territory (NT)",
+                "Other",
               ]}
             />
 
@@ -356,7 +355,7 @@ export function ApplicationModal({
               <Button
                 onClick={handleSubmit}
                 disabled={!isFormComplete() || isLoading}
-                className="bg-blue-800 hover:bg-blue-900 text-white px-8 py-2 flex items-center space-x-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="flex items-center space-x-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 <span>{isLoading ? "Submitting..." : "Send"}</span>
                 {!isLoading && <Send className="h-4 w-4" />}

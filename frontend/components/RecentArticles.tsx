@@ -139,7 +139,7 @@ function RecentArticles() {
                       <div className="text-base text-gray-500 font-normal mb-2">
                         {formattedDate}
                       </div>
-                      <h3 className="text-3xl font-medium text-blue-800 transition-colors leading-tight line-clamp-2 group-hover:text-blue-700">
+                      <h3 className="text-3xl font-medium text-brand-primary transition-colors leading-tight line-clamp-2 group-hover:text-blue-700">
                         {article.title}
                       </h3>
                       <p className="mt-2 text-lg font-light text-gray-500 line-clamp-2">

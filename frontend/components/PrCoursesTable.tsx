@@ -144,16 +144,16 @@ function PRCoursesTable() {
       <Table>
         <TableHeader>
           <TableRow className="text-white">
-            <TableHead className="text-h3 bg-blue-800 border-x-2 border-white">
+            <TableHead className="text-h3 bg-brand-primary border-x-2 border-white">
               Field of Study
             </TableHead>
-            <TableHead className="text-h3 bg-blue-800 border-x-2 border-white">
+            <TableHead className="text-h3 bg-brand-primary border-x-2 border-white">
               Course Examples
             </TableHead>
-            <TableHead className="text-h3 bg-blue-800 border-x-2 border-white">
+            <TableHead className="text-h3 bg-brand-primary border-x-2 border-white">
               Occupation
             </TableHead>
-            <TableHead className="text-h3 bg-orange-500 border-x-2 border-white">
+            <TableHead className="text-h3 bg-brand-secondary border-x-2 border-white">
               Visa Pathway
             </TableHead>
           </TableRow>

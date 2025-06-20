@@ -63,7 +63,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <div className="relative h-64 md:h-80 lg:h-96">
         <Image
-          src="/contactus.svg"
+          src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/contact_us_banner.webp"
           alt="Library with books on shelves"
           fill
           className="object-cover"
@@ -84,10 +84,10 @@ export default function ContactPage() {
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Left Text Content */}
           <div className="lg:w-2/5">
-            <h2 className="text-6xl font-normal text-blue-800">
+            <h2 className="text-6xl font-normal text-brand-primary">
               Let&apos;s Talk About <br />
-              <span className="text-blue-800 font-bold">Your</span>{" "}
-              <span className="text-orange-500 font-bold">Concern</span>
+              <span className="text-brand-primary font-bold">Your</span>{" "}
+              <span className="text-brand-secondary font-bold">Concern</span>
             </h2>
             <p className="mt-4 text-gray-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non
@@ -121,10 +121,10 @@ export default function ContactPage() {
 
         {/* Contact Cards Section */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="bg-orange-500/10 shadow-lg">
+          <Card className="bg-brand-secondary/10 shadow-lg">
             <CardContent className="pt-6 flex flex-col items-center text-center">
               <div className="p-3 bg-white rounded-full shadow">
-                <Phone className="w-8 h-8 text-orange-500" />
+                <Phone className="w-8 h-8 text-brand-secondary" />
               </div>
               <h3 className="mt-4 font-semibold text-blue-700">CALL US NOW</h3>
               <p className="mt-1 text-gray-700">+61 430 190 323</p>
@@ -132,10 +132,10 @@ export default function ContactPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-orange-500/10 shadow-lg">
+          <Card className="bg-brand-secondary/10 shadow-lg">
             <CardContent className="pt-6 flex flex-col items-center text-center">
               <div className="p-3 bg-white rounded-full shadow">
-                <Mail className="w-8 h-8 text-orange-500" />
+                <Mail className="w-8 h-8 text-brand-secondary" />
               </div>
               <h3 className="mt-4 font-semibold text-blue-700">
                 DROP US AN EMAIL
@@ -144,10 +144,10 @@ export default function ContactPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-orange-500/10 shadow-lg">
+          <Card className="bg-brand-secondary/10 shadow-lg">
             <CardContent className="pt-6 flex flex-col items-center text-center">
               <div className="p-3 bg-white rounded-full shadow">
-                <MapPin className="w-8 h-8 text-orange-500" />
+                <MapPin className="w-8 h-8 text-brand-secondary" />
               </div>
               <h3 className="mt-4 font-semibold text-blue-700">ADDRESS</h3>
               <p className="mt-1 text-gray-700">

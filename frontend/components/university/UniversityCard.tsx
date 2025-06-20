@@ -9,6 +9,8 @@ import Link from "next/link";
 export function UniversityCard({ university }: any) {
   const [showModal, setShowModal] = useState(false);
 
+  console.log({ university });
+
   // Generate star rating
   const renderStars = (rating: number) => {
     const stars = [];
@@ -55,7 +57,10 @@ export function UniversityCard({ university }: any) {
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center overflow-hidden">
               {university.logo_url ? (
                 <Image
-                  src={university.logo_url}
+                  src={
+                    "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/" +
+                    university.logo_url
+                  }
                   alt={university.college_name}
                   width={80}
                   height={80}
@@ -75,13 +80,10 @@ export function UniversityCard({ university }: any) {
               <div className="flex-1 min-w-0 sm:pr-4">
                 {/* University Name */}
                 <Link
-                  href={`/university/${
-                    university.slug ||
-                    university.college_name.toLowerCase().replace(/\s+/g, "-")
-                  }-${university.id}`}
+                  href={`/university/${university.slug}-${university.id}`}
                   className="hover:text-blue-600 transition-colors"
                 >
-                  <h3 className="text-lg sm:text-xl font-bold text-blue-800 mb-1 line-clamp-2 sm:line-clamp-1">
+                  <h3 className="text-lg sm:text-xl font-bold text-brand-primary mb-1 line-clamp-2 sm:line-clamp-1">
                     {university.college_name}
                   </h3>
                 </Link>
@@ -108,7 +110,7 @@ export function UniversityCard({ university }: any) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mb-4">
                   <div className="text-center sm:text-left">
                     <div className="text-xs text-gray-500 mb-1">Course Fee</div>
-                    <div className="text-base sm:text-lg font-bold text-orange-500">
+                    <div className="text-base sm:text-lg font-bold text-brand-secondary">
                       $
                       {university.avg_fees_in_aud?.toLocaleString() ||
                         "4,50,000"}{" "}
@@ -143,7 +145,7 @@ export function UniversityCard({ university }: any) {
           <Button
             variant="outline"
             size="sm"
-            className="text-blue-800 border-blue-800 hover:bg-blue-50 text-xs sm:text-sm"
+            className="text-brand-primary border-blue-800 hover:bg-blue-50 text-xs sm:text-sm"
             onClick={() => window.open(university.brochure_url, "_blank")}
           >
             <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
@@ -153,13 +155,13 @@ export function UniversityCard({ university }: any) {
             <Button
               size="sm"
               variant="outline"
-              className="bg-blue-800 text-white hover:text-white border-blue-600 hover:bg-blue-900 px-4 sm:px-6 text-xs sm:text-sm"
+              className="bg-brand-primary text-white hover:text-white border-blue-600 hover:bg-blue-900 px-4 sm:px-6 text-xs sm:text-sm"
             >
               More Details
             </Button>
             <Button
               size="sm"
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 text-xs sm:text-sm"
+              variant={"secondary"}
               onClick={() => setShowModal(true)}
             >
               Apply Now

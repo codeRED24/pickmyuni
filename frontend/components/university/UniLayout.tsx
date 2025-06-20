@@ -40,22 +40,28 @@ function UniLayout({ params }: { params: Promise<{ slugAndId: string }> }) {
       {/* Hero Section */}
       <div className="relative h-48 sm:h-56 md:h-64 lg:h-80 xl:h-96">
         <Image
-          src="/transfer.svg" // Background image
-          alt="Library with books on shelves"
+          src={
+            `https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegebanner/${college?.bg_url}` ||
+            "/transfer.svg"
+          }
+          alt={college?.college_name || "college campus"}
           fill
           className="object-cover"
           priority
         />
 
         {/* University Logo */}
-        <div className="absolute inset-x-0 -bottom-10 sm:-bottom-12 flex xl:container justify-center xl:justify-start z-10">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full bg-white overflow-hidden flex items-center justify-center shadow-lg border border-gray-300">
+        <div className="absolute inset-x-0 -bottom-12 flex xl:container justify-center xl:justify-start z-10">
+          <div className="sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full bg-white overflow-hidden flex items-center justify-center shadow-lg border border-gray-300">
             <Image
-              src="/benefit7.svg" // Logo image
+              src={
+                `https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/${college?.logo_url}` ||
+                "/benefit7.svg"
+              }
               alt="University Logo"
-              width={60}
-              height={60}
-              className="object-contain w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20"
+              width={120}
+              height={120}
+              className="object-contain"
             />
           </div>
         </div>
@@ -66,7 +72,7 @@ function UniLayout({ params }: { params: Promise<{ slugAndId: string }> }) {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
           {/* University Info */}
           <div className="text-center sm:text-left flex-1">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-800 leading-tight">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-brand-primary leading-tight">
               {college?.college_name}
             </h1>
             <p className="text-gray-600 mt-2 text-sm sm:text-base md:text-lg">
@@ -77,16 +83,17 @@ function UniLayout({ params }: { params: Promise<{ slugAndId: string }> }) {
           {/* Enquire Button */}
           <div className="flex justify-center sm:justify-end">
             <Button
+              variant={"secondary"}
               onClick={() => setIsModalOpen(true)}
-              className="bg-orange-500 hover:bg-orange-600 text-white font-medium flex items-center px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg shadow-md transition-all duration-200 hover:shadow-lg"
+              className="flex items-center"
             >
               <span>Enquire Now</span>
               <Image
                 src="/logo-button.svg"
                 alt="Icon"
-                width={24}
-                height={24}
-                className="ml-2 w-5 h-5 sm:w-6 sm:h-6"
+                width={50}
+                height={50}
+                className=""
               />
             </Button>
           </div>

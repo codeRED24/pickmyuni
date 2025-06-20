@@ -6,7 +6,7 @@ const steps = [
     title: "STEP 1",
     description:
       "Search Your Desired Course\nBrowse a wide range of courses tailored for your learning goals",
-    icon: "/s1.svg",
+    icon: "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/Step_1.webp",
     position: "left",
   },
   {
@@ -14,7 +14,7 @@ const steps = [
     title: "STEP 2",
     description:
       "View Course Details Compare course features, reviews, and select the best fit for you.",
-    icon: "/s2.svg",
+    icon: "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/Step_2.webp",
     position: "right",
   },
   {
@@ -22,7 +22,7 @@ const steps = [
     title: "STEP 3",
     description:
       "Enroll Online Simple and secure online enrollment within minutes.",
-    icon: "/s3.svg",
+    icon: "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/Step_3.webp",
     position: "left",
   },
   {
@@ -30,7 +30,7 @@ const steps = [
     title: "STEP 4",
     description:
       "Start Learning Access your course material and start learning anytime, anywhere.",
-    icon: "/s4.svg",
+    icon: "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/Step_4.webp",
     position: "right",
   },
 ];
@@ -40,8 +40,8 @@ export default function ProcessSection() {
     <section className="py-8 md:py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-16">
-          <span className="text-blue-800">Our Process 4 Simple</span>{" "}
-          <span className="text-orange-500">Steps</span>
+          <span className="text-brand-primary">Our Process 4 Simple</span>{" "}
+          <span className="text-brand-secondary">Steps</span>
         </h2>
 
         {/* Mobile Timeline (visible only on small screens) */}
@@ -52,10 +52,12 @@ export default function ProcessSection() {
             {steps.map((step, index) => (
               <div key={index} className="relative pl-12">
                 {/* Timeline Dot */}
-                <div className="absolute left-4 top-6 w-4 h-4 bg-orange-500 rounded-full transform -translate-x-1/2 z-10"></div>
+                <div className="absolute left-4 top-6 w-4 h-4 bg-brand-secondary rounded-full transform -translate-x-1/2 z-10"></div>
 
                 <div className="flex flex-col">
-                  <h3 className="text-blue-800 font-bold mb-2">{step.title}</h3>
+                  <h3 className="text-brand-primary font-bold mb-2">
+                    {step.title}
+                  </h3>
                   <p className="text-gray-600 text-base md:text-xl font-extralight mb-4">
                     {step.description}
                   </p>
@@ -66,6 +68,7 @@ export default function ProcessSection() {
                       width={200}
                       height={152}
                       className="mx-auto"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -83,14 +86,14 @@ export default function ProcessSection() {
             {steps.map((step, index) => (
               <div key={index} className="relative">
                 {/* Timeline Dot */}
-                <div className="absolute left-1/2 top-1/2 w-4 h-4 bg-orange-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
+                <div className="absolute left-1/2 top-1/2 w-4 h-4 bg-brand-secondary rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
 
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   {step.position === "right" ? (
                     <>
                       <div className="flex flex-col md:pr-12 text-right">
                         <div className="flex flex-col items-end">
-                          <h3 className="text-blue-800 font-bold mb-2">
+                          <h3 className="text-brand-primary font-bold mb-2">
                             {step.title}
                           </h3>
                           <p className="text-gray-600 text-xl font-extralight max-w-md">
@@ -104,6 +107,7 @@ export default function ProcessSection() {
                           alt={`Step ${step.number}`}
                           width={282}
                           height={214}
+                          loading="lazy"
                         />
                       </div>
                     </>
@@ -119,7 +123,7 @@ export default function ProcessSection() {
                       </div>
                       <div className="md:pl-12">
                         <div className="flex flex-col">
-                          <h3 className="text-blue-800 font-bold mb-2">
+                          <h3 className="text-brand-primary font-bold mb-2">
                             {step.title}
                           </h3>
                           <p className="text-gray-600 text-xl font-extralight max-w-md">

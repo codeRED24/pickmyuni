@@ -26,11 +26,11 @@ export function TestimonialCardSkeleton() {
 
 export function TestimonialsLoadingSkeleton() {
   return (
-    <section className="py-16 bg-blue-800">
+    <section className="py-16 bg-brand-primary">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-white">
-            What Students <span className="text-orange-500">Say!</span>
+            What Students <span className="text-brand-secondary">Say!</span>
           </h2>
           <div className="flex space-x-2">
             <button

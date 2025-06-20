@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function HeroSkeleton() {
   return (
-    <section className="bg-blue-800 text-white relative overflow-hidden">
+    <section className="bg-brand-primary text-white relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 items-center py-16">
           <div className="z-10">
@@ -10,7 +10,7 @@ export function HeroSkeleton() {
             <Skeleton className="h-12 w-4/5 mb-4 bg-white/20" />
             <Skeleton className="h-6 w-3/4 mb-2 bg-white/20" />
             <Skeleton className="h-6 w-2/3 mb-6 bg-white/20" />
-            <Skeleton className="h-12 w-48 bg-orange-500/80" />
+            <Skeleton className="h-12 w-48 bg-brand-secondary/80" />
           </div>
           <div className="relative">
             <Skeleton className="h-64 w-full bg-white/20" />

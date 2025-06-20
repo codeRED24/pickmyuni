@@ -54,6 +54,18 @@ const prisma = new PrismaClient();
  *           type: integer
  *           default: 10
  *         description: Number of items per page
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [score_desc, score_asc, rating_desc, rating_asc]
+ *           default: score_desc
+ *         description: Sort colleges by score or rating
+ *       - in: query
+ *         name: streamid
+ *         schema:
+ *           type: string
+ *         description: Filter colleges by stream id
  *     responses:
  *       200:
  *         description: Successfully retrieved college list
@@ -67,12 +79,12 @@ export const getCollegeList = async (req: Request, res: Response) => {
       page = 1,
       limit = 10,
       searchquery,
-      cityid,
       stateid,
       courseid,
       min_fees,
       max_fees,
       streamid,
+      sortBy = "score_desc",
     } = req.query;
 
     // Calculate pagination
@@ -86,14 +98,6 @@ export const getCollegeList = async (req: Request, res: Response) => {
       whereClause.college_name = {
         contains: String(searchquery),
         mode: "insensitive",
-      };
-    }
-
-    if (cityid) {
-      whereClause.city = {
-        id: {
-          equals: Number(cityid),
-        },
       };
     }
 
@@ -131,11 +135,33 @@ export const getCollegeList = async (req: Request, res: Response) => {
       }
     }
 
+    // Determine sort order
+    let orderBy: any = { score: "desc" }; // default
+
+    switch (sortBy) {
+      case "score_asc":
+        orderBy = { score: "asc" };
+        break;
+      case "score_desc":
+        orderBy = { score: "desc" };
+        break;
+      case "rating_asc":
+        orderBy = { rating: "asc" };
+        break;
+      case "rating_desc":
+        orderBy = { rating: "desc" };
+        break;
+      default:
+        orderBy = { score: "desc" };
+    }
+
     // Fetch colleges and total count in parallel for efficiency
     const [colleges, totalColleges] = await Promise.all([
       prisma.colleges.findMany({
         where: whereClause,
         select: {
+          id: true,
+          slug: true,
           logo_url: true,
           college_name: true,
           location: true,
@@ -147,7 +173,7 @@ export const getCollegeList = async (req: Request, res: Response) => {
           state: { select: { name: true } },
           CollegesCourses: { select: { id: true } },
         },
-        orderBy: { score: "desc" },
+        orderBy,
         skip,
         take,
       }),
@@ -156,6 +182,8 @@ export const getCollegeList = async (req: Request, res: Response) => {
 
     // Transform data to include course_count and flatten city/state names
     const collegeList = colleges.map((college) => ({
+      id: college.id,
+      slug: college.slug,
       logo_url: college.logo_url,
       college_name: college.college_name,
       location: college.location,
@@ -169,13 +197,8 @@ export const getCollegeList = async (req: Request, res: Response) => {
     }));
 
     // Fetch filter options with both id and name, in parallel
-    const [streams, cities, states, courses] = await Promise.all([
+    const [streams, states, courses] = await Promise.all([
       prisma.stream.findMany({
-        where: { Colleges: { some: {} } },
-        select: { id: true, name: true },
-        orderBy: { name: "asc" },
-      }),
-      prisma.city.findMany({
         where: { Colleges: { some: {} } },
         select: { id: true, name: true },
         orderBy: { name: "asc" },
@@ -194,7 +217,6 @@ export const getCollegeList = async (req: Request, res: Response) => {
 
     // Transform filter data to include both id and name
     const streamOptions = streams.map((s) => ({ id: s.id, name: s.name }));
-    const cityOptions = cities.map((c) => ({ id: c.id, name: c.name }));
     const stateOptions = states.map((s) => ({ id: s.id, name: s.name }));
     const courseOptions = courses.map((c) => ({
       id: c.id,
@@ -213,7 +235,6 @@ export const getCollegeList = async (req: Request, res: Response) => {
         },
         filters: {
           stream: streamOptions,
-          city: cityOptions,
           state: stateOptions,
           courses: courseOptions,
         },

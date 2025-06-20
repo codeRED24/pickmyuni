@@ -90,7 +90,7 @@ function ContactForm({
         <Button
           type="submit"
           disabled={isLoading}
-          className="bg-blue-800 hover:bg-blue-900 text-white px-8 py-3 flex items-center space-x-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center space-x-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <>

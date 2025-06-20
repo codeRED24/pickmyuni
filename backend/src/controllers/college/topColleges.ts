@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
  * @swagger
  * /api/v1/college/top:
  *   get:
- *     summary: Get top colleges
+ *     summary: Get top colleges with optional stream filter and also returns all streams
  *     tags: [Colleges]
  *     description: Retrieve a list of top-ranked colleges
  *     parameters:
@@ -40,40 +40,44 @@ export const getTopColleges = async (req: Request, res: Response) => {
       };
     }
 
-    const colleges = await prisma.colleges.findMany({
-      where: whereClause,
-      orderBy: {
-        score: "desc",
-      },
-      take: 6,
-      select: {
-        id: true,
-        college_name: true,
-        logo_url: true,
-        location: true,
-        intake_start_date: true,
-        pr_pathway: true,
-        slug: true,
-        avg_fees_in_aud: true,
-        CollegesCourses: {
-          select: { id: true },
+    const [colleges, streams] = await Promise.all([
+      prisma.colleges.findMany({
+        where: whereClause,
+        include: {
+          _count: {
+            select: {
+              CollegesCourses: true,
+            },
+          },
         },
+        orderBy: {
+          score: "desc",
+        },
+        take: 6,
+      }),
+      prisma.stream.findMany({
+        where: { Colleges: { some: {} } },
+        select: { id: true, name: true },
+        orderBy: { name: "asc" },
+      }),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        colleges: colleges.map((college: any) => ({
+          ...college,
+          count_collegewise_course: college._count.CollegesCourses,
+        })),
+        streams: [
+          { id: 0, name: "All" },
+          ...streams.map((stream: any) => ({
+            id: stream.id,
+            name: stream.name,
+          })),
+        ],
       },
     });
-
-    const response = colleges.map((college) => ({
-      id: college.id,
-      college_name: college.college_name,
-      logo_url: college.logo_url,
-      location: college.location,
-      intake_start_date: college.intake_start_date,
-      pr_pathway: college.pr_pathway,
-      slug: college.slug,
-      avg_fees_in_aud: college.avg_fees_in_aud,
-      count_collegewise_course: college.CollegesCourses.length,
-    }));
-
-    res.status(200).json(response);
   } catch (error) {
     console.error("Error fetching top colleges:", error);
     res.status(500).json({ error: "Internal Server Error" });

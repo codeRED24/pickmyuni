@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Article } from "@/types/search";
 import PopularArticles from "./PopularArticles";
 import RecentArticles from "./RecentArticles";
+import { Button } from "./ui/button";
 
 function getLimitByScreenSize(width: number): number {
   if (width < 640) return 70; // mobile
@@ -45,8 +46,8 @@ function StudentResources() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
-            <span className="text-blue-800">Recent</span>{" "}
-            <span className="text-orange-500">Articles</span>
+            <span className="text-brand-primary">Recent</span>{" "}
+            <span className="text-brand-secondary">Articles</span>
           </h2>
           <div className="text-center text-red-500">Error: {error}</div>
         </div>
@@ -96,7 +97,7 @@ function StudentResources() {
                   className="cursor-pointer"
                   href={`/student-resources/${article.id}`}
                 >
-                  <h3 className="font-medium text-4xl  text-blue-800 mb-2">
+                  <h3 className="font-medium text-4xl  text-brand-primary mb-2">
                     {article.title}
                   </h3>
                 </Link>
@@ -104,9 +105,7 @@ function StudentResources() {
                   {stripHtmlAndTruncate(article.content, charLimit)}
                 </p>
                 <Link href={`/student-resources/${article.id}`}>
-                  <button className="font-medium text-sm  bg-orange-500 hover:bg-orange-600 p-4 text-white">
-                    Read More
-                  </button>
+                  <Button variant={"secondary"}>Read More</Button>
                 </Link>
               </div>
             </div>
@@ -116,8 +115,8 @@ function StudentResources() {
 
       <section className="bg-orange-50">
         <div className="container mx-auto  px-4 py-16">
-          <h2 className="text-4xl font-semibold text-blue-800">
-            Most Popular <span className="text-orange-500">Articles</span>
+          <h2 className="text-4xl font-semibold text-brand-primary">
+            Most Popular <span className="text-brand-secondary">Articles</span>
           </h2>
           {/* 4 cards of most popular articles */}
           <PopularArticles />
@@ -125,8 +124,8 @@ function StudentResources() {
       </section>
 
       <section className="container mx-auto px-4 py-24 flex justify-center flex-col">
-        <h2 className="text-4xl font-semibold text-blue-800 mb-4 text-center">
-          Most Recent <span className="text-orange-500">Articles</span>
+        <h2 className="text-4xl font-semibold text-brand-primary mb-4 text-center">
+          Most Recent <span className="text-brand-secondary">Articles</span>
         </h2>
         <RecentArticles />
       </section>

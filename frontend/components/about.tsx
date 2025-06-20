@@ -61,7 +61,7 @@ export default function AboutPage() {
       <div className="container mx-auto px-4 py-12 lg:py-16">
         {/* Header Section */}
         <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-800">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-brand-primary">
             About PickMyUni{" "}
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed">
@@ -70,16 +70,14 @@ export default function AboutPage() {
             future. Join thousands of students using PickMyUni to make confident
             decisions about their education.
           </p>
-          <Button className="bg-orange-500 hover:bg-orange-700 text-white px-6 py-2 mt-3 rounded-md font-medium flex items-center">
-            Explore Universities
-          </Button>
+          <Button variant={"secondary"}>Explore Universities</Button>
         </div>
 
         {/* Who we are Section */}
         <section className="mt-20">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-2/3">
-              <h2 className="text-3xl font-bold text-blue-800 mb-4">
+              <h2 className="text-3xl font-bold text-brand-primary mb-4">
                 Who We Are
               </h2>
               <p className="text-gray-600 mb-4">
@@ -162,7 +160,7 @@ export default function AboutPage() {
         {/* what we do section */}
         <section className="mt-20 flex flex-col gap-12">
           <div className="">
-            <h2 className="text-center text-3xl md:text-4xl font-bold mb-6 text-blue-800">
+            <h2 className="text-center text-3xl md:text-4xl font-bold mb-6 text-brand-primary">
               What We Do
             </h2>
             <p className="text-center text-gray-600 text-lg leading-relaxed">
@@ -177,11 +175,11 @@ export default function AboutPage() {
                 key={index}
                 className="flex flex-col gap-4 bg-gray-50 rounded-xl p-6 items-start shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-full bg-orange-500 text-white font-bold text-lg">
+                <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-full bg-brand-secondary text-white font-bold text-lg">
                   {index + 1}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-xl text-blue-800 mb-2">
+                  <h3 className="font-semibold text-xl text-brand-primary mb-2">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 text-base font-normal">

@@ -15,32 +15,33 @@ datasource db {
 }
 
 model Colleges {
-  id                         Int      @id @default(autoincrement())
+  id                         Int       @id @default(autoincrement())
   college_name               String
-  address                    String   @default("")
+  address                    String    @default("")
   location                   String
-  established                DateTime
-  email                      String
-  contact                    String
-  logo_url                   String
-  bg_url                     String
-  media_url                  Json
-  rating                     Float // Must be between 1 and 10
-  score                      Int      @default(1) // Must be between 1 and 999
-  intake_start_date          DateTime
-  pr_pathway                 Boolean
-  slug                       String   @unique
-  total_students             Int      @default(0)
-  acceptance_rate            Float    @default(0)
-  international_student_rate Float    @default(0)
+  established                Int?
+  email                      String?
+  contact                    String?
+  logo_url                   String?
+  bg_url                     String?
+  media_url                  Json?
+  rating                     Float? // Must be between 1 and 10
+  score                      Int       @default(1) // Must be between 1 and 999
+  intake_start_date          DateTime?
+  pr_pathway                 Boolean?
+  slug                       String    @unique
+  total_students             Int?
+  acceptance_rate            Float?
+  international_student_rate Float?
   brochure_url               String?
   avg_fees_in_aud            Float?
   search_names               String?
 
-  streamId  Int @default(1)
-  cityId    Int @default(1)
-  stateId   Int @default(1)
-  countryId Int @default(1)
+  streamId          Int  @default(1)
+  cityId            Int  @default(1)
+  stateId           Int  @default(1)
+  countryId         Int  @default(1)
+  parent_college_id Int?
 
   primary_stream Stream  @relation(fields: [streamId], references: [id])
   city           City    @relation(fields: [cityId], references: [id])
@@ -50,29 +51,32 @@ model Colleges {
   CollegesCourses    CollegesCourses[]
   CollegewiseContent CollegewiseContent[]
 
-  meta_desc String
-  og_img    String
+  meta_desc String?
+  og_img    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Courses {
-  id                 Int    @id @default(autoincrement())
+  id                 Int     @id @default(autoincrement())
   course_name        String
-  duration_in_months Int
-  rating             Float // Must be between 1 and 10
-  score              Int    @default(1) // Must be between 1 and 999
-  stream             Stream @relation(fields: [streamId], references: [id])
-  streamId           Int
-  banner_img         String
-  img1               String
-  img2               String
+  duration_in_months Int?
+  rating             Float? // Must be between 1 and 10
+  score              Int     @default(1) // Must be between 1 and 999
+  stream             Stream? @relation(fields: [streamId], references: [id])
+  streamId           Int?
+  banner_img         String?
+  img1               String?
+  img2               String?
+  content            String?
+  slug               String?
+  type               String?
 
   CollegesCourses CollegesCourses[]
 
-  meta_desc String
-  og_img    String
+  meta_desc String?
+  og_img    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,11 +85,11 @@ model Courses {
 model CollegesCourses {
   id                 Int    @id @default(autoincrement())
   name               String
-  duration_in_months Int
-  tution_fees        Float
-  hostel_fees        Float
-  one_time_fees      Float
-  other_fees         Json
+  duration_in_months Int?
+  tution_fees        Float?
+  hostel_fees        Float?
+  one_time_fees      Float?
+  other_fees         Json?
   score              Int    @default(1)
 
   college_id Int
@@ -96,8 +100,8 @@ model CollegesCourses {
   course  Courses  @relation(fields: [course_id], references: [id])
   stream  Stream   @relation(fields: [streamId], references: [id])
 
-  meta_desc String
-  og_img    String
+  meta_desc String?
+  og_img    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -109,12 +113,12 @@ model CollegewiseContent {
   content    String
   silos      CollegewiseContentSilos @default(info)
   score      Int                     @default(1)
-  banner_img String
-  img1       String
-  img2       String
+  banner_img String?
+  img1       String?
+  img2       String?
 
-  meta_desc String
-  og_img    String
+  meta_desc String?
+  og_img    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -144,12 +148,13 @@ model Articles {
   content    String
   silos      ArticlesSilos @default(news)
   score      Int           @default(1)
-  banner_img String        @default("")
-  img1       String        @default("")
-  img2       String        @default("")
+  banner_img String?
+  img1       String?
+  img2       String?
+  slug       String        @unique
 
-  meta_desc String
-  og_img    String
+  meta_desc String?
+  og_img    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -194,13 +199,13 @@ model Subscription {
 }
 
 model City {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   name       String
-  slug       String @unique
-  score      Int    @default(1)
-  banner_img String @default("")
-  img1       String @default("")
-  img2       String @default("")
+  slug       String  @unique
+  score      Int     @default(1)
+  banner_img String?
+  img1       String?
+  img2       String?
 
   state_id   Int?
   country_id Int?
@@ -215,13 +220,13 @@ model City {
 }
 
 model State {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   name       String
-  slug       String @unique
-  score      Int    @default(1)
-  banner_img String @default("")
-  img1       String @default("")
-  img2       String @default("")
+  slug       String  @unique
+  score      Int     @default(1)
+  banner_img String?
+  img1       String?
+  img2       String?
 
   Colleges Colleges[]
 
@@ -231,13 +236,13 @@ model State {
 }
 
 model Country {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   name       String
-  slug       String @unique
-  score      Int    @default(1)
-  banner_img String @default("")
-  img1       String @default("")
-  img2       String @default("")
+  slug       String  @unique
+  score      Int     @default(1)
+  banner_img String?
+  img1       String?
+  img2       String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -247,13 +252,13 @@ model Country {
 }
 
 model Stream {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   name       String
-  slug       String @unique
-  score      Int    @default(1)
-  banner_img String @default("")
-  img1       String @default("")
-  img2       String @default("")
+  slug       String  @unique
+  score      Int     @default(1)
+  banner_img String?
+  img1       String?
+  img2       String?
 
   Colleges        Colleges[]
   Courses         Courses[]
