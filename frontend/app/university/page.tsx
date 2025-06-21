@@ -21,6 +21,7 @@ function UniversityPage() {
     loading,
     loadingMore,
     error,
+    params,
     updateSearch,
     updateFilters,
     updateSorting,
@@ -44,6 +45,17 @@ function UniversityPage() {
     stream: "All Streams",
     state: "All States",
   });
+
+  // Get current applied filters from the hook
+  const currentFilters = {
+    searchquery:
+      universities.length > 0 || loading ? params?.searchquery : undefined,
+    stateid: universities.length > 0 || loading ? params?.stateid : undefined,
+    courseid: universities.length > 0 || loading ? params?.courseid : undefined,
+    streamid: universities.length > 0 || loading ? params?.streamid : undefined,
+    min_fees: universities.length > 0 || loading ? params?.min_fees : undefined,
+    max_fees: universities.length > 0 || loading ? params?.max_fees : undefined,
+  };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState("Top Rated First");
 
@@ -83,6 +95,27 @@ function UniversityPage() {
       state: "All States",
     });
     clearFilters();
+  };
+
+  // Clear individual filter
+  const clearIndividualFilter = (filterType: string) => {
+    switch (filterType) {
+      case "search":
+        updateSearch("");
+        break;
+      case "state":
+        updateFilters({ stateid: undefined });
+        break;
+      case "course":
+        updateFilters({ courseid: undefined });
+        break;
+      case "stream":
+        updateFilters({ streamid: undefined });
+        break;
+      case "fees":
+        updateFilters({ min_fees: undefined, max_fees: undefined });
+        break;
+    }
   };
 
   // Handle search
@@ -146,8 +179,10 @@ function UniversityPage() {
             isOpen={isFilterOpen}
             setIsOpen={setIsFilterOpen}
             availableFilters={availableFilters}
+            currentFilters={currentFilters}
             onFilterChange={handleFilterChange}
             onSearch={handleSearch}
+            onClearIndividualFilter={clearIndividualFilter}
           />
 
           {/* University List */}
@@ -157,8 +192,6 @@ function UniversityPage() {
               totalCount={pagination.totalItems}
               sortBy={sortBy}
               setSortBy={handleSortChange}
-              onClearFilters={clearAllFilters}
-              hasResults={universities.length > 0}
             />
 
             {/* University Cards */}

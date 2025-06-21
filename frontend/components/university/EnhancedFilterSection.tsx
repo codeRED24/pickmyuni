@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter, X, ChevronDown, Search } from "lucide-react";
@@ -18,8 +18,10 @@ interface EnhancedFilterSectionProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   availableFilters?: any;
+  currentFilters?: any;
   onFilterChange?: (filterType: string, value: string | number) => void;
   onSearch?: (searchTerm: string) => void;
+  onClearIndividualFilter?: (filterType: string) => void;
 }
 
 export function EnhancedFilterSection({
@@ -28,8 +30,10 @@ export function EnhancedFilterSection({
   isOpen,
   setIsOpen,
   availableFilters,
+  currentFilters,
   onFilterChange,
   onSearch,
+  onClearIndividualFilter,
 }: EnhancedFilterSectionProps) {
   const [searchTerm, setSearchTerm] = useState(filters.search || "");
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
@@ -37,6 +41,44 @@ export function EnhancedFilterSection({
   const [selectedStreamId, setSelectedStreamId] = useState<number | null>(null);
   const [minFees, setMinFees] = useState<string>("");
   const [maxFees, setMaxFees] = useState<string>("");
+
+  // Use currentFilters (actual applied filters) for active filter detection
+  const hasActiveFilters = currentFilters
+    ? currentFilters.searchquery ||
+      currentFilters.stateid ||
+      currentFilters.courseid ||
+      currentFilters.streamid ||
+      currentFilters.min_fees ||
+      currentFilters.max_fees
+    : false;
+
+  // Sync local state with applied filters
+  useEffect(() => {
+    if (currentFilters) {
+      if (currentFilters.searchquery !== undefined) {
+        setSearchTerm(currentFilters.searchquery || "");
+      }
+      if (currentFilters.stateid !== undefined) {
+        setSelectedStateId(currentFilters.stateid || null);
+      }
+      if (currentFilters.courseid !== undefined) {
+        setSelectedCourseId(currentFilters.courseid || null);
+      }
+      if (currentFilters.streamid !== undefined) {
+        setSelectedStreamId(currentFilters.streamid || null);
+      }
+      if (currentFilters.min_fees !== undefined) {
+        setMinFees(
+          currentFilters.min_fees ? currentFilters.min_fees.toString() : ""
+        );
+      }
+      if (currentFilters.max_fees !== undefined) {
+        setMaxFees(
+          currentFilters.max_fees ? currentFilters.max_fees.toString() : ""
+        );
+      }
+    }
+  }, [currentFilters]);
 
   const clearAllFilters = () => {
     setFilters({
@@ -107,17 +149,6 @@ export function EnhancedFilterSection({
     }
   };
 
-  const hasActiveFilters =
-    filters.course !== "All Courses" ||
-    filters.location !== "All Locations" ||
-    filters.feesRange !== "All Fees" ||
-    filters.exams !== "All Exams" ||
-    selectedStateId !== null ||
-    selectedCourseId !== null ||
-    selectedStreamId !== null ||
-    minFees !== "" ||
-    maxFees !== "";
-
   return (
     <div className="lg:w-80 flex-shrink-0">
       {/* Mobile Filter Toggle */}
@@ -171,59 +202,102 @@ export function EnhancedFilterSection({
               Active Filters:
             </h4>
             <div className="flex flex-wrap gap-2">
-              {selectedStateId && availableFilters?.state && (
+              {currentFilters?.searchquery && (
                 <Badge
                   variant="secondary"
-                  onClick={() => handleStateChange("all")}
+                  onClick={() => {
+                    if (onClearIndividualFilter) {
+                      onClearIndividualFilter("search");
+                    } else {
+                      setSearchTerm("");
+                      if (onSearch) onSearch("");
+                    }
+                  }}
+                  className="text-xs cursor-pointer"
+                >
+                  Search: {currentFilters.searchquery}
+                  <X className="w-3 h-3 ml-1" />
+                </Badge>
+              )}
+              {currentFilters?.stateid && availableFilters?.state && (
+                <Badge
+                  variant="secondary"
+                  onClick={() => {
+                    if (onClearIndividualFilter) {
+                      onClearIndividualFilter("state");
+                    } else {
+                      handleStateChange("all");
+                    }
+                  }}
                   className="text-xs cursor-pointer"
                 >
                   {
                     availableFilters.state.find(
-                      (s: any) => s.id === selectedStateId
+                      (s: any) => s.id === currentFilters.stateid
                     )?.name
                   }
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
-              {selectedStreamId && availableFilters?.stream && (
+              {currentFilters?.streamid && availableFilters?.stream && (
                 <Badge
                   variant="secondary"
-                  onClick={() => handleStreamChange("all")}
+                  onClick={() => {
+                    if (onClearIndividualFilter) {
+                      onClearIndividualFilter("stream");
+                    } else {
+                      handleStreamChange("all");
+                    }
+                  }}
                   className="text-xs cursor-pointer"
                 >
                   {
                     availableFilters.stream.find(
-                      (s: any) => s.id === selectedStreamId
+                      (s: any) => s.id === currentFilters.streamid
                     )?.name
                   }
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
-              {selectedCourseId && availableFilters?.courses && (
+              {currentFilters?.courseid && availableFilters?.courses && (
                 <Badge
                   variant="secondary"
-                  onClick={() => handleCourseChange("all")}
+                  onClick={() => {
+                    if (onClearIndividualFilter) {
+                      onClearIndividualFilter("course");
+                    } else {
+                      handleCourseChange("all");
+                    }
+                  }}
                   className="text-xs cursor-pointer"
                 >
                   {
                     availableFilters.courses.find(
-                      (c: any) => c.id === selectedCourseId
+                      (c: any) => c.id === currentFilters.courseid
                     )?.name
                   }
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
-              {(minFees || maxFees) && (
+              {(currentFilters?.min_fees || currentFilters?.max_fees) && (
                 <Badge
                   variant="secondary"
                   onClick={() => {
-                    setMinFees("");
-                    setMaxFees("");
-                    handleFeesChange();
+                    if (onClearIndividualFilter) {
+                      onClearIndividualFilter("fees");
+                    } else {
+                      setMinFees("");
+                      setMaxFees("");
+                      if (onFilterChange) {
+                        onFilterChange("min_fees", "");
+                        onFilterChange("max_fees", "");
+                      }
+                    }
                   }}
                   className="text-xs cursor-pointer"
                 >
-                  Fees: {minFees || "0"} - {maxFees || "∞"}
+                  Fees: {currentFilters.min_fees || "0"} -{" "}
+                  {currentFilters.max_fees || "∞"}
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}

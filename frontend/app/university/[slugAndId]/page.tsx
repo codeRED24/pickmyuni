@@ -18,7 +18,7 @@ const indexes = [
   "ranking",
   "fees",
   "scholarships",
-  "reviews",
+  "placement",
   "faqs",
 ];
 

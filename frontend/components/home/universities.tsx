@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useUniversities } from "@/hooks/useUniversities";
 import { UniversitiesLoadingSkeleton } from "@/components/skeleton/university-skeleton";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function UniversitiesSection() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -122,18 +123,22 @@ export default function UniversitiesSection() {
                         style={{ width: 60, height: 60 }}
                       >
                         <Image
-                          // src={uni.logo_url}
-                          src={"/vercel.svg"}
-                          alt={uni.college_name}
+                          src={
+                            "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/" +
+                              uni?.logo_url || "/vercel.svg"
+                          }
+                          alt={uni?.college_name}
                           width={60}
                           height={60}
                           className="object-contain"
                         />
                       </div>
                       <div>
-                        <h3 className="font-bold text-brand-primary text-lg">
-                          {uni.college_name}
-                        </h3>
+                        <Link href={`/university/${uni.slug}-${uni.id}`}>
+                          <h3 className="font-bold text-brand-primary text-lg">
+                            {uni.college_name}
+                          </h3>
+                        </Link>
                         <p className="text-sm text-gray-500">{uni.location}</p>
                       </div>
                     </div>
@@ -187,7 +192,9 @@ export default function UniversitiesSection() {
         </div>
 
         <div className="flex justify-center mt-8">
-          <Button>View All Universities</Button>
+          <Link href="/university">
+            <Button>View All Universities</Button>
+          </Link>
         </div>
       </div>
     </section>
