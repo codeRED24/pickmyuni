@@ -76,8 +76,8 @@ const getEndpointForTab = (tab: string, id: number): string | null => {
     fees: `${baseUrl}/api/v1/college/fees/${id}`,
     scholarships: `${baseUrl}/api/v1/college/scholarships/${id}`,
     faqs: `${baseUrl}/api/v1/college/faqs/${id}`,
-    reviews: `${baseUrl}/api/v1/college/reviews/${id}`,
-    placement: null, // No endpoint available in backend.txt
+    // reviews: `${baseUrl}/api/v1/college/reviews/${id}`,
+    placement: `${baseUrl}/api/v1/college/placement/${id}`,
   };
 
   return endpointMap[tab] || null;

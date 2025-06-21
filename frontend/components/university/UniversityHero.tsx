@@ -4,7 +4,7 @@ import React from "react";
 
 export function UniversityHero({
   title = "Best Universities in Australia",
-  imageSrc = "/globe.png",
+  imageSrc = "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_banner.webp",
   imageAlt = "Library with books on shelves",
 }: any) {
   return (

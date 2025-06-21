@@ -7,8 +7,8 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const testimonialsData = [
   {
     _id: "1",
-    name: "Aamani Majumdar",
-    role: "Marketing Professional",
+    name: "Aarti Patel",
+    role: "Bachelor of Nursing at a regional university in Queensland",
     testimonial:
       "A seamless and user-friendly platform. I found the perfect course and improved my skills in no time! Highly recommended.",
     hasVideo: false,

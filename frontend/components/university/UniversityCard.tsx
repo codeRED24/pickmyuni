@@ -102,7 +102,7 @@ export function UniversityCard({ university }: any) {
                     {renderStars(university.rating)}
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-gray-700">
-                    {university.rating}/5 ({university.score || 250})
+                    {university.rating}/5
                   </span>
                 </div>
 

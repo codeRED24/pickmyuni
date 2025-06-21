@@ -10,7 +10,7 @@ export default function HeroSection() {
           "url(https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/home_banner.webp)",
       }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="z-10 py-10">
             <h1 className="font-anton text-4xl md:text-6xl mb-4">

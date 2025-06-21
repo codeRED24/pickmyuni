@@ -19,9 +19,12 @@ export default function Footer() {
               />
             </div>
             <p className="text-gray-300 text-sm mb-4 max-w-sm mx-auto sm:mx-0">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-              placerat venenatis augue. Suspendisse tempus venenatis. Rhoncus.
-              Maecenas hendrerit.
+              PickMyUni is the ideal platform for students looking for
+              affordable universities in Australia. Students can pick their
+              desired universities in Australia with our course and university
+              transfer assistance. To accomplish your career goals, feel free to
+              consult our team and grab the opportunity to enroll in your dream
+              university.
             </p>
           </div>
 
@@ -187,7 +190,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-700 pt-6 text-center text-xs sm:text-sm text-gray-400">
-          <p>DummyName 2023 © All Rights Reserved</p>
+          <p>PickMyUni 2025 © All Rights Reserved</p>
         </div>
       </div>
     </footer>
