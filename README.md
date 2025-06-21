@@ -1,4 +1,4 @@
-# EduScholar Project
+# PickMyUni
 
 ## Prerequisites
 
@@ -88,4 +88,3 @@ frontend/   # Next.js frontend application
 - Check logs in the terminal for error messages.
 
 ---
-# pickmyuni
