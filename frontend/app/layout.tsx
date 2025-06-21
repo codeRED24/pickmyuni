@@ -82,7 +82,7 @@ export default function RootLayout({
               href="https://wa.me/1234567890"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 p-3 rounded-full hover:bg-green-600 transition-colors"
+              className="p-3 bg-green-500  rounded-full hover:bg-green-600 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
