@@ -19,6 +19,16 @@ interface Article {
   category?: string;
 }
 
+const arr = [
+  "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/pr_path1.webp",
+  "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/pr_path2.webp",
+  "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/pr_path3.webp",
+];
+
+export const randomImage = () => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+
 export default function ArticlesSection() {
   const { articles, loading, error } = useTopArticles();
 
@@ -54,9 +64,9 @@ export default function ArticlesSection() {
               key={article.id}
               className="bg-[#F6F6F7] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="relative h-48">
+              <div className="relative h-64">
                 <Image
-                  src={article.image || "/placeholder.svg?height=200&width=300"}
+                  src={article.image || randomImage()}
                   alt={article.title}
                   fill
                   className="object-cover"

@@ -71,7 +71,7 @@ export default function ContactPage() {
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-end">
-          <div className="container mx-auto px-4 pb-8">
+          <div className="container mx-auto pb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
               Contact Us
             </h1>
@@ -79,7 +79,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <section className="mt-20 container mx-auto px-4 py-12">
+      <section className="mt-20 container mx-auto py-12">
         {/* Lets Talk Section */}
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Left Text Content */}
@@ -163,7 +163,7 @@ export default function ContactPage() {
       {/* map section */}
       <section className="relative h-[700px] mt-12">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8385385142534!2d144.96549531531787!3d-37.81528397975151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642b5b425ba07%3A0x834e71eeb27d391f!2s227%20Collins%20St%2C%20Melbourne%20VIC%203000!5e0!3m2!1sen!2sau!4v1655123456789!5m2!1sen!2sau"
+          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3151.8918603542966!2d144.9623450759323!3d37.816001871975025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzfCsDQ4JzU3LjYiTiAxNDTCsDU3JzUzLjciRQ!5e0!3m2!1sen!2sin!4v1750681165613!5m2!1sen!2sinhttps://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d76290.06707997114!2d144.90966104249517!3d-37.82971382058018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzfCsDQ4JzU3LjYiUyAxNDTCsDU3JzUzLjciRQ!5e0!3m2!1sen!2sin!4v1750681260928!5m2!1sen!2sin"
           width="100%"
           height="100%"
           style={{ border: 0 }}

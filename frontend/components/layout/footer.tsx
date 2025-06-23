@@ -5,17 +5,15 @@ import { Facebook, Twitter, Mail } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="bg-brand-primary text-white py-8 md:pt-16 md:pb-8">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 md:mb-12">
           <div className="text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start mb-4">
-              <h3 className="text-lg md:text-xl font-bold">Dummy Name</h3>
               <Image
-                src="/placeholder.svg?height=20&width=20"
+                src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/footer_logo.webp"
                 alt="Logo"
-                width={20}
-                height={20}
-                className="ml-2"
+                width={220}
+                height={220}
               />
             </div>
             <p className="text-gray-300 text-sm mb-4 max-w-sm mx-auto sm:mx-0">

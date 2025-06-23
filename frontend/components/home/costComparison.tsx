@@ -147,7 +147,7 @@ export default function CostComparisonSection() {
             </table>
           </div>
           <div className="min-w-screen sm:hidden flex justify-center mt-8">
-            <Link href="/university">
+            <Link href="/compare">
               <Button className="">See more savings</Button>
             </Link>
           </div>

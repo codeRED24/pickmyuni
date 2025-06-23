@@ -212,4 +212,196 @@ body {
   .nav-link-active {
     @apply bg-[#EAFDF5] text-[#2C5680];
   }
+
+  /* Content Components */
+  .title {
+    @apply text-[46px] font-bold text-[#2C5680] mb-6 leading-tight;
+  }
+
+  .sub-title {
+    @apply text-[36px] font-semibold text-[#2C5680] mb-4 leading-tight;
+  }
+
+  .tag-h3 {
+    @apply text-[30px] font-semibold text-[#2C5680] mb-3 mt-6 leading-tight;
+  }
+
+  .tag-h4 {
+    @apply text-[26px] font-semibold text-[#2C5680] mb-3 mt-5 leading-tight;
+  }
+
+  .tag-h5 {
+    @apply text-[20px] font-semibold text-[#2C5680] mb-2 mt-4 leading-tight;
+  }
+
+  .tag-h6 {
+    @apply text-[18px] font-medium text-[#2C5680] mb-2 mt-3 leading-tight;
+  }
+
+  .content-item {
+    @apply text-[16px] leading-relaxed text-[#242628] mb-4;
+  }
+
+  .article-content-body {
+    @apply prose max-w-none;
+  }
+
+  .article-content-body p {
+    @apply text-[16px] leading-relaxed text-[#242628] mb-4;
+  }
+
+  .article-content-body img {
+    @apply container mx-auto my-12;
+  }
+
+  /* List Styles */
+  .unordered-list {
+    @apply list-disc list-inside space-y-2 mb-4 ml-4;
+  }
+
+  .unordered-list li {
+    @apply text-[16px] leading-relaxed text-[#242628] pl-2;
+  }
+
+  .unordered-list li::marker {
+    @apply text-[#242628];
+  }
+
+  .ordered-list {
+    @apply list-decimal list-inside space-y-2 mb-4 ml-4;
+  }
+
+  .ordered-list li {
+    @apply text-[16px] leading-relaxed text-[#242628] pl-2;
+  }
+
+  .ordered-list li::marker {
+    @apply text-[#242628] font-semibold;
+  }
+
+  /* Table Styles */
+  .table-container {
+    @apply w-full overflow-x-auto mb-6 rounded-lg border border-gray-200;
+    /* Add custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: #2c5680 #f1f1f1;
+  }
+
+  .table-container::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .table-container::-webkit-scrollbar-thumb {
+    background: #2c5680;
+    border-radius: 4px;
+  }
+
+  .table-container::-webkit-scrollbar-thumb:hover {
+    background: #1e3a56;
+  }
+
+  .primary-table {
+    @apply w-full border-collapse bg-white shadow-sm min-w-[600px];
+  }
+
+  .primary-table th {
+    @apply bg-[#2C5680] text-white font-semibold text-[14px] px-4 py-3 text-left uppercase tracking-wide whitespace-nowrap;
+  }
+
+  .primary-table td {
+    @apply border-b border-gray-200 px-4 py-3 text-[14px] text-[#242628] whitespace-nowrap;
+  }
+
+  .primary-table tr:hover {
+    @apply bg-[#EAFDF5] transition-colors duration-150;
+  }
+
+  .secondary-table {
+    @apply w-full border-collapse bg-white border border-gray-200 min-w-[600px];
+  }
+
+  .secondary-table th {
+    @apply bg-[#FAF4F0] text-[#242628] font-semibold text-[14px] px-4 py-3 text-left border-b border-gray-200 whitespace-nowrap;
+  }
+
+  .secondary-table td {
+    @apply border-b border-gray-200 px-4 py-3 text-[14px] text-[#242628] whitespace-nowrap;
+  }
+
+  .secondary-table tr:nth-child(even) {
+    @apply bg-gray-50;
+  }
+
+  .secondary-table tr:hover {
+    @apply bg-[#EAFDF5] transition-colors duration-150;
+  }
+
+  /* Responsive table adjustments */
+  @media (max-width: 768px) {
+    .primary-table,
+    .secondary-table {
+      min-width: 500px;
+      font-size: 12px;
+    }
+
+    .primary-table th,
+    .primary-table td,
+    .secondary-table th,
+    .secondary-table td {
+      padding: 8px 6px;
+    }
+  }
+
+  /* Text Formatting */
+  .item-bold {
+    @apply font-semibold text-[#242628];
+  }
+
+  .item-highlight {
+    @apply text-[#FF882E] px-2 py-1 rounded font-medium;
+  }
+
+  /* FAQ Components */
+  .faq-item {
+    @apply border border-gray-200 rounded-lg mb-4 overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  .faq-ques {
+    @apply font-semibold text-[18px] text-[#242628] p-4 cursor-pointer flex justify-between items-center bg-[#FAF4F0] hover:bg-[#EAFDF5] transition-colors duration-200;
+  }
+
+  .faq-ques::after {
+    content: "+";
+    @apply text-[#2C5680] font-bold text-[20px] ml-4 transition-transform duration-200;
+  }
+
+  .faq-ques.active::after {
+    content: "−";
+    @apply transform rotate-0;
+  }
+
+  .faq-ans {
+    @apply text-[16px] leading-relaxed text-[#242628] p-4 pt-0 border-t border-gray-100;
+  }
+
+  .faq-ans p {
+    @apply mb-3 last:mb-0;
+  }
+
+  .faq-ans ul {
+    @apply list-disc list-inside space-y-1 mb-3 ml-4;
+  }
+
+  .faq-ans ol {
+    @apply list-decimal list-inside space-y-1 mb-3 ml-4;
+  }
+
+  .faq-ans li {
+    @apply text-[15px] leading-relaxed;
+  }
 }
