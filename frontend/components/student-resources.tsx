@@ -38,7 +38,75 @@ function StudentResources() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        {/* Loading skeleton for 2 main articles */}
+        <section className="container mx-auto py-16">
+          <div className="flex flex-col gap-8">
+            {[1, 2].map((index) => (
+              <div
+                key={index}
+                className={`flex flex-col md:flex-row ${
+                  index % 2 !== 0 ? "" : "md:flex-row-reverse"
+                } bg-white rounded-lg overflow-hidden mb-6`}
+              >
+                {/* Image Section Skeleton */}
+                <div className="w-full md:w-1/3 h-64 md:h-auto">
+                  <div className="w-full h-full bg-gray-200 animate-pulse rounded-xl" />
+                </div>
+
+                {/* Content Section Skeleton */}
+                <div className="w-full md:w-2/3 p-6">
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-24 mb-2" />
+                  <div className="h-8 bg-gray-200 rounded animate-pulse w-3/4 mb-2" />
+                  <div className="space-y-2 mb-4">
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-full" />
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-5/6" />
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-4/5" />
+                  </div>
+                  <div className="h-10 bg-gray-200 rounded animate-pulse w-24" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Loading skeleton for Popular Articles section */}
+        <section className="bg-orange-50">
+          <div className="container mx-auto py-16">
+            <div className="h-8 bg-gray-200 rounded animate-pulse w-64 mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((index) => (
+                <div key={index} className="bg-white rounded-lg p-4">
+                  <div className="w-full h-48 bg-gray-200 animate-pulse rounded mb-4" />
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-20 mb-2" />
+                  <div className="h-6 bg-gray-200 rounded animate-pulse w-full mb-2" />
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Loading skeleton for Recent Articles section */}
+        <section className="container mx-auto py-24 flex justify-center flex-col">
+          <div className="h-8 bg-gray-200 rounded animate-pulse w-64 mb-8 mx-auto" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((index) => (
+              <div key={index} className="bg-white rounded-lg p-4 shadow-md">
+                <div className="w-full h-48 bg-gray-200 animate-pulse rounded mb-4" />
+                <div className="h-4 bg-gray-200 rounded animate-pulse w-20 mb-2" />
+                <div className="h-6 bg-gray-200 rounded animate-pulse w-full mb-2" />
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-full" />
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    );
   }
 
   if (error) {

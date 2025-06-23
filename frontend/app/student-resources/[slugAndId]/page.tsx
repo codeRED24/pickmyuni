@@ -1,17 +1,14 @@
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 import SocialShare from "@/components/SocialShare";
+import ArticleContent from "@/components/ArticleContent";
 import { Article } from "@/types/search";
 import { Metadata } from "next";
 
 async function getArticle(id: number): Promise<Article | null> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/articles/${id}`,
-      {
-        // Enable ISR (Incremental Static Regeneration) - revalidate every hour
-        next: { revalidate: 3600 },
-      }
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/articles/${id}`
     );
 
     if (!response.ok) {
@@ -202,14 +199,11 @@ export default async function Page({
         </div>
       </section>{" "}
       <section className="container mx-auto py-8 md:py-12 lg:py-16">
-        {article?.content && (
-          <div
-            className="prose max-w-none text-gray-700 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
-        )}
-
-        <SocialShare title={article.title} url={currentUrl} />
+        <ArticleContent content={article.content} />
+        <SocialShare
+          title={article?.title || "Test Article"}
+          url={currentUrl}
+        />
       </section>
     </div>
   );

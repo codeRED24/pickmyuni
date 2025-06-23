@@ -3,6 +3,7 @@ import { Article } from "@/types/search";
 import React, { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import { randomImage } from "./home/articles";
 
 function stripHtmlAndTruncate(html: string): string {
   const tempDiv = document.createElement("div");
@@ -130,7 +131,7 @@ function RecentArticles() {
                   <div className="flex flex-col">
                     <div className="relative w-full h-52 flex-shrink-0 overflow-hidden">
                       <img
-                        src={article.image || "/transfer3.svg"}
+                        src={article.image || randomImage()}
                         alt={article.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
                       />

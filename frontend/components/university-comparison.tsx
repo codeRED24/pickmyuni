@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function ComaprisonComponent() {
   const benefits = [
@@ -183,16 +184,18 @@ export default function ComaprisonComponent() {
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Compare. Choose. Succeed
           </h1>
-          <Button className="flex items-center">
-            Start Your University Search Today!{" "}
-            <Image
-              src="/logo-button.svg"
-              alt="Icon"
-              width={40}
-              height={40}
-              className="ml-2"
-            />
-          </Button>
+          <Link href="/university">
+            <Button className="flex items-center">
+              Start Your University Search Today!{" "}
+              <Image
+                src="/logo-button.svg"
+                alt="Icon"
+                width={40}
+                height={40}
+                className="ml-2"
+              />
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

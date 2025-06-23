@@ -37,6 +37,7 @@ model Colleges {
   brochure_url               String?
   avg_fees_in_aud            Float?
   search_names               String?
+  is_active                  Boolean   @default(true)
 
   streamId          Int  @default(1)
   cityId            Int  @default(1)
@@ -73,6 +74,7 @@ model Courses {
   content            String?
   slug               String?
   type               String?
+  is_active          Boolean @default(true)
 
   CollegesCourses CollegesCourses[]
 
@@ -84,14 +86,15 @@ model Courses {
 }
 
 model CollegesCourses {
-  id                 Int    @id @default(autoincrement())
+  id                 Int     @id @default(autoincrement())
   name               String
   duration_in_months Int?
   tution_fees        Float?
   hostel_fees        Float?
   one_time_fees      Float?
   other_fees         Json?
-  score              Int    @default(1)
+  score              Int     @default(1)
+  is_active          Boolean @default(true)
 
   college_id Int
   course_id  Int
@@ -117,6 +120,7 @@ model CollegewiseContent {
   banner_img String?
   img1       String?
   img2       String?
+  is_active  Boolean                 @default(true)
 
   meta_desc String?
   og_img    String?
@@ -153,6 +157,7 @@ model Articles {
   img1       String?
   img2       String?
   slug       String        @unique
+  is_active  Boolean       @default(true)
 
   meta_desc String?
   og_img    String?
@@ -207,6 +212,7 @@ model City {
   banner_img String?
   img1       String?
   img2       String?
+  is_active  Boolean @default(true)
 
   state_id   Int?
   country_id Int?
@@ -228,6 +234,7 @@ model State {
   banner_img String?
   img1       String?
   img2       String?
+  is_active  Boolean @default(true)
 
   Colleges Colleges[]
 
@@ -244,6 +251,7 @@ model Country {
   banner_img String?
   img1       String?
   img2       String?
+  is_active  Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -260,6 +268,7 @@ model Stream {
   banner_img String?
   img1       String?
   img2       String?
+  is_active  Boolean @default(true)
 
   Colleges        Colleges[]
   Courses         Courses[]

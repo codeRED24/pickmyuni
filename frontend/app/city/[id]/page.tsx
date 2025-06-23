@@ -1,3 +1,9 @@
+import {
+  ChartNoAxesCombined,
+  CircleDollarSign,
+  FileTextIcon,
+  GraduationCapIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 
@@ -7,6 +13,7 @@ interface CityData {
     name: string;
     slug: string;
     content: string;
+    banner_img: string;
   };
 }
 
@@ -123,7 +130,10 @@ export default async function PrPath({
         {/* Hero Section */}
         <div className="relative h-64 md:h-80 lg:h-96">
           <Image
-            src="/globe.png"
+            src={
+              city.city.banner_img ||
+              "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/transfer_banner.webp"
+            }
             alt="Library with books on shelves"
             fill
             className="object-cover"
@@ -146,6 +156,106 @@ export default async function PrPath({
             />
           )}
         </div>
+        <div className="bg-brand-primary py-24">
+          <div className="container flex flex-col lg:flex-row-reverse items-center gap-8">
+            <div className="flex-1">
+              <h2 className="text-h1 text-white  leading-tight">
+                How FindMyUni Helps You Get
+                <span className="text-brand-secondary"> Admitted</span>
+              </h2>
+              <p className="text-body text-white mb-4">
+                At FindMyUni, we make it easy for international students to
+                discover, compare, and apply to the best universities in
+                Melbourne Victoria. Our platform offers:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* High employability */}
+                <div className="flex items-center gap-3 bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex-shrink-0 w-10 h-10  flex items-center justify-center">
+                    <ChartNoAxesCombined className="text-brand-primary" />
+                  </div>
+                  <div>
+                    <p className="text-gray-600">
+                      Personalized university recommendation
+                    </p>
+                  </div>
+                </div>
+
+                {/* Strong migration pathway */}
+                <div className="flex items-center gap-3 bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex-shrink-0 w-10 h-10  flex items-center justify-center">
+                    <FileTextIcon className="text-brand-primary" />
+                  </div>
+                  <div>
+                    <p className="text-gray-600">
+                      Application and visa guidance
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quality education */}
+                <div className="flex items-center gap-3 bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex-shrink-0 w-10 h-10  flex items-center justify-center">
+                    <GraduationCapIcon className="text-brand-primary" />
+                  </div>
+                  <div>
+                    <p className="text-gray-600">
+                      Expert counselling and student support
+                    </p>
+                  </div>
+                </div>
+
+                {/* Competitive salary */}
+                <div className="flex items-center gap-3 bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center">
+                    <CircleDollarSign className="text-brand-primary" />
+                  </div>
+                  <div>
+                    <p className="text-gray-600">
+                      Access to scholarships and funding opportunities
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 bg-white rounded-lg p-4 shadow-md">
+                  <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center">
+                    <CircleDollarSign className="text-brand-primary" />
+                  </div>
+                  <div>
+                    <p className="text-gray-600">
+                      Course and University Transfer Assistance
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 text-body text-white">
+                <p>
+                  Whether you're looking to explore the complete list of
+                  universities in Melbourne or need help identifying the best
+                  university in Melbourne for your field, we’re here to simplify
+                  the process for you.
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:w-1/3">
+              <div className="relative">
+                <Image
+                  src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/pr_path3.webp"
+                  alt="Graduate student celebrating"
+                  width={400}
+                  height={500}
+                  className="rounded-lg w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* faqs section */}
+        <div></div>
       </div>
     </>
   );

@@ -1,4 +1,11 @@
 import Image from "next/image";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/radix-accordion";
+import GetInTouch from "./GetInTouch";
 
 const howToTransferData = [
   {
@@ -27,21 +34,226 @@ const howToTransferData = [
       "Submit your application directly to the university through their admissions portal.",
   },
   {
-    name: "Get Your Student Visa Updated",
+    name: "Get Your Student Visa Updated (If Required)",
     Description:
       "If you’re an international student, you may need to update your visa details after transferring.",
   },
 ];
 
 const faqData = [
-  { question: "How do I transfer to another university in Australia?" },
-  { question: "Can you transfer from one university to another in Australia?" },
-  { question: "What is a good GPA to have to transfer?" },
-  { question: "Can I transfer colleges in my 2nd year?" },
-  { question: "Can I change universities after my 1st year?" },
-  { question: "Can international students change colleges in Australia?" },
-  { question: "Which universities in Australia accept credit transfers?" },
-  { question: "Can you change universities after getting a student visa?" },
+  {
+    question: "How do I transfer to another university in Australia?",
+    answer: (
+      <div>
+        <p className="mb-3">
+          Transferring to another university in Australia involves a few key
+          steps:
+        </p>
+        <ul className="list-disc list-inside space-y-2 mb-4">
+          <li>
+            Research and shortlist universities that offer your desired course
+          </li>
+          <li>Check their transfer policies and credit recognition process</li>
+          <li>Apply for admission and submit your academic transcripts</li>
+          <li>
+            If accepted, obtain a new Confirmation of Enrolment (CoE) (for
+            international students)
+          </li>
+          <li>
+            If you're on a student visa, inform the Department of Home Affairs
+            about your transfer
+          </li>
+        </ul>
+        <p className="font-medium">
+          Our platform simplifies the transfer process by helping you find the
+          right course and guiding you through each step.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Can you transfer from one university to another in Australia?",
+    answer: (
+      <div>
+        <p>
+          <strong>Yes</strong>, you can transfer from one university to another
+          in Australia, provided you meet the eligibility criteria of your new
+          institution.
+        </p>
+        <p className="mt-2">
+          Each university has different transfer policies, so it's important to
+          check:
+        </p>
+        <ul className="list-disc list-inside space-y-1 mt-2">
+          <li>Credit transfer options</li>
+          <li>Entry requirements</li>
+          <li>Visa implications (for international students)</li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    question: "What is a good GPA to have to transfer?",
+    answer: (
+      <div>
+        <p className="mb-3">
+          A good GPA for transfer depends on the university and course you're
+          applying for. Generally:
+        </p>
+        <div className="space-y-2">
+          <div className="flex items-start gap-2">
+            <span className="text-brand-primary font-bold">•</span>
+            <span>
+              <strong>Competitive programs</strong> (e.g., medicine, law) may
+              require a GPA of{" "}
+              <strong className="text-brand-primary">6.0+</strong> (on a 7-point
+              scale)
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-brand-primary font-bold">•</span>
+            <span>
+              <strong>General courses</strong> usually require a GPA of at least{" "}
+              <strong className="text-brand-primary">4.0–5.0</strong>
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-brand-primary font-bold">•</span>
+            <span>
+              Some universities may consider students with{" "}
+              <strong>lower GPAs</strong> based on work experience, portfolios,
+              or other achievements
+            </span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    question: "Can I transfer colleges in my 2nd year?",
+    answer: (
+      <div>
+        <p>
+          <strong>Yes</strong>, many students transfer in their second year. If
+          your new university offers credit transfer, you may be able to
+          continue without losing much study time. Some courses have
+          restrictions on transferring mid-program, so it's best to check with
+          both your current and future institutions.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Can I change universities after my 1st year?",
+    answer: (
+      <div>
+        <p>
+          <strong>Absolutely!</strong> Changing universities after the first
+          year is common, especially if you find a better-suited program or
+          institution. You’ll need to apply for a transfer, check credit
+          recognition, and ensure your visa (if applicable) allows the move.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Can international students change colleges in Australia?",
+    answer: (
+      <div>
+        <p>
+          Yes, international students can change colleges, but they must meet
+          student visa requirements. If you have completed less than six months
+          in your current program, you may need a release letter from your
+          current institution. It's also important to ensure that your new
+          course is CRICOS-registered.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Which universities in Australia accept credit transfers?",
+    answer: (
+      <div>
+        <p className="mb-3">
+          Most Australian universities accept credit transfers, but it depends
+          on your previous studies, course structure, and institution
+          agreements.
+        </p>
+        <p className="mb-2">
+          <strong>
+            Popular universities known for flexible credit transfer policies
+            include:
+          </strong>
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
+          <div className="flex items-center gap-2">
+            <span className="w-1 h-1 bg-brand-primary rounded-full"></span>
+            <span>The University of Melbourne</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-1 h-1 bg-brand-primary rounded-full"></span>
+            <span>Monash University</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-1 h-1 bg-brand-primary rounded-full"></span>
+            <span>The University of Sydney</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-1 h-1 bg-brand-primary rounded-full"></span>
+            <span>The Australian National University (ANU)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-1 h-1 bg-brand-primary rounded-full"></span>
+            <span>The University of Queensland</span>
+          </div>
+        </div>
+        <p className="font-medium">
+          Our platform helps you check credit eligibility and transfer options.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: "Can you change universities after getting a student visa?",
+    answer: (
+      <div>
+        <p>
+          <strong>Yes</strong>, you can change universities after getting a
+          student visa, but there are conditions:
+        </p>
+        <div className="mt-3 space-y-3">
+          <div className="flex items-start gap-3">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+              1
+            </span>
+            <span>
+              If you haven't completed <strong>six months of study</strong> in
+              your primary course, you may need a{" "}
+              <strong>release letter</strong>
+            </span>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+              2
+            </span>
+            <span>
+              Your new course must be of the{" "}
+              <strong>same or higher AQF level</strong> to avoid visa issues
+            </span>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="flex-shrink-0 w-6 h-6  rounded-full flex items-center justify-center text-sm font-bold">
+              3
+            </span>
+            <span>
+              You must <strong>inform the Department of Home Affairs</strong>{" "}
+              about the change
+            </span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 const courseTransferHelp = [
@@ -58,7 +270,7 @@ const courseTransferHelp = [
   {
     title: "Application Assistance:",
     description:
-      "Our advisors assist in finding the best university and course that match your academic and career goals.",
+      "We guide you in preparing and submitting all necessary documents for your transfer application.",
   },
   {
     title: "Credit Transfer Guidance:",
@@ -83,7 +295,6 @@ export default function TransferAssistance() {
           fill
           className="object-cover"
           priority
-          sizes="100vw"
           quality={85}
         />
         <div className="absolute inset-0 bg-black/20" />
@@ -143,7 +354,6 @@ export default function TransferAssistance() {
                 height={420}
                 className="rounded-lg shadow-lg object-cover w-full"
                 loading="lazy"
-                quality={75}
               />
             </div>
           </div>
@@ -159,7 +369,7 @@ export default function TransferAssistance() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Many universities in Australia accept transfer students, giving
-                you the flexibility to move if your current institution isn’t
+                you the flexibility to move if your current institution isn't
                 the right fit. You may choose to transfer due to various
                 reasons, such as a change in academic interests, relocation, or
                 a preference for a different university environment. Some of the
@@ -169,11 +379,12 @@ export default function TransferAssistance() {
               <ul className="list-disc list-inside space-y-2 text-gray-600">
                 <li>The University of Melbourne</li>
                 <li>The University of Sydney</li>
-                <li>Monash University</li>
+                <li>Monash Course Transfer</li>
                 <li>The University of Queensland</li>
                 <li>The University of New South Wales (UNSW)</li>
+                <li>The University of New South Wales (UNSW)</li>
                 <li>RMIT University</li>
-                <li>Deakin University</li>
+                <li>Course Transfer Deakin University</li>
               </ul>
             </div>
             <div className="md:w-1/3">
@@ -183,9 +394,7 @@ export default function TransferAssistance() {
                 width={500}
                 height={350}
                 className="rounded-lg shadow-lg object-cover w-full"
-                sizes="(max-width: 768px) 100vw, 33vw"
                 loading="lazy"
-                quality={75}
               />
             </div>
           </div>
@@ -241,8 +450,8 @@ export default function TransferAssistance() {
                     1. Meet with Your Student Advisor:
                   </span>{" "}
                   <span className="text-gray-600">
-                    Ensure your new university qualifies for a streamlined
-                    student visa; otherwise, you may need to cancel and reapply.
+                    Discuss your transfer plans to understand policies,
+                    requirements, and next steps.
                   </span>
                 </p>
                 <p>
@@ -250,8 +459,8 @@ export default function TransferAssistance() {
                     2. Check Visa Implications:
                   </span>{" "}
                   <span className="text-gray-600">
-                    Discuss your transfer plans to understand policies,
-                    requirements, and next steps.
+                    Ensure your new university qualifies for a streamlined
+                    student visa; otherwise, you may need to cancel and reapply.
                   </span>
                 </p>
                 <p>
@@ -303,9 +512,107 @@ export default function TransferAssistance() {
                 width={500}
                 height={400}
                 className="rounded-lg shadow-lg object-cover w-full"
-                quality={75}
                 loading="lazy"
               />
+            </div>
+          </div>
+        </section>
+
+        {/* Course Transfers Within the Same University Section */}
+        <section className="mt-20">
+          <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+            <div className="">
+              <h2 className="text-3xl font-bold text-brand-primary mb-4">
+                Course Transfers Within the{" "}
+                <span className="text-brand-secondary">Same University</span>
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Sometimes, students realize that their initial course choice
+                isn't the best fit. Australian universities allow students to
+                change their courses within the same institution, provided they
+                meet the eligibility criteria.
+              </p>
+
+              <h3 className="text-xl font-bold text-brand-primary mb-4">
+                How to Change Your Course?
+              </h3>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 bg-brand-secondary rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-brand-primary mb-1">
+                      Consult Your Academic Advisor
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      Discuss your interest in switching courses and understand
+                      the process.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 bg-brand-secondary rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-brand-primary mb-1">
+                      Check Eligibility & Course Prerequisites
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      Some courses have specific entry requirements that you
+                      must meet.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 bg-brand-secondary rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-brand-primary mb-1">
+                      Apply for an Internal Transfer
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      Universities usually have a formal application process for
+                      course transfers.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 bg-brand-secondary rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">
+                    4
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-brand-primary mb-1">
+                      Credit Transfer Assessment
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      If you've completed relevant subjects, you may receive
+                      credits for your new course.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 bg-brand-secondary rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 mt-0.5">
+                    5
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-brand-primary mb-1">
+                      Confirm Your New Enrollment
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      Once approved, complete any necessary formalities to
+                      finalize your course transfer.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -321,8 +628,6 @@ export default function TransferAssistance() {
                 height={400}
                 className="rounded-lg w-full"
                 loading="lazy"
-                sizes="(max-width: 768px) 100vw, 33vw"
-                quality={75}
               />
             </div>
             <div className="md:w-2/3 space-y-4">
@@ -350,21 +655,19 @@ export default function TransferAssistance() {
         </section>
 
         {/* CTA Section */}
-        <section className="mt-20 text-center bg-gray-50 py-12 rounded-lg">
+        <section className="mt-20 py-12">
           <h2 className="text-3xl font-bold text-brand-primary">
             Start Your Course Transfer{" "}
             <span className="text-brand-secondary">Today!</span>
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-gray-600">
+          <p className="mt-4 text-gray-600">
             If you&apos;re considering transferring universities in Australia,
             PickMyUni is here to help you take the next step with confidence.
             Our dedicated team will ensure your course transfer process is
             hassle-free, allowing you to focus on your education and future.
           </p>
-          <button className="mt-8 px-8 py-3 bg-white border-2 border-orange-500 text-brand-secondary font-semibold rounded-lg hover:bg-brand-secondary hover:text-white transition-colors">
-            Get in touch with us today and make your university transfer journey
-            smooth and successful!
-          </button>
+
+          <GetInTouch />
         </section>
 
         {/* FAQ Section */}
@@ -373,16 +676,18 @@ export default function TransferAssistance() {
             FAQs on University and Course Transfers in{" "}
             <span className="text-brand-secondary">Australia</span>
           </h2>
-          <div className="space-y-4">
+          <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <div key={index} className="border-b pb-4">
-                <div className="flex justify-between items-center cursor-pointer">
-                  <h3 className="text-lg text-gray-700">{faq.question}</h3>
-                  <span className="text-2xl text-gray-500 font-light">+</span>
-                </div>
-              </div>
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-left text-lg font-medium text-gray-800 hover:text-brand-primary">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 leading-relaxed">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </section>
       </main>
     </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -23,20 +24,22 @@ export default function HeroSection() {
               Struggling with high fees or course dissatisfaction? <br />
               We&apos;ll help you transfer to the right university.
             </p>
-            <Button
-              className="flex items-center"
-              variant={"secondary"}
-              size={"lg"}
-            >
-              Compare University
-              <Image
-                src="/logo-button.svg"
-                alt="Icon"
-                width={50}
-                height={50}
-                className="ml-2"
-              />
-            </Button>
+            <Link href="/compare">
+              <Button
+                className="flex items-center"
+                variant={"secondary"}
+                size={"lg"}
+              >
+                Compare University
+                <Image
+                  src="/logo-button.svg"
+                  alt="Icon"
+                  width={50}
+                  height={50}
+                  className="ml-2"
+                />
+              </Button>
+            </Link>
           </div>
           <div className="relative pt-16">
             <Image

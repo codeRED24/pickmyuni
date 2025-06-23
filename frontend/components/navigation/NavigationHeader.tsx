@@ -26,7 +26,6 @@ export default function NavigationHeader() {
                 alt="Logo"
                 width={150}
                 height={150}
-                className="inline-block ml-1"
               />
             </div>
           </Link>
