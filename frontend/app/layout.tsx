@@ -61,7 +61,7 @@ export default function RootLayout({
           </div>
           <div className="flex flex-col gap-2">
             <a
-              href="tel:+1234567890"
+              href="tel:+61433502082"
               className="bg-blue-500 p-3 rounded-full hover:bg-blue-600 transition-colors"
             >
               <svg
@@ -79,7 +79,7 @@ export default function RootLayout({
               </svg>
             </a>
             <a
-              href="https://wa.me/1234567890"
+              href="https://wa.me/+61433502082"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 bg-green-500  rounded-full hover:bg-green-600 transition-colors"

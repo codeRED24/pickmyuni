@@ -91,7 +91,7 @@ export default function SearchBar() {
 
   return (
     <div className="bg-brand-primary py-4">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="relative" ref={searchRef}>
           <div className="relative flex items-center bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button className="absolute left-4 text-gray-400 z-10 cursor-default">

@@ -30,7 +30,7 @@ export default function PrPath() {
           />
           <div className="absolute inset-0 bg-black/40" />
           <div className="absolute inset-0 flex items-end">
-            <div className="container mx-auto px-4 pb-8">
+            <div className="container mx-auto pb-8">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
                 Best PR Courses in Australia 2025
               </h1>
@@ -54,7 +54,7 @@ export default function PrPath() {
           </p>
 
           {/* What Are PR List Courses Section */}
-          <div className="flex flex-col lg:flex -row gap-8 items-start">
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
             <div className="flex-1">
               <h2 className="text-h1 text-brand-primary mb-6">
                 What Are PR List Courses in Australia 2025?
@@ -171,7 +171,7 @@ export default function PrPath() {
             <div className="lg:w-1/3">
               <div className="sticky top-24">
                 <Image
-                  src="/transfer2.svg"
+                  src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/pr_path2.webp"
                   alt="PR Courses in Australia"
                   width={500}
                   height={400}
@@ -273,7 +273,7 @@ export default function PrPath() {
             <div className="lg:w-1/3">
               <div className="relative">
                 <Image
-                  src="/transfer-hero-lady.svg"
+                  src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/pr_path3.webp"
                   alt="Graduate student celebrating"
                   width={400}
                   height={500}

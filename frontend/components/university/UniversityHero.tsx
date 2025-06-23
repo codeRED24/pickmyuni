@@ -18,7 +18,7 @@ export function UniversityHero({
       />
       <div className="absolute inset-0 bg-black/40" />
       <div className="absolute inset-0 flex items-end">
-        <div className="container mx-auto px-4 pb-8">
+        <div className="container mx-auto pb-8">
           <h1 className="max-w-[850px] text-3xl md:text-4xl lg:text-5xl font-bold text-white">
             {title}
           </h1>

@@ -73,7 +73,7 @@ function CollegePage({ params }: { params: Promise<{ slugAndId: string }> }) {
     <>
       <UniLayout params={params} />
 
-      <div className="min-h-screen container mx-auto px-4 py-6 flex flex-col lg:flex-row-reverse gap-6">
+      <div className="min-h-screen container mx-auto py-6 flex flex-col lg:flex-row-reverse gap-6">
         <QuickFacts college={college} />
         <div className="flex-1 min-w-0">
           <Tabs defaultValue="info" className="w-full">

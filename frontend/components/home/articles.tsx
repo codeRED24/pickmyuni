@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArticlesLoadingSkeleton } from "@/components/skeleton/article-skeleton";
 import { useTopArticles } from "@/hooks/useTopArticles";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 interface Article {
   id: number;
@@ -54,12 +55,12 @@ export default function ArticlesSection() {
               className="bg-[#F6F6F7] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="relative h-48">
-                {/* <Image
+                <Image
                   src={article.image || "/placeholder.svg?height=200&width=300"}
                   alt={article.title}
                   fill
                   className="object-cover"
-                /> */}
+                />
               </div>
               <div className="p-6">
                 <div className="flex items-center text-xs text-gray-500 mb-2">

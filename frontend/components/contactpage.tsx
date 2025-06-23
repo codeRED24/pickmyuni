@@ -127,7 +127,7 @@ export default function ContactPage() {
                 <Phone className="w-8 h-8 text-brand-secondary" />
               </div>
               <h3 className="mt-4 font-semibold text-blue-700">CALL US NOW</h3>
-              <p className="mt-1 text-gray-700">+61 430 190 323</p>
+              <p className="mt-1 text-gray-700">+61 433 502 082</p>
               <p className="text-sm text-gray-500">24/7 Support</p>
             </CardContent>
           </Card>

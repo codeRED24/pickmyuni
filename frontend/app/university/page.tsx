@@ -170,7 +170,7 @@ function UniversityPage() {
       <UniversityHero />
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto py-6">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filter Section */}
           <EnhancedFilterSection
