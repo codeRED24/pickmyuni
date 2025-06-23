@@ -1,17 +1,103 @@
-"use client";
-import ArticlePageSkeleton from "@/components/skeleton/article-page-skeleton";
-import { useArticle } from "@/hooks/useArticle";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
-import React from "react";
-import { toast } from "sonner";
+import SocialShare from "@/components/SocialShare";
+import { Article } from "@/types/search";
+import { Metadata } from "next";
 
-export default function Page({
+async function getArticle(id: number): Promise<Article | null> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/articles/${id}`,
+      {
+        // Enable ISR (Incremental Static Regeneration) - revalidate every hour
+        next: { revalidate: 3600 },
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null;
+      }
+      throw new Error(`Failed to fetch article: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data.article;
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    return null;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slugAndId: string }>;
+}): Promise<Metadata> {
+  const { slugAndId } = await params;
+
+  // Split into slug and id
+  const parts = slugAndId.split("-");
+  const id = parts.pop();
+
+  if (!id || isNaN(Number(id))) {
+    return {
+      title: "Article Not Found",
+      description: "The requested article could not be found.",
+    };
+  }
+
+  const article = await getArticle(Number(id));
+
+  if (!article) {
+    return {
+      title: "Article Not Found",
+      description: "The requested article could not be found.",
+    };
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://pickmyuni.com";
+  const articleUrl = `${siteUrl}/student-resources/${article.slug}-${article.id}`;
+
+  return {
+    title: article.title,
+    description: article.meta_desc || article.title,
+    openGraph: {
+      title: article.title,
+      description: article.meta_desc || article.title,
+      url: articleUrl,
+      siteName: "PickMyUni",
+      type: "article",
+      publishedTime: article.createdAt,
+      images: article.image
+        ? [
+            {
+              url: article.image,
+              width: 1200,
+              height: 630,
+              alt: article.title,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.meta_desc || article.title,
+      images: article.image ? [article.image] : [],
+    },
+    alternates: {
+      canonical: articleUrl,
+    },
+  };
+}
+
+export default async function Page({
   params,
 }: {
   params: Promise<{ slugAndId: string }>;
 }) {
-  const { slugAndId } = React.use(params);
+  const { slugAndId } = await params;
 
   // Split into slug and id
   const parts = slugAndId.split("-");
@@ -22,41 +108,65 @@ export default function Page({
     notFound();
   }
 
-  const { article, loading, error } = useArticle(Number(id));
+  const article = await getArticle(Number(id));
 
-  if (loading) return <ArticlePageSkeleton />;
-  if (error) return <div>Error: {error}</div>;
-  if (!article) return notFound();
+  if (!article) {
+    notFound();
+  }
 
   // If the slug is incorrect, redirect to correct URL
   if (article.slug && slug !== article.slug) {
     redirect(`/student-resources/${article.slug}-${article.id}`);
   }
 
-  // Social media sharing functions
+  // Generate the current page URL for social sharing
+  const currentUrl = `${
+    process.env.NEXT_PUBLIC_SITE_URL || "https://pickmyuni.com"
+  }/student-resources/${article.slug}-${article.id}`;
 
-  const shareOnFacebook = () => {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(article?.title || "");
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${title}`;
-    window.open(facebookUrl, "_blank", "width=600,height=400");
-  };
+  // // Generate structured data for SEO
+  // const structuredData = {
+  //   "@context": "https://schema.org",
+  //   "@type": "Article",
+  //   headline: article.title,
+  //   description: article.meta_desc || article.title,
+  //   datePublished: article.createdAt,
+  //   dateModified: article.createdAt,
+  //   author: {
+  //     "@type": "Organization",
+  //     name: "PickMyUni",
+  //   },
+  //   publisher: {
+  //     "@type": "Organization",
+  //     name: "PickMyUni",
+  //     logo: {
+  //       "@type": "ImageObject",
+  //       url: `${
+  //         process.env.NEXT_PUBLIC_SITE_URL || "https://pickmyuni.com"
+  //       }/logo.svg`,
+  //     },
+  //   },
+  //   mainEntityOfPage: {
+  //     "@type": "WebPage",
+  //     "@id": currentUrl,
+  //   },
+  //   ...(article.image && {
+  //     image: {
+  //       "@type": "ImageObject",
+  //       url: article.image,
+  //       width: 1200,
+  //       height: 630,
+  //     },
+  //   }),
+  // };
 
-  const shareOnTwitter = () => {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(article?.title || "");
-    const twitterUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-    window.open(twitterUrl, "width=600,height=400");
-  };
-
-  const InstagramHandleShare = () => {
-    toast.success("Article link copied to clipboard!");
-    navigator.clipboard.writeText(window.location.href);
-  };
-
-  console.log(article);
   return (
     <div className="bg-white font-sans">
+      {/* Structured Data */}
+      {/* <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      /> */}
       {/* Hero Section */}
       <section className="relative w-full h-[336px] text-white">
         <Image
@@ -70,7 +180,7 @@ export default function Page({
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container mx-auto px-4 pb-8 text-center">
+          <div className="container mx-auto pb-8 text-center">
             {/* Date Badge */}
             {article?.createdAt && (
               <div className="inline-block bg-orange-500 text-white px-4 py-2 text-sm font-medium mb-4 uppercase">
@@ -90,9 +200,8 @@ export default function Page({
             </h1>
           </div>
         </div>
-      </section>
-
-      <section className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+      </section>{" "}
+      <section className="container mx-auto py-8 md:py-12 lg:py-16">
         {article?.content && (
           <div
             className="prose max-w-none text-gray-700 leading-relaxed"
@@ -100,37 +209,7 @@ export default function Page({
           />
         )}
 
-        <div className="bg-gradient-to-r from-gray-200 to-gray-100/10 py-4 px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <h2 className="text-2xl font-normal italic">
-            Share This Article on Favourite Social Platform
-          </h2>
-          <div className="flex gap-4">
-            <Image
-              src="https://img.icons8.com/?size=100&id=uLWV5A9vXIPu&format=png&color=000000"
-              alt="Facebook Share"
-              width={30}
-              height={30}
-              className="cursor-pointer hover:scale-110 transition-all"
-              onClick={shareOnFacebook}
-            />
-            <Image
-              src="https://img.icons8.com/?size=100&id=yoQabS8l0qpr&format=png&color=000000"
-              alt="Twitter Share"
-              width={30}
-              height={30}
-              className="cursor-pointer hover:scale-110 transition-all"
-              onClick={shareOnTwitter}
-            />
-            <Image
-              src="https://img.icons8.com/?size=100&id=0GU4b5gZ4PdA&format=png&color=000000"
-              alt="Instagram Share"
-              width={30}
-              height={30}
-              className="cursor-pointer hover:scale-110 transition-all"
-              onClick={InstagramHandleShare}
-            />
-          </div>
-        </div>
+        <SocialShare title={article.title} url={currentUrl} />
       </section>
     </div>
   );

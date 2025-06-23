@@ -88,7 +88,7 @@ export default function TransferAssistance() {
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex items-end">
-          <div className="container mx-auto px-4 pb-8">
+          <div className="container mx-auto pb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
               University and Course Transfer​ <br />
               Assistance in Australia{" "}
@@ -97,7 +97,7 @@ export default function TransferAssistance() {
         </div>
       </section>
 
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="container mx-auto py-16 text-lg">
         <p className="text-gray-600">
           At PickMyUni, we understand that your academic journey is not always
           straightforward. Whether you wish to explore a new field of study,

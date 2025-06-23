@@ -1,5 +1,3 @@
-"use client";
-
 import StudentResources from "@/components/student-resources";
 import Image from "next/image";
 import React from "react";
@@ -20,7 +18,7 @@ function page() {
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex items-end">
-          <div className="container mx-auto px-4 pb-8">
+          <div className="container mx-auto pb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
               Blog
             </h1>

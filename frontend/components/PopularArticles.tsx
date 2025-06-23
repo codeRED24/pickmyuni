@@ -9,7 +9,7 @@ function PopularArticles() {
   if (loading) {
     return (
       <section className="py-8">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="animate-pulse">

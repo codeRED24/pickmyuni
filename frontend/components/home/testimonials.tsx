@@ -10,60 +10,30 @@ const testimonialsData = [
     name: "Aarti Patel",
     role: "Bachelor of Nursing at a regional university in Queensland",
     testimonial:
-      "A seamless and user-friendly platform. I found the perfect course and improved my skills in no time! Highly recommended.",
+      "I had already spent a semester in Sydney but felt overwhelmed by the high tuition and living costs. A friend recommended PickMyUni, and honestly, it changed everything. Their team helped me transfer to a more affordable university in regional Queensland that also gives me extra points for PR. The process was smooth, and they even guided me with my visa paperwork. Thanks to PickMyUni, I’m now on the right track—both academically and financially.",
     hasVideo: false,
     profileImage: "/api/placeholder/60/60",
     videoUrl: "",
   },
   {
     _id: "2",
-    name: "Steven John",
-    role: "Marketing Professional",
+    name: "Muhammad Faizan",
+    role: "Master of Information Technology in Victoria",
     testimonial:
-      "A seamless and user-friendly platform. I found the perfect course and improved my skills in no time! Highly recommended.",
+      "Choosing a university in Australia can be confusing, especially with so many expensive options. PickMyUni helped me compare multiple affordable IT courses and find one that fits both my budget and PR plan. They were transparent, professional, and super responsive. Without their support, I would have spent so much more money on tuition. I’m now settled in Melbourne, loving my course, and confident about my PR future.",
     hasVideo: false,
     profileImage: "/api/placeholder/60/60",
     videoUrl: "",
   },
   {
     _id: "3",
-    name: "Sarah Wilson",
-    role: "Marketing Professional",
+    name: "Mereani Lewaqa",
+    role: "Certificate IV in Aged Care, transferring to Diploma of Community Services",
     testimonial:
-      "Exceptional service and support throughout my application process. The platform made everything so much easier.",
-    hasVideo: true,
-    profileImage: "/api/placeholder/60/60",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  },
-  {
-    _id: "4",
-    name: "Vinay Rattan",
-    role: "Marketing Professional",
-    testimonial:
-      "Outstanding experience with comprehensive university information. Helped me make the right choice for my future.",
-    hasVideo: true,
-    profileImage: "/api/placeholder/60/60",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  },
-  {
-    _id: "5",
-    name: "Michael Chen",
-    role: "Software Engineer",
-    testimonial:
-      "The platform's detailed university comparisons were incredibly helpful in making my decision. Highly recommend!",
+      "PickMyUni supported me from the first day. I wanted to build a future in aged care and apply for PR later, but I didn’t know which course or college to choose. They helped me find a budget-friendly provider and even assisted with my course upgrade to Diploma level. I’m now working part-time in the sector I love, gaining experience and building towards permanent residency. I’m so thankful for their honest advice and encouragement.",
     hasVideo: false,
     profileImage: "/api/placeholder/60/60",
-    videoUrl: "",
-  },
-  {
-    _id: "6",
-    name: "Michael Chen",
-    role: "Software Engineer",
-    testimonial:
-      "The platform's detailed university comparisons were incredibly helpful in making my decision. Highly recommend!",
-    hasVideo: false,
-    profileImage: "/api/placeholder/60/60",
-    videoUrl: "",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   },
 ];
 
@@ -136,7 +106,7 @@ export default function TestimonialsSection() {
           {testimonialsData.map((testimonial, index) => (
             <div key={testimonial._id} className="flex flex-col flex-shrink-0">
               {/* Testimonial speech bubble */}
-              <div className="relative max-w-[320px]  min-h-[200px] bg-white rounded-2xl p-6 mb-6 shadow-lg">
+              <div className="relative max-w-[320px]  min-h-[200px] bg-white rounded-2xl p-6 mb-6 shadow-lg ">
                 {testimonial.hasVideo ? (
                   <div className="size-full">
                     <iframe
@@ -163,7 +133,7 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Profile section */}
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 max-w-[320px]">
                 <div>
                   <h4 className="font-semibold text-white text-base mb-1">
                     {testimonial.name}

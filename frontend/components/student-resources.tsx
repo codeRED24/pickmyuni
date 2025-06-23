@@ -60,7 +60,7 @@ function StudentResources() {
   return (
     <div>
       {/* 2 blogs */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto py-16">
         <div className="flex flex-col gap-8">
           {articles?.slice(0, 2).map((article: Article, index: number) => (
             <div
@@ -114,7 +114,7 @@ function StudentResources() {
       </section>
 
       <section className="bg-orange-50">
-        <div className="container mx-auto  px-4 py-16">
+        <div className="container mx-auto py-16">
           <h2 className="text-4xl font-semibold text-brand-primary">
             Most Popular <span className="text-brand-secondary">Articles</span>
           </h2>
@@ -123,7 +123,7 @@ function StudentResources() {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-24 flex justify-center flex-col">
+      <section className="container mx-auto py-24 flex justify-center flex-col">
         <h2 className="text-4xl font-semibold text-brand-primary mb-4 text-center">
           Most Recent <span className="text-brand-secondary">Articles</span>
         </h2>

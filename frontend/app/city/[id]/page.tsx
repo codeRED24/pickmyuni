@@ -1,15 +1,98 @@
-"use client";
-import { useCity } from "@/hooks/useCity";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
-import React from "react";
 
-export default function PrPath({
+interface CityData {
+  city: {
+    id: number;
+    name: string;
+    slug: string;
+    content: string;
+  };
+}
+
+async function fetchCity(id: number): Promise<CityData | null> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/city/${id}`,
+      {
+        cache: "force-cache", // Cache the response for better performance
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null;
+      }
+      throw new Error(`Failed to fetch city: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching city:", error);
+    return null;
+  }
+}
+
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: Promise<{ id: string }>;
+// }): Promise<Metadata> {
+//   const { id } = await params;
+
+//   const parts = id.split("-");
+//   const cityid = parts.pop();
+
+//   if (!cityid || isNaN(Number(cityid))) {
+//     return {
+//       title: "City Not Found",
+//     };
+//   }
+
+//   const city = await fetchCity(Number(cityid));
+
+//   if (!city) {
+//     return {
+//       title: "City Not Found",
+//     };
+//   }
+
+//   return {
+//     title: `Best Universities in ${city.city.name} | PickMyUni`,
+//     description: `Discover top universities in ${city.city.name}. Get enrolled in the best higher education institutions and explore study opportunities.`,
+//     keywords: [
+//       `universities in ${city.city.name}`,
+//       "higher education",
+//       "study abroad",
+//       "university admission",
+//     ],
+//     openGraph: {
+//       title: `Best Universities in ${city.city.name}`,
+//       description: `Discover top universities in ${city.city.name}. Get enrolled in the best higher education institutions.`,
+//       type: "website",
+//     },
+//   };
+// }
+
+// Generate static paths for popular cities at build time
+// export async function generateStaticParams() {
+//   try {
+//     // You might want to fetch popular cities from your API
+//     // For now, this returns an empty array which means all pages will be generated on-demand
+//     return [];
+//   } catch (error) {
+//     console.error("Error generating static params:", error);
+//     return [];
+//   }
+// }
+
+export default async function PrPath({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = React.use(params);
+  const { id } = await params;
 
   // Split into slug and id
   const parts = id.split("-");
@@ -20,11 +103,11 @@ export default function PrPath({
     notFound();
   }
 
-  const { city, error, loading } = useCity(Number(cityid));
+  const city = await fetchCity(Number(cityid));
 
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <div>Error: {error}</div>;
-  if (!city) return <h1>City not found</h1>;
+  if (!city) {
+    notFound();
+  }
 
   console.log({ city });
   console.log({ slug });
@@ -50,13 +133,13 @@ export default function PrPath({
           <div className="absolute inset-0 flex items-end">
             <div className="container mx-auto pb-8">
               <h1 className="max-w-[850px] text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-                Get Enrolled in the Best Universities in {city?.city.name}
+                Get Enrolled in the Best Universities in {city.city.name}
               </h1>
             </div>
           </div>
         </div>
         <div className="container mx-auto my-20">
-          {city?.city.content && (
+          {city.city.content && (
             <div
               className=" prose max-w-none text-gray-700 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: city.city.content }}

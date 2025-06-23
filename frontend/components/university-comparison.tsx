@@ -59,7 +59,7 @@ export default function ComaprisonComponent() {
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-end">
-          <div className="container mx-auto px-4 pb-8">
+          <div className="container mx-auto pb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
               Compare Universities in Australia
             </h1>
@@ -68,7 +68,7 @@ export default function ComaprisonComponent() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12 lg:py-16">
+      <div className="container mx-auto py-12 lg:py-16">
         {/* Header Section */}
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-brand-primary">
@@ -179,7 +179,7 @@ export default function ComaprisonComponent() {
         </div>
       </div>
       <section className="mt-16 bg-brand-secondary">
-        <div className="container mx-auto px-4 py-12 lg:py-16 flex flex-col items-center justify-center">
+        <div className="container mx-auto py-12 lg:py-16 flex flex-col items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Compare. Choose. Succeed
           </h1>
