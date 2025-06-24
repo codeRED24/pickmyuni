@@ -86,38 +86,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Canonical and alternate links for SEO */}
-        <link rel="canonical" href="https://pickmyuni.com/" />
-        <link rel="alternate" href="https://pickmyuni.com/" hrefLang="en-au" />
-        {/* JSON-LD Structured Data for Organization */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "PickMyUni",
-              url: "https://pickmyuni.com",
-              logo: "https://pickmyuni.com/logo.svg",
-              sameAs: [
-                "https://www.facebook.com/pickmyuni",
-                "https://www.instagram.com/pickmyuni",
-                "https://www.linkedin.com/company/pickmyuni",
-              ],
-              contactPoint: [
-                {
-                  "@type": "ContactPoint",
-                  telephone: "+61-433-502-082",
-                  contactType: "customer service",
-                  areaServed: "AU",
-                  availableLanguage: ["English"],
-                },
-              ],
-            }),
-          }}
-        />
-      </head>
       <body
         className={`${roboto.variable} ${anton.variable} ${plus_jakarta.variable} font-sans antialiased min-h-screen flex flex-col`}
       >

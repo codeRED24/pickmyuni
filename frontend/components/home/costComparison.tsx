@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import CheckEligibility from "@/components/home/CheckEligibility";
 import CitiesSection from "@/components/home/cities";
+import Link from "next/link";
 
 const costData = [
   {
@@ -89,7 +90,9 @@ export default function CostComparisonSection() {
             <h2 className="text-3xl font-bold mb-2 text-center md:text-start text-white">
               Compare Your Uni Costs
             </h2>
-            <Button className="hidden md:block">See more savings</Button>
+            <Link href="/compare">
+              <Button className="hidden md:block">See more savings</Button>
+            </Link>
           </div>
 
           <div className="mt-8 overflow-x-auto">
@@ -168,7 +171,9 @@ export default function CostComparisonSection() {
             </Table>
           </div>
           <div className="flex justify-center items-center mt-8">
-            <Button className="md:hidden">See more savings</Button>
+            <Link href="/compare">
+              <Button className="md:hidden">See more savings</Button>
+            </Link>
           </div>
         </div>
       </section>
