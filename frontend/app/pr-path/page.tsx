@@ -14,6 +14,30 @@ import {
   AccordionContent,
 } from "@/components/ui/radix-accordion";
 import { PRCoursesTable } from "@/components/PrCoursesTable";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title:
+    "PR Pathway Courses in Australia 2025 | PickMyUni - Your Route to Permanent Residency",
+  description:
+    "Discover the best PR pathway courses in Australia for 2025. Get comprehensive information about courses leading to permanent residency, skill assessment requirements, and immigration pathways.",
+  keywords: [
+    "PR pathway courses Australia 2025",
+    "permanent residency courses Australia",
+    "skilled migration Australia",
+    "PR courses Australian universities",
+    "immigration pathway courses",
+    "skill assessment courses",
+    "Regional Occupation List courses",
+    "Australian immigration education",
+  ],
+  openGraph: {
+    title: "PR Pathway Courses in Australia 2025 | PickMyUni",
+    description:
+      "Find the best courses that lead to permanent residency in Australia. Complete guide to PR pathway education in 2025.",
+    type: "website",
+  },
+};
 
 export default function PrPath() {
   return (

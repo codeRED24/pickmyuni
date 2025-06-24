@@ -54,8 +54,6 @@ export function ConsultationModal({
       return;
     }
 
-    console.log({ formData });
-
     try {
       // Submit new data with phone to API
       await submitContactForm(formData);

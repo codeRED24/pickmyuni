@@ -24,11 +24,7 @@ function UniLayout({ params }: { params: Promise<{ slugAndId: string }> }) {
     return null;
   }
 
-  console.log({ college });
-
   const correctSlug = college.slug;
-
-  console.log(college.slug, college.id);
 
   // If the slug is incorrect, redirect to correct URL
   if (slug !== correctSlug) {
@@ -47,7 +43,7 @@ function UniLayout({ params }: { params: Promise<{ slugAndId: string }> }) {
           alt={college?.college_name || "college campus"}
           fill
           className="object-cover"
-          priority
+          loading="lazy"
         />
 
         {/* University Logo */}

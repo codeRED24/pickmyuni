@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
+import { Metadata } from "next";
 
 interface CityData {
   city: {
@@ -36,63 +37,59 @@ async function fetchCity(id: number): Promise<CityData | null> {
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error("Error fetching city:", error);
+    // console.error("Error fetching city:", error);
     return null;
   }
 }
 
-// export async function generateMetadata({
-//   params,
-// }: {
-//   params: Promise<{ id: string }>;
-// }): Promise<Metadata> {
-//   const { id } = await params;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
 
-//   const parts = id.split("-");
-//   const cityid = parts.pop();
+  const parts = id.split("-");
+  const cityid = parts.pop();
 
-//   if (!cityid || isNaN(Number(cityid))) {
-//     return {
-//       title: "City Not Found",
-//     };
-//   }
+  if (!cityid || isNaN(Number(cityid))) {
+    return {
+      title: "City Not Found | PickMyUni",
+      description:
+        "The requested city could not be found. Explore other cities and universities in Australia.",
+    };
+  }
 
-//   const city = await fetchCity(Number(cityid));
+  const city = await fetchCity(Number(cityid));
 
-//   if (!city) {
-//     return {
-//       title: "City Not Found",
-//     };
-//   }
+  if (!city) {
+    return {
+      title: "City Not Found | PickMyUni",
+      description:
+        "The requested city could not be found. Explore other cities and universities in Australia.",
+    };
+  }
 
-//   return {
-//     title: `Best Universities in ${city.city.name} | PickMyUni`,
-//     description: `Discover top universities in ${city.city.name}. Get enrolled in the best higher education institutions and explore study opportunities.`,
-//     keywords: [
-//       `universities in ${city.city.name}`,
-//       "higher education",
-//       "study abroad",
-//       "university admission",
-//     ],
-//     openGraph: {
-//       title: `Best Universities in ${city.city.name}`,
-//       description: `Discover top universities in ${city.city.name}. Get enrolled in the best higher education institutions.`,
-//       type: "website",
-//     },
-//   };
-// }
-
-// Generate static paths for popular cities at build time
-// export async function generateStaticParams() {
-//   try {
-//     // You might want to fetch popular cities from your API
-//     // For now, this returns an empty array which means all pages will be generated on-demand
-//     return [];
-//   } catch (error) {
-//     console.error("Error generating static params:", error);
-//     return [];
-//   }
-// }
+  return {
+    title: `Best Universities in ${city.city.name} | PickMyUni - Study in ${city.city.name}`,
+    description: `Discover top universities in ${city.city.name}, Australia. Get enrolled in the best higher education institutions and explore study opportunities in ${city.city.name}.`,
+    keywords: [
+      `universities in ${city.city.name}`,
+      `${city.city.name} universities`,
+      `study in ${city.city.name}`,
+      "higher education Australia",
+      "international students",
+      "university admission",
+      "Australian education",
+    ],
+    openGraph: {
+      title: `Best Universities in ${city.city.name} | PickMyUni`,
+      description: `Discover top universities in ${city.city.name}. Get enrolled in the best higher education institutions.`,
+      type: "website",
+      images: city.city.banner_img ? [{ url: city.city.banner_img }] : [],
+    },
+  };
+}
 
 export default async function PrPath({
   params,
@@ -115,9 +112,6 @@ export default async function PrPath({
   if (!city) {
     notFound();
   }
-
-  console.log({ city });
-  console.log({ slug });
 
   // If the slug is incorrect, redirect to correct URL
   if (city.city.slug && slug !== city.city.slug) {

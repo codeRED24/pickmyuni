@@ -22,8 +22,6 @@ interface College {
 }
 
 function QuickFacts({ college }: { college: College }) {
-  console.log({ college });
-
   return (
     <div>
       <div className="bg-[#FAF4F0] p-4 sm:p-6 h-fit w-full lg:w-[320px] lg:min-w-[320px] flex flex-col shadow-sm">

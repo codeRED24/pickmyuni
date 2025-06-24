@@ -33,8 +33,6 @@ export default function SearchDropdown({
   getTotalResults,
   onResultClick,
 }: SearchDropdownProps) {
-  console.log({ results });
-
   return (
     <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 z-50 max-h-96 overflow-y-auto">
       {loading ? (

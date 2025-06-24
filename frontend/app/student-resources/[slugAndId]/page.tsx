@@ -39,8 +39,9 @@ export async function generateMetadata({
 
   if (!id || isNaN(Number(id))) {
     return {
-      title: "Article Not Found",
-      description: "The requested article could not be found.",
+      title: "Article Not Found | PickMyUni",
+      description:
+        "The requested article could not be found. Explore our other student resources and guides for studying in Australia.",
     };
   }
 
@@ -48,8 +49,9 @@ export async function generateMetadata({
 
   if (!article) {
     return {
-      title: "Article Not Found",
-      description: "The requested article could not be found.",
+      title: "Article Not Found | PickMyUni",
+      description:
+        "The requested article could not be found. Explore our other student resources and guides for studying in Australia.",
     };
   }
 
@@ -57,8 +59,19 @@ export async function generateMetadata({
   const articleUrl = `${siteUrl}/student-resources/${article.slug}-${article.id}`;
 
   return {
-    title: article.title,
-    description: article.meta_desc || article.title,
+    title: `${article.title} | PickMyUni`,
+    description:
+      article.meta_desc ||
+      `${article.title} - Expert advice and guidance for international students studying in Australia.`,
+    keywords: [
+      "student resources Australia",
+      "study abroad tips",
+      "international student guide",
+      "Australian university advice",
+      "student life Australia",
+      "education blog",
+      article.title.toLowerCase(),
+    ],
     openGraph: {
       title: article.title,
       description: article.meta_desc || article.title,

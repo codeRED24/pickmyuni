@@ -41,8 +41,6 @@ function PopularArticles() {
     );
   }
 
-  console.log(articles);
-
   return (
     <section className="pt-8">
       <div className="max-w-[1400px]">

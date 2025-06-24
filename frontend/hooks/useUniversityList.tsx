@@ -74,8 +74,6 @@ export function useUniversityList(initialParams: any = {}) {
 
       const data: any = await response.json();
 
-      console.log(data.data.colleges);
-
       if (data.success) {
         setUniversities(data.data.colleges);
         setFilters(data.data.filters);
