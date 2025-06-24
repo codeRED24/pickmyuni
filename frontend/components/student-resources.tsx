@@ -123,8 +123,6 @@ function StudentResources() {
     );
   }
 
-  console.log(articles);
-
   return (
     <div>
       {/* 2 blogs */}

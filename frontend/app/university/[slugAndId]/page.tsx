@@ -67,7 +67,10 @@ function CollegePage({ params }: { params: Promise<{ slugAndId: string }> }) {
 
   if (error) return <div>Error: {error}</div>;
   if (loading) return <CollegeSkeleton />;
-  if (!college) return notFound;
+  if (!college) {
+    notFound();
+    return null;
+  }
 
   return (
     <>

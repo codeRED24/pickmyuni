@@ -9,8 +9,6 @@ import Link from "next/link";
 export function UniversityCard({ university }: any) {
   const [showModal, setShowModal] = useState(false);
 
-  console.log({ university });
-
   // Generate star rating
   const renderStars = (rating: number) => {
     const stars = [];

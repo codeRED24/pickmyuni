@@ -1,54 +1,63 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { DollarSign, RefreshCw, Globe, FileText, Link } from "lucide-react";
+import { DollarSign, RefreshCw, Globe, FileText } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import CheckEligibility from "@/components/home/CheckEligibility";
+import CitiesSection from "@/components/home/cities";
 
 const costData = [
   {
     currentUni: "University of Sydney",
     currentCourse: "MBA",
-    currentFee: "$42,000",
-    suggestedUni: "Western Sydney University",
+    currentFee: "AUD 57,200",
+    suggestedUni: "UBSS",
     suggestedCourse: "MBA",
-    suggestedFee: "$32,000",
-    savings: "$10,000",
+    suggestedFee: "AUD 28,728",
+    savings: "AUD 28,472",
   },
   {
     currentUni: "University of Melbourne",
-    currentCourse: "Engineering",
-    currentFee: "$45,000",
-    suggestedUni: "RMIT University",
-    suggestedCourse: "Engineering",
-    suggestedFee: "$38,000",
-    savings: "$7,000",
+    currentCourse: "Master of IT",
+    currentFee: "AUD 58,976",
+    suggestedUni: "Apex Institute of Higher Education",
+    suggestedCourse: "Master of IT",
+    suggestedFee: "AUD 31,400",
+    savings: "AUD 27,576",
   },
   {
-    currentUni: "Australian National University",
-    currentCourse: "Computer Science",
-    currentFee: "$40,000",
-    suggestedUni: "University of Technology Sydney",
-    suggestedCourse: "Computer Science",
-    suggestedFee: "$35,000",
-    savings: "$5,000",
+    currentUni: "The University of Melbourne",
+    currentCourse: "Master of Early Childhood",
+    currentFee: "AUD 126,751",
+    suggestedUni: "Southern Cross University",
+    suggestedCourse: "Master of Early Childhood",
+    suggestedFee: "AUD 50,000",
+    savings: "AUD 76,751",
   },
   {
-    currentUni: "Monash University",
-    currentCourse: "Business",
-    currentFee: "$38,000",
-    suggestedUni: "Deakin University",
-    suggestedCourse: "Business",
-    suggestedFee: "$32,000",
-    savings: "$6,000",
+    currentUni: "Deakin University",
+    currentCourse: "Master of Engineering",
+    currentFee: "AUD 92,216",
+    suggestedUni: "Southern Cross University",
+    suggestedCourse: "Master of Engineering",
+    suggestedFee: "AUD 50,000",
+    savings: "AUD 42,216",
   },
   {
-    currentUni: "University of Queensland",
-    currentCourse: "Medicine",
-    currentFee: "$50,000",
-    suggestedUni: "Griffith University",
-    suggestedCourse: "Medicine",
-    suggestedFee: "$42,000",
-    savings: "$8,000",
+    currentUni: "Southern Cross Education Institute",
+    currentCourse: "Bachelor of Community Services",
+    currentFee: "AUD 94,800",
+    suggestedUni: "Acknowledge Education",
+    suggestedCourse: "Bachelor of Community Services",
+    suggestedFee: "AUD 54,200",
+    savings: "AUD 40,600",
   },
 ];
 
@@ -76,83 +85,95 @@ export default function CostComparisonSection() {
     <>
       <section className="bg-brand-secondary py-16">
         <div className="container mx-auto mb-12">
-          <div className="flex flex-row justify-between">
-            <div className="flex flex-col">
-              <h2 className="text-3xl font-bold mb-2">
-                <span className="text-white">Compare Your Uni Costs</span>{" "}
-              </h2>
-            </div>
+          <div className="flex flex-row justify-center md:justify-between">
+            <h2 className="text-3xl font-bold mb-2 text-center md:text-start text-white">
+              Compare Your Uni Costs
+            </h2>
             <Button className="hidden md:block">See more savings</Button>
           </div>
 
           <div className="mt-8 overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead
                     colSpan={3}
-                    className="bg-blue-100 p-4 text-left text-brand-primary font-medium border-b border-gray-200 w-1/2"
+                    className="text-h3 bg-blue-100 text-brand-primary border-x-2 border-b-2 border-[#FF882E] text-center"
                   >
                     CURRENT UNIVERSITIES COST PER YEAR
-                  </th>
-                  <th
+                  </TableHead>
+                  <TableHead
                     colSpan={4}
-                    className="bg-orange-100 p-4 text-left text-brand-secondary font-medium border-b border-gray-200 w-1/2"
+                    className="text-h3 bg-orange-100 text-brand-secondary border-x-2 border-b-2 border-[#FF882E] text-center"
                   >
                     UNIVERSITIES SUGGESTION FOR COST SAVING
-                  </th>
-                </tr>
-                <tr className="bg-gray-50">
-                  <th className="p-4 text-left text-gray-600 border-b border-gray-200">
+                  </TableHead>
+                </TableRow>
+                <TableRow>
+                  <TableHead className="text-h4 bg-blue-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Current Uni
-                  </th>
-                  <th className="p-4 text-left text-gray-600 border-b border-gray-200">
+                  </TableHead>
+                  <TableHead className="text-h4 bg-blue-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Course
-                  </th>
-                  <th className="p-4 text-left text-gray-600 border-b border-gray-200">
+                  </TableHead>
+                  <TableHead className="text-h4 bg-blue-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Course Fee
-                  </th>
-                  <th className="p-4 text-left text-gray-600 border-b border-gray-200">
+                  </TableHead>
+                  <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Suggested Uni
-                  </th>
-                  <th className="p-4 text-left text-gray-600 border-b border-gray-200">
+                  </TableHead>
+                  <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Course
-                  </th>
-                  <th className="p-4 text-left text-gray-600 border-b border-gray-200">
+                  </TableHead>
+                  <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Course Fee
-                  </th>
-                  <th className="p-4 text-left text-green-600 font-bold border-b border-gray-200">
+                  </TableHead>
+                  <TableHead className="text-h4 bg-orange-100 text-green-600 font-bold border-x-2 border-[#ff882e]">
                     Savings
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {costData.map((row, index) => (
-                  <tr
+                  <TableRow
                     key={index}
-                    className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                    className={`text-h4 hover:bg-gray-50 leading-tight ${
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
                   >
-                    <td className="p-4 border-t">{row.currentUni}</td>
-                    <td className="p-4 border-t">{row.currentCourse}</td>
-                    <td className="p-4 border-t">{row.currentFee}</td>
-                    <td className="p-4 border-t">{row.suggestedUni}</td>
-                    <td className="p-4 border-t">{row.suggestedCourse}</td>
-                    <td className="p-4 border-t">{row.suggestedFee}</td>
-                    <td className="p-4 border-t text-green-600 font-bold">
+                    <TableCell className="border-x-2 border-[#ff882e]">
+                      {row.currentUni}
+                    </TableCell>
+                    <TableCell className="border-x-2 border-[#ff882e]">
+                      {row.currentCourse}
+                    </TableCell>
+                    <TableCell className="border-x-2 border-[#ff882e]">
+                      {row.currentFee}
+                    </TableCell>
+                    <TableCell className="border-x-2 border-[#ff882e]">
+                      {row.suggestedUni}
+                    </TableCell>
+                    <TableCell className="border-x-2 border-[#ff882e]">
+                      {row.suggestedCourse}
+                    </TableCell>
+                    <TableCell className="border-x-2 border-[#ff882e]">
+                      {row.suggestedFee}
+                    </TableCell>
+                    <TableCell className="border-x-2 border-[#ff882e] text-green-600 font-bold">
                       {row.savings}
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
-          <div className="min-w-screen sm:hidden flex justify-center mt-8">
-            <Link href="/compare">
-              <Button className="">See more savings</Button>
-            </Link>
+          <div className="flex justify-center items-center mt-8">
+            <Button className="md:hidden">See more savings</Button>
           </div>
         </div>
       </section>
+
+      <CitiesSection />
 
       <section className="flex flex-col container mt-10">
         <div className="flex flex-col md:flex-row items-center gap-12 mt-12 justify-center">

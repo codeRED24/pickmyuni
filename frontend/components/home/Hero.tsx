@@ -4,14 +4,15 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section
-      className="bg-brand-primary text-white relative overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage:
-          "url(https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/home_banner.webp)",
-      }}
-    >
-      <div className="container mx-auto">
+    <section className="bg-brand-primary text-white relative overflow-hidden">
+      <Image
+        src="https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/static/home_banner.webp"
+        alt="University campus"
+        fill
+        priority
+        className="object-cover"
+      />
+      <div className="container mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="z-10 py-10">
             <h1 className="font-anton text-4xl md:text-6xl mb-4">
@@ -37,6 +38,7 @@ export default function HeroSection() {
                   width={50}
                   height={50}
                   className="ml-2"
+                  priority
                 />
               </Button>
             </Link>
@@ -48,7 +50,9 @@ export default function HeroSection() {
               width={450}
               height={800}
               className="relative z-10"
-              loading="lazy"
+              priority
+              quality={85}
+              sizes="(max-width: 768px) 100vw, 450px"
             />
           </div>
         </div>

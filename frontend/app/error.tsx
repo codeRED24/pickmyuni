@@ -10,7 +10,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    // console.error(error);
   }, [error]);
 
   return (
@@ -20,7 +20,7 @@ export default function Error({
           Oops! Something went wrong
         </h2>
         <p className="text-gray-600 mb-6">
-          We encountered an error while loading this city page.
+          We encountered an error while loading this page.
         </p>
         <button
           onClick={reset}

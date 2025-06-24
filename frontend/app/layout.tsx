@@ -1,47 +1,82 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Roboto,
-  Anton,
-  Plus_Jakarta_Sans,
-} from "next/font/google";
+import { Roboto, Anton, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const anton = Anton({
   weight: "400",
   variable: "--font-anton",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const roboto = Roboto({
-  weight: ["400", "700", "500", "600", "800"],
+  weight: ["400", "500", "700"], // Reduced weights
   variable: "--font-roboto",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const plus_jakarta = Plus_Jakarta_Sans({
-  weight: "500",
+  weight: ["500"], // Single weight
   variable: "--font-jakarta",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "PickMyUni",
-  description: "Best University Transfer Service",
+  title: {
+    default: "PickMyUni - Find and compare the best universities in Australia",
+    template: "%s | PickMyUni",
+  },
+  description:
+    "Find and compare the best universities in Australia. Explore courses, rankings, scholarships, and more with PickMyUni.",
+  keywords: [
+    "universities in Australia",
+    "study in Australia",
+    "Australian universities",
+    "university comparison",
+    "courses in Australia",
+    "PickMyUni",
+    "scholarships Australia",
+    "student resources",
+    "PR pathway universities",
+    "international students Australia",
+  ],
+  openGraph: {
+    title: "PickMyUni",
+    description:
+      "Find and compare the best universities in Australia. Explore courses, rankings, scholarships, and more with PickMyUni.",
+    url: "https://pickmyuni.com",
+    siteName: "PickMyUni",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PickMyUni - Search for better universities in Australia",
+      },
+    ],
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PickMyUni",
+    description:
+      "Find and compare the best universities in Australia. Explore courses, rankings, scholarships, and more with PickMyUni.",
+    images: ["/opengraph-image.png"],
+    site: "@pickmyuni",
+  },
+  metadataBase: new URL("https://pickmyuni.com"),
+  alternates: {
+    canonical: "https://pickmyuni.com/",
+    languages: {
+      "en-AU": "https://pickmyuni.com/",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -51,8 +86,40 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Canonical and alternate links for SEO */}
+        <link rel="canonical" href="https://pickmyuni.com/" />
+        <link rel="alternate" href="https://pickmyuni.com/" hrefLang="en-au" />
+        {/* JSON-LD Structured Data for Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "PickMyUni",
+              url: "https://pickmyuni.com",
+              logo: "https://pickmyuni.com/logo.svg",
+              sameAs: [
+                "https://www.facebook.com/pickmyuni",
+                "https://www.instagram.com/pickmyuni",
+                "https://www.linkedin.com/company/pickmyuni",
+              ],
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+61-433-502-082",
+                  contactType: "customer service",
+                  areaServed: "AU",
+                  availableLanguage: ["English"],
+                },
+              ],
+            }),
+          }}
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${anton.variable} ${plus_jakarta.variable} font-sans antialiased min-h-screen flex flex-col`}
+        className={`${roboto.variable} ${anton.variable} ${plus_jakarta.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <Navbar />
         <div className="fixed bottom-4 right-4 z-20 flex flex-col items-end gap-2">

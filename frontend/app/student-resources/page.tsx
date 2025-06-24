@@ -1,6 +1,29 @@
 import StudentResources from "@/components/student-resources";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Student Resources & Blog | PickMyUni - Study Abroad Tips & Guides",
+  description:
+    "Access comprehensive student resources, study abroad guides, university tips, and expert advice for international students planning to study in Australia.",
+  keywords: [
+    "student resources Australia",
+    "study abroad blog",
+    "international student tips",
+    "university guides",
+    "Australian education blog",
+    "student life Australia",
+    "study tips",
+    "university preparation",
+  ],
+  openGraph: {
+    title: "Student Resources & Blog | PickMyUni",
+    description:
+      "Access comprehensive guides and tips for studying in Australia. Get expert advice for your educational journey.",
+    type: "website",
+  },
+};
 
 function page() {
   return (
