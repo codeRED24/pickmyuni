@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import JsonLd from "@/components/JsonLd";
+import { combineSchemas } from "@/lib/jsonld";
 
 const HeroSection = dynamic(() => import("@/components/home/Hero"));
 const UniversitiesSection = dynamic(
@@ -46,14 +48,56 @@ export const metadata: Metadata = {
     description:
       "Discover and compare top Australian universities. Your gateway to studying in Australia.",
   },
-  alternates: {
-    canonical: "https://pickmyuni.com",
-  },
 };
 
 export default function Home() {
+  // FAQ data for structured data
+  const faqs = [
+    {
+      question: "How do I choose the right university in Australia?",
+      answer:
+        "Consider factors like course offerings, location, fees, rankings, and student support services. Use PickMyUni's comparison tools to evaluate multiple universities based on your preferences.",
+    },
+    {
+      question:
+        "What are the admission requirements for Australian universities?",
+      answer:
+        "Requirements vary by university and course. Generally, you'll need academic transcripts, English language test scores (IELTS/TOEFL), and may need additional documents like portfolios or work experience.",
+    },
+    {
+      question: "How much does it cost to study in Australia?",
+      answer:
+        "Tuition fees range from AUD 20,000 to AUD 50,000+ per year for international students, depending on the course and university. Living costs vary by city, typically AUD 18,000-25,000 per year.",
+    },
+    {
+      question: "Can I work while studying in Australia?",
+      answer:
+        "Yes, student visa holders can work up to 48 hours per fortnight during studies and unlimited hours during breaks. This helps cover living expenses and gain work experience.",
+    },
+  ];
+
+  const homePageStructuredData = combineSchemas({
+    "@type": "WebPage",
+    "@id": "https://pickmyuni.com/#webpage",
+    url: "https://pickmyuni.com",
+    name: "Find the Perfect Australian University - PickMyUni",
+    description:
+      "Discover and compare top Australian universities. Get expert guidance on courses, fees, admission requirements, and student services.",
+    isPartOf: {
+      "@id": "https://pickmyuni.com/#website",
+    },
+    about: {
+      "@id": "https://pickmyuni.com/#organization",
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://pickmyuni.com/opengraph-image.png",
+    },
+  });
+
   return (
     <main className="min-h-screen">
+      <JsonLd data={homePageStructuredData} />
       <HeroSection />
       <UniversitiesSection />
       <CostComparisonSection />

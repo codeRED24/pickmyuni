@@ -9,6 +9,12 @@ import { notFound } from "next/navigation";
 import UniLayout from "@/components/university/UniLayout";
 import CollegeSkeleton from "@/components/skeleton/college-skeleton";
 import QuickFacts from "@/components/QuickFacts";
+import JsonLd from "@/components/JsonLd";
+import {
+  generateUniversitySchema,
+  generateBreadcrumbSchema,
+  combineSchemas,
+} from "@/lib/jsonld";
 
 const indexes = [
   "info",
@@ -74,6 +80,32 @@ function CollegePage({ params }: { params: Promise<{ slugAndId: string }> }) {
 
   return (
     <>
+      {college && (
+        <JsonLd
+          data={combineSchemas(
+            generateUniversitySchema({
+              name: college.name,
+              description:
+                college.description ||
+                `Learn more about ${college.name}, one of Australia's leading universities.`,
+              url: `https://pickmyuni.com/university/${slugAndId}`,
+              logo: college.logo,
+              address: college.address,
+              city: college.city?.name,
+              state: college.state?.name,
+              ranking: college.ranking,
+            }),
+            generateBreadcrumbSchema([
+              { name: "Home", url: "https://pickmyuni.com" },
+              { name: "Universities", url: "https://pickmyuni.com/university" },
+              {
+                name: college.name,
+                url: `https://pickmyuni.com/university/${slugAndId}`,
+              },
+            ])
+          )}
+        />
+      )}
       <UniLayout params={params} />
 
       <div className="min-h-screen container mx-auto py-6 flex flex-col lg:flex-row-reverse gap-6">

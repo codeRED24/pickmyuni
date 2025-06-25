@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { generateBreadcrumbSchema, combineSchemas } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title:
@@ -29,5 +31,33 @@ export default function UniversityLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  const universityListingSchema = combineSchemas(
+    generateBreadcrumbSchema([
+      { name: "Home", url: "https://pickmyuni.com" },
+      { name: "Universities", url: "https://pickmyuni.com/university" },
+    ]),
+    {
+      "@type": "CollectionPage",
+      "@id": "https://pickmyuni.com/university#webpage",
+      url: "https://pickmyuni.com/university",
+      name: "Universities in Australia",
+      description:
+        "Discover and compare top universities in Australia. Search by location, courses, fees, and rankings.",
+      isPartOf: {
+        "@id": "https://pickmyuni.com/#website",
+      },
+      about: {
+        "@type": "Thing",
+        name: "Australian Universities",
+        description: "Higher education institutions in Australia",
+      },
+    }
+  );
+
+  return (
+    <>
+      <JsonLd data={universityListingSchema} />
+      {children}
+    </>
+  );
 }
