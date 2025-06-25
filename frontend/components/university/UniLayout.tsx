@@ -1,28 +1,22 @@
 "use client";
-import { useUniversity } from "@/hooks/useUniversity";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { ApplicationModal } from "../modal/lead-modal";
 
-function UniLayout({ params }: { params: Promise<{ slugAndId: string }> }) {
-  const { slugAndId } = React.use(params);
+interface UniLayoutProps {
+  college: any;
+  slugAndId: string;
+}
+
+function UniLayout({ college, slugAndId }: UniLayoutProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Split into slug and id
   const parts = slugAndId.split("-");
   const id = parts.pop(); // last part is ID
   const slug = parts.join("-"); // rest is slug
-
-  const { college, loading, error } = useUniversity(Number(id));
-
-  if (error) return <div>Error: {error}</div>;
-  if (loading) return <div>{""}</div>;
-  if (!college) {
-    notFound();
-    return null;
-  }
 
   const correctSlug = college.slug;
 

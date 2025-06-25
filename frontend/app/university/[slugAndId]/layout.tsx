@@ -1,114 +1,156 @@
+import React from "react";
+import { notFound } from "next/navigation";
+import UniLayout from "@/components/university/UniLayout";
+import QuickFacts from "@/components/QuickFacts";
+import JsonLd from "@/components/JsonLd";
+import {
+  generateUniversitySchema,
+  generateBreadcrumbSchema,
+  combineSchemas,
+} from "@/lib/jsonld";
 import { Metadata } from "next";
+import TabsWithUrlContainer from "../../../components/university/TabsWithUrlContainer";
 
-interface University {
-  id: number;
-  college_name: string;
-  slug: string;
-  city?: {
-    name: string;
-  };
-  state?: {
-    name: string;
-  };
-  description?: string;
-  logo_url?: string;
-  location?: string;
-}
-
-async function fetchUniversity(id: number): Promise<University | null> {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/college/${id}`,
-      {
-        cache: "force-cache",
-      }
-    );
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      throw new Error(`Failed to fetch university: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.data || null;
-  } catch (error) {
-    console.error("Error fetching university:", error);
-    return null;
-  }
-}
-
+// Generate metadata for SEO
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slugAndId: string }>;
 }): Promise<Metadata> {
   const { slugAndId } = await params;
-
-  const parts = slugAndId.split("-");
-  const id = parts.pop();
+  const id = slugAndId.split("-").pop();
 
   if (!id || isNaN(Number(id))) {
     return {
-      title: "University Not Found | PickMyUni",
-      description:
-        "The requested university could not be found. Explore other universities in Australia.",
+      title: "University Not Found",
+      description: "The requested university could not be found.",
     };
   }
 
-  const university = await fetchUniversity(Number(id));
+  const { college } = await getUniversityData(Number(id));
 
-  if (!university) {
+  if (!college) {
     return {
-      title: "University Not Found | PickMyUni",
-      description:
-        "The requested university could not be found. Explore other universities in Australia.",
+      title: "University Not Found",
+      description: "The requested university could not be found.",
     };
   }
-
-  const locationString =
-    university.city?.name && university.state?.name
-      ? `${university.city.name}, ${university.state.name}`
-      : university.state?.name || university.location || "Australia";
 
   return {
-    title: `${university.college_name} | PickMyUni - University Information, Courses & Admission`,
-    description: `Discover ${university.college_name} in ${locationString}. Get comprehensive information about courses, fees, admission requirements, rankings, and more at this top Australian university.`,
-    keywords: [
-      university.college_name,
-      `${university.college_name} university`,
-      `${university.college_name} courses`,
-      `${university.college_name} admission`,
-      `${university.college_name} fees`,
-      `study at ${university.college_name}`,
-      `${university.college_name} Australia`,
-      ...(university.city?.name ? [`${university.college_name} ${university.city.name}`] : []),
-      "Australian university",
-      "international students",
-      "higher education Australia",
-    ],
+    title: `${college.college_name} - PickMyUni`,
+    description:
+      college.description ||
+      `Learn more about ${college.college_name}, one of Australia's leading universities.`,
     openGraph: {
-      title: `${university.college_name} | PickMyUni`,
-      description: `Discover ${university.college_name} - comprehensive university information, courses, and admission details.`,
+      title: `${college.college_name} - PickMyUni`,
+      description:
+        college.description ||
+        `Learn more about ${college.name}, one of Australia's leading universities.`,
+      url: `https://pickmyuni.com/university/${slugAndId}`,
+      siteName: "PickMyUni",
+      images: [
+        {
+          url: college.logo_url || college.bg_url,
+          width: 1200,
+          height: 630,
+          alt: `${college.college_name} logo`,
+        },
+      ],
+      locale: "en_AU",
       type: "website",
-      images: university.logo_url
-        ? [{ url: university.logo_url, width: 400, height: 400 }]
-        : [],
     },
     twitter: {
-      card: "summary",
-      title: `${university.college_name} | PickMyUni`,
-      description: `Discover ${university.college_name} - comprehensive university information and courses.`,
-      images: university.logo_url ? [university.logo_url] : [],
+      card: "summary_large_image",
+      title: `${college.college_name} - PickMyUni`,
+      description:
+        college.description ||
+        `Learn more about ${college.name}, one of Australia's leading universities.`,
+      images: [college.logo_url || college.bg_url],
     },
   };
 }
 
-export default function UniversityLayout({
+// Server-side data fetching function
+async function getUniversityData(id: number) {
+  try {
+    // Use internal API URL for server-side requests if available, otherwise fallback to public URL
+    const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
+    const response = await fetch(`${baseUrl}/api/v1/college/${id}`);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return { college: null, error: null };
+      }
+      throw new Error(`Failed to fetch university data: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return { college: data.data, error: null };
+  } catch (error) {
+    console.error("Error fetching university:", error);
+    return {
+      college: null,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch university data",
+    };
+  }
+}
+
+export default async function UniversityLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ slugAndId: string }>;
 }) {
-  return <>{children}</>;
+  const { slugAndId } = await params;
+  const id = slugAndId.split("-").pop();
+
+  if (!id || isNaN(Number(id))) {
+    notFound();
+  }
+
+  const { college, error } = await getUniversityData(Number(id));
+
+  if (error) return <div>Error: {error}</div>;
+  if (!college) {
+    notFound();
+    return null;
+  }
+
+  return (
+    <>
+      {college && (
+        <JsonLd
+          data={combineSchemas(
+            generateUniversitySchema({
+              name: college.college_name,
+              description: `Learn more about ${college.college_name}, one of Australia's leading universities.`,
+              url: `https://pickmyuni.com/university/${slugAndId}`,
+              logo: college.logo_url || college.bg_url,
+            }),
+            generateBreadcrumbSchema([
+              { name: "Home", url: "https://pickmyuni.com" },
+              { name: "Universities", url: "https://pickmyuni.com/university" },
+              {
+                name: college.college_name,
+                url: `https://pickmyuni.com/university/${slugAndId}`,
+              },
+            ])
+          )}
+        />
+      )}
+      <UniLayout college={college} slugAndId={slugAndId} />
+
+      <div className="min-h-screen container mx-auto py-6 flex flex-col lg:flex-row-reverse gap-6">
+        <QuickFacts college={college} />
+        <div className="flex-1 min-w-0">
+          <TabsWithUrlContainer id={id!} slugAndId={slugAndId} />
+          {children}
+        </div>
+      </div>
+    </>
+  );
 }

@@ -45,10 +45,7 @@ export default function CitiesSection() {
   const fetchCities = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/city/top`,
-        {
-          cache: "force-cache", // Cache the response for better performance
-        }
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/city/top`
       );
 
       if (!response.ok) {
