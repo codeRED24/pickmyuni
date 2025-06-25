@@ -4,6 +4,12 @@ import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
+import JsonLd from "@/components/JsonLd";
+import {
+  organizationSchema,
+  websiteSchema,
+  combineSchemas,
+} from "@/lib/jsonld";
 
 const anton = Anton({
   weight: "400",
@@ -71,11 +77,8 @@ export const metadata: Metadata = {
     site: "@pickmyuni",
   },
   metadataBase: new URL("https://pickmyuni.com"),
-  alternates: {
-    canonical: "https://pickmyuni.com/",
-    languages: {
-      "en-AU": "https://pickmyuni.com/",
-    },
+  verification: {
+    google: "_134iCeEhMsA_BfemTw79UdPXJBPisBshFgSGCqVZfAG-S11SC3CBZ1",
   },
 };
 
@@ -84,8 +87,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const structuredData = combineSchemas(organizationSchema, websiteSchema);
+
   return (
     <html lang="en">
+      <head>
+        <JsonLd data={structuredData} />
+      </head>
       <body
         className={`${roboto.variable} ${anton.variable} ${plus_jakarta.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
