@@ -1,172 +1,57 @@
-"use client";
-
-import { useUniversity } from "@/hooks/useUniversity";
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Universitytabs from "@/components/university/Universitytabs";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { notFound } from "next/navigation";
-import UniLayout from "@/components/university/UniLayout";
-import CollegeSkeleton from "@/components/skeleton/college-skeleton";
-import QuickFacts from "@/components/QuickFacts";
-import JsonLd from "@/components/JsonLd";
-import {
-  generateUniversitySchema,
-  generateBreadcrumbSchema,
-  combineSchemas,
-} from "@/lib/jsonld";
+import { notFound, redirect } from "next/navigation";
 
-const indexes = [
-  "info",
-  "courses",
-  "departments",
-  "careers",
-  "ranking",
-  "fees",
-  "scholarships",
-  "placement",
-  "faqs",
-];
+// Server-side data fetching function
+async function getUniversityData(id: number) {
+  try {
+    // Use internal API URL for server-side requests if available, otherwise fallback to public URL
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+    const response = await fetch(`${baseUrl}/api/v1/college/${id}`);
 
-function CollegePage({ params }: { params: Promise<{ slugAndId: string }> }) {
-  const { slugAndId } = React.use(params);
+    if (!response.ok) {
+      if (response.status === 404) {
+        return { college: null, error: null };
+      }
+      throw new Error(`Failed to fetch university data: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return { college: data.data, error: null };
+  } catch (error) {
+    console.error("Error fetching university:", error);
+    return {
+      college: null,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch university data",
+    };
+  }
+}
+
+async function CollegePage({
+  params,
+}: {
+  params: Promise<{ slugAndId: string }>;
+}) {
+  const { slugAndId } = await params;
 
   const id = slugAndId.split("-").pop();
 
   if (!id || isNaN(Number(id))) {
     notFound();
   }
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(false);
 
-  const { college, error, loading } = useUniversity(Number(id));
-
-  const checkScrollPosition = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
-    }
-  };
-
-  React.useEffect(() => {
-    checkScrollPosition();
-    const handleResize = () => checkScrollPosition();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
-      setTimeout(checkScrollPosition, 300);
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
-      setTimeout(checkScrollPosition, 300);
-    }
-  };
+  const { college, error } = await getUniversityData(Number(id));
 
   if (error) return <div>Error: {error}</div>;
-  if (loading) return <CollegeSkeleton />;
   if (!college) {
     notFound();
     return null;
   }
 
-  return (
-    <>
-      {college && (
-        <JsonLd
-          data={combineSchemas(
-            generateUniversitySchema({
-              name: college.name,
-              description:
-                college.description ||
-                `Learn more about ${college.name}, one of Australia's leading universities.`,
-              url: `https://pickmyuni.com/university/${slugAndId}`,
-              logo: college.logo,
-              address: college.address,
-              city: college.city?.name,
-              state: college.state?.name,
-              ranking: college.ranking,
-            }),
-            generateBreadcrumbSchema([
-              { name: "Home", url: "https://pickmyuni.com" },
-              { name: "Universities", url: "https://pickmyuni.com/university" },
-              {
-                name: college.name,
-                url: `https://pickmyuni.com/university/${slugAndId}`,
-              },
-            ])
-          )}
-        />
-      )}
-      <UniLayout params={params} />
-
-      <div className="min-h-screen container mx-auto py-6 flex flex-col lg:flex-row-reverse gap-6">
-        <QuickFacts college={college} />
-        <div className="flex-1 min-w-0">
-          <Tabs defaultValue="info" className="w-full">
-            <div className="relative mb-6">
-              {/* Left Arrow */}
-              {canScrollLeft && (
-                <button
-                  onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm border rounded-full p-2 shadow-sm hover:bg-background transition-colors"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-              )}
-
-              {/* Right Arrow */}
-              {canScrollRight && (
-                <button
-                  onClick={scrollRight}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm border rounded-full p-2 shadow-sm hover:bg-background transition-colors"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              )}
-
-              {/* Scrollable Tabs Container */}
-              <div
-                ref={scrollRef}
-                className="overflow-x-auto scrollbar-hide mx-8"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                onScroll={checkScrollPosition}
-              >
-                <TabsList className="inline-flex w-auto gap-4 p-0 h-auto min-w-full justify-start">
-                  {indexes.map((index) => (
-                    <TabsTrigger
-                      key={index}
-                      value={index}
-                      className="whitespace-nowrap px-4 py-2 text-sm flex-shrink-0"
-                    >
-                      {index.toUpperCase()}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
-            </div>
-            {indexes.map((index) => (
-              <TabsContent key={index} value={index}>
-                <div className="p-2 sm:p-4 lg:p-6">
-                  <Universitytabs tab={index} id={id} />
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </div>
-    </>
-  );
+  // Redirect to the info tab by default
+  redirect(`/university/${slugAndId}/info`);
 }
 
 export default CollegePage;

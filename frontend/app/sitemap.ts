@@ -8,20 +8,6 @@ type ApiResponse = {
   }>;
 };
 
-type SitemapEntry = {
-  url: string;
-  lastModified: Date;
-  changeFrequency:
-    | "always"
-    | "hourly"
-    | "daily"
-    | "weekly"
-    | "monthly"
-    | "yearly"
-    | "never";
-  priority: number;
-};
-
 // Fetch data with retry logic and timeout
 async function fetchWithRetry(
   url: string,
@@ -178,12 +164,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Process college routes
   let collegeRoutes: MetadataRoute.Sitemap = [];
   if (collegeData.status === "fulfilled" && collegeData.value) {
-    collegeRoutes = collegeData.value.data.map((college) => ({
-      url: `${baseUrl}/university/${college.slug}-${college.id}`,
-      lastModified: new Date(),
-      changeFrequency: "daily" as const,
-      priority: 0.8,
-    }));
+    const universityPaths = [
+      "info",
+      "courses",
+      "departments",
+      "careers",
+      "ranking",
+      "fees",
+      "scholarships",
+      "placement",
+      "faqs",
+    ];
+
+    collegeRoutes = collegeData.value.data.flatMap((college) =>
+      universityPaths.map((path) => ({
+        url: `${baseUrl}/university/${college.slug}-${college.id}/${path}`,
+        lastModified: new Date(),
+        changeFrequency: "daily" as const,
+        priority: 0.8,
+      }))
+    );
     console.log(`Generated ${collegeRoutes.length} college routes`);
   }
 

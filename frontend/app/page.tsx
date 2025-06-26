@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import JsonLd from "@/components/JsonLd";
-import { combineSchemas } from "@/lib/jsonld";
+import { WebsiteSchema } from "@/components/seo";
 
 const HeroSection = dynamic(() => import("@/components/home/Hero"));
 const UniversitiesSection = dynamic(
@@ -76,34 +75,17 @@ export default function Home() {
     },
   ];
 
-  const homePageStructuredData = combineSchemas({
-    "@type": "WebPage",
-    "@id": "https://pickmyuni.com/#webpage",
-    url: "https://pickmyuni.com",
-    name: "Find the Perfect Australian University - PickMyUni",
-    description:
-      "Discover and compare top Australian universities. Get expert guidance on courses, fees, admission requirements, and student services.",
-    isPartOf: {
-      "@id": "https://pickmyuni.com/#website",
-    },
-    about: {
-      "@id": "https://pickmyuni.com/#organization",
-    },
-    primaryImageOfPage: {
-      "@type": "ImageObject",
-      url: "https://pickmyuni.com/opengraph-image.png",
-    },
-  });
-
   return (
-    <main className="min-h-screen">
-      <JsonLd data={homePageStructuredData} />
-      <HeroSection />
-      <UniversitiesSection />
-      <CostComparisonSection />
-      <TestimonialsSection />
-      <ProcessSection />
-      <ArticlesSection />
-    </main>
+    <>
+      <WebsiteSchema />
+      <main className="min-h-screen">
+        <HeroSection />
+        <UniversitiesSection />
+        <CostComparisonSection />
+        <TestimonialsSection />
+        <ProcessSection />
+        <ArticlesSection />
+      </main>
+    </>
   );
 }
