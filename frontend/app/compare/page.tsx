@@ -1,7 +1,7 @@
 import ComaprisonComponent from "@/components/university-comparison";
 import { Metadata } from "next";
-import JsonLd from "@/components/JsonLd";
-import { generateBreadcrumbSchema, combineSchemas } from "@/lib/jsonld";
+import { BreadcrumbSchema } from "@/components/seo";
+import { commonBreadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
   title:
@@ -25,32 +25,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  const comparePageSchema = combineSchemas(
-    generateBreadcrumbSchema([
-      { name: "Home", url: "https://pickmyuni.com" },
-      { name: "Compare Universities", url: "https://pickmyuni.com/compare" },
-    ]),
-    {
-      "@type": "WebPage",
-      "@id": "https://pickmyuni.com/compare#webpage",
-      url: "https://pickmyuni.com/compare",
-      name: "Compare Universities in Australia",
-      description:
-        "Compare top Australian universities side by side. Analyze fees, courses, rankings, and facilities.",
-      isPartOf: {
-        "@id": "https://pickmyuni.com/#website",
-      },
-      about: {
-        "@type": "Thing",
-        name: "University Comparison Tool",
-        description: "Educational comparison tool for Australian universities",
-      },
-    }
-  );
-
   return (
     <>
-      <JsonLd data={comparePageSchema} />
+      <BreadcrumbSchema items={commonBreadcrumbs.compare()} />
       <ComaprisonComponent />
     </>
   );

@@ -4,12 +4,6 @@ import SocialShare from "@/components/SocialShare";
 import ArticleContent from "@/components/ArticleContent";
 import { Article } from "@/types/search";
 import { Metadata } from "next";
-import JsonLd from "@/components/JsonLd";
-import {
-  generateArticleSchema,
-  generateBreadcrumbSchema,
-  combineSchemas,
-} from "@/lib/jsonld";
 
 async function getArticle(id: number): Promise<Article | null> {
   try {
@@ -140,32 +134,8 @@ export default async function Page({
     process.env.NEXT_PUBLIC_SITE_URL || "https://pickmyuni.com"
   }/student-resources/${article.slug}-${article.id}`;
 
-  // Generate structured data for SEO
-  const articleSchema = generateArticleSchema({
-    title: article.title,
-    description: article.meta_desc || article.title,
-    url: currentUrl,
-    datePublished: article.createdAt,
-    dateModified: article.createdAt,
-    author: "PickMyUni",
-    image: article.image,
-  });
-
-  const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://pickmyuni.com" },
-    {
-      name: "Student Resources",
-      url: "https://pickmyuni.com/student-resources",
-    },
-    { name: article.title, url: currentUrl },
-  ]);
-
-  const structuredData = combineSchemas(articleSchema, breadcrumbSchema);
-
   return (
     <div className="bg-white font-sans">
-      {/* Structured Data */}
-      <JsonLd data={structuredData} />
       {/* Hero Section */}
       <section className="relative w-full h-[336px] text-white">
         <Image

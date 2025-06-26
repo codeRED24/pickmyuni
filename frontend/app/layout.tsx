@@ -4,12 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
-import JsonLd from "@/components/JsonLd";
-import {
-  organizationSchema,
-  websiteSchema,
-  combineSchemas,
-} from "@/lib/jsonld";
+import { OrganizationSchema } from "@/components/seo";
 
 const anton = Anton({
   weight: "400",
@@ -87,12 +82,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = combineSchemas(organizationSchema, websiteSchema);
-
   return (
     <html lang="en">
       <head>
-        <JsonLd data={structuredData} />
+        <OrganizationSchema />
       </head>
       <body
         className={`${roboto.variable} ${anton.variable} ${plus_jakarta.variable} font-sans antialiased min-h-screen flex flex-col`}

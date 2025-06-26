@@ -2,12 +2,6 @@ import React from "react";
 import { notFound } from "next/navigation";
 import UniLayout from "@/components/university/UniLayout";
 import QuickFacts from "@/components/QuickFacts";
-import JsonLd from "@/components/JsonLd";
-import {
-  generateUniversitySchema,
-  generateBreadcrumbSchema,
-  combineSchemas,
-} from "@/lib/jsonld";
 import { Metadata } from "next";
 import TabsWithUrlContainer from "../../../components/university/TabsWithUrlContainer";
 
@@ -122,26 +116,6 @@ export default async function UniversityLayout({
 
   return (
     <>
-      {college && (
-        <JsonLd
-          data={combineSchemas(
-            generateUniversitySchema({
-              name: college.college_name,
-              description: `Learn more about ${college.college_name}, one of Australia's leading universities.`,
-              url: `https://pickmyuni.com/university/${slugAndId}`,
-              logo: college.logo_url || college.bg_url,
-            }),
-            generateBreadcrumbSchema([
-              { name: "Home", url: "https://pickmyuni.com" },
-              { name: "Universities", url: "https://pickmyuni.com/university" },
-              {
-                name: college.college_name,
-                url: `https://pickmyuni.com/university/${slugAndId}`,
-              },
-            ])
-          )}
-        />
-      )}
       <UniLayout college={college} slugAndId={slugAndId} />
 
       <div className="min-h-screen container mx-auto py-6 flex flex-col lg:flex-row-reverse gap-6">

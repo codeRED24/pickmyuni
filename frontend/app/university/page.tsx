@@ -12,6 +12,8 @@ import { UniversityCardSkeleton } from "@/components/skeleton/university-skeleto
 import { EnhancedFilterSection } from "@/components/university/EnhancedFilterSection";
 import { InfiniteScrollLoader } from "@/components/ui/InfiniteScrollLoader";
 import { BackToTopButton } from "@/components/ui/BackToTopButton";
+import { BreadcrumbSchema } from "@/components/seo";
+import { commonBreadcrumbs } from "@/lib/breadcrumbs";
 
 function UniversityPage() {
   const {
@@ -166,6 +168,8 @@ function UniversityPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <BreadcrumbSchema items={commonBreadcrumbs.university()} />
+
       {/* Hero Section */}
       <UniversityHero />
 

@@ -1,9 +1,13 @@
 import React from "react";
 
 interface JsonLdProps {
-  data: any;
+  data: Record<string, any>;
 }
 
+/**
+ * Base JSON-LD component for structured data
+ * Renders JSON-LD script tag with proper escaping
+ */
 export default function JsonLd({ data }: JsonLdProps) {
   return (
     <script
@@ -13,13 +17,4 @@ export default function JsonLd({ data }: JsonLdProps) {
       }}
     />
   );
-}
-
-// Utility function to safely render JSON-LD
-export function renderJsonLd(data: any) {
-  if (typeof window !== "undefined") {
-    return null; // Don't render on client side to avoid hydration issues
-  }
-
-  return <JsonLd data={data} />;
 }
