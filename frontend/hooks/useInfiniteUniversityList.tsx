@@ -57,14 +57,12 @@ export function useInfiniteUniversityList(initialParams: any = {}) {
           searchParams.append("page", queryParams.page.toString());
         if (queryParams.limit)
           searchParams.append("limit", queryParams.limit.toString());
-        if (queryParams.cityid)
-          searchParams.append("cityid", queryParams.cityid.toString());
-        if (queryParams.stateid)
-          searchParams.append("stateid", queryParams.stateid.toString());
-        if (queryParams.courseid)
-          searchParams.append("courseid", queryParams.courseid.toString());
-        if (queryParams.streamid)
-          searchParams.append("streamid", queryParams.streamid.toString());
+        if (queryParams.statename)
+          searchParams.append("statename", queryParams.statename);
+        if (queryParams.coursename)
+          searchParams.append("coursename", queryParams.coursename);
+        if (queryParams.streamname)
+          searchParams.append("streamname", queryParams.streamname);
         if (queryParams.min_fees)
           searchParams.append("min_fees", queryParams.min_fees.toString());
         if (queryParams.max_fees)

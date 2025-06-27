@@ -22,6 +22,8 @@ interface EnhancedFilterSectionProps {
   onFilterChange?: (filterType: string, value: string | number) => void;
   onSearch?: (searchTerm: string) => void;
   onClearIndividualFilter?: (filterType: string) => void;
+  onFeeRangeChange?: (minFees?: number, maxFees?: number) => void;
+  onClearAllFilters?: () => void;
 }
 
 export function EnhancedFilterSection({
@@ -34,53 +36,52 @@ export function EnhancedFilterSection({
   onFilterChange,
   onSearch,
   onClearIndividualFilter,
+  onFeeRangeChange,
+  onClearAllFilters,
 }: EnhancedFilterSectionProps) {
   const [searchTerm, setSearchTerm] = useState(filters.search || "");
-  const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
-  const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
-  const [selectedStreamId, setSelectedStreamId] = useState<number | null>(null);
+  const [selectedStateName, setSelectedStateName] = useState<string>("");
+  const [selectedCourseName, setSelectedCourseName] = useState<string>("");
+  const [selectedStreamName, setSelectedStreamName] = useState<string>("");
   const [minFees, setMinFees] = useState<string>("");
   const [maxFees, setMaxFees] = useState<string>("");
 
   // Use currentFilters (actual applied filters) for active filter detection
   const hasActiveFilters = currentFilters
-    ? currentFilters.searchquery ||
-      currentFilters.stateid ||
-      currentFilters.courseid ||
-      currentFilters.streamid ||
-      currentFilters.min_fees ||
-      currentFilters.max_fees
+    ? !!(
+        currentFilters.searchquery ||
+        currentFilters.statename ||
+        currentFilters.coursename ||
+        currentFilters.streamname ||
+        currentFilters.min_fees ||
+        currentFilters.max_fees
+      )
     : false;
 
   // Sync local state with applied filters
   useEffect(() => {
     if (currentFilters) {
-      if (currentFilters.searchquery !== undefined) {
-        setSearchTerm(currentFilters.searchquery || "");
-      }
-      if (currentFilters.stateid !== undefined) {
-        setSelectedStateId(currentFilters.stateid || null);
-      }
-      if (currentFilters.courseid !== undefined) {
-        setSelectedCourseId(currentFilters.courseid || null);
-      }
-      if (currentFilters.streamid !== undefined) {
-        setSelectedStreamId(currentFilters.streamid || null);
-      }
-      if (currentFilters.min_fees !== undefined) {
-        setMinFees(
-          currentFilters.min_fees ? currentFilters.min_fees.toString() : ""
-        );
-      }
-      if (currentFilters.max_fees !== undefined) {
-        setMaxFees(
-          currentFilters.max_fees ? currentFilters.max_fees.toString() : ""
-        );
-      }
+      setSearchTerm(currentFilters.searchquery || "");
+      setSelectedStateName(currentFilters.statename || "");
+      setSelectedCourseName(currentFilters.coursename || "");
+      setSelectedStreamName(currentFilters.streamname || "");
+      setMinFees(
+        currentFilters.min_fees ? currentFilters.min_fees.toString() : ""
+      );
+      setMaxFees(
+        currentFilters.max_fees ? currentFilters.max_fees.toString() : ""
+      );
     }
   }, [currentFilters]);
 
   const clearAllFilters = () => {
+    // If parent component provides a clear all filters handler, use it
+    if (onClearAllFilters) {
+      onClearAllFilters();
+      return;
+    }
+
+    // Fallback to local state updates
     setFilters({
       course: "All Courses",
       location: "All Locations",
@@ -89,9 +90,9 @@ export function EnhancedFilterSection({
       search: "",
     });
     setSearchTerm("");
-    setSelectedStateId(null);
-    setSelectedCourseId(null);
-    setSelectedStreamId(null);
+    setSelectedStateName("");
+    setSelectedCourseName("");
+    setSelectedStreamName("");
     setMinFees("");
     setMaxFees("");
 
@@ -100,6 +101,11 @@ export function EnhancedFilterSection({
       onFilterChange("state", "");
       onFilterChange("course", "");
       onFilterChange("stream", "");
+    }
+
+    if (onFeeRangeChange) {
+      onFeeRangeChange(undefined, undefined);
+    } else if (onFilterChange) {
       onFilterChange("min_fees", "");
       onFilterChange("max_fees", "");
     }
@@ -118,34 +124,39 @@ export function EnhancedFilterSection({
     }
   };
 
-  const handleStateChange = (stateId: string) => {
-    const id = stateId === "all" ? null : parseInt(stateId);
-    setSelectedStateId(id);
+  const handleStateChange = (stateName: string) => {
+    const name = stateName === "all" ? "" : stateName;
+    setSelectedStateName(name);
     if (onFilterChange) {
-      onFilterChange("state", id || "");
+      onFilterChange("state", name);
     }
   };
 
-  const handleCourseChange = (courseId: string) => {
-    const id = courseId === "all" ? null : parseInt(courseId);
-    setSelectedCourseId(id);
+  const handleCourseChange = (courseName: string) => {
+    const name = courseName === "all" ? "" : courseName;
+    setSelectedCourseName(name);
     if (onFilterChange) {
-      onFilterChange("course", id || "");
+      onFilterChange("course", name);
     }
   };
 
   const handleFeesChange = () => {
-    if (onFilterChange) {
-      if (minFees) onFilterChange("min_fees", parseInt(minFees));
-      if (maxFees) onFilterChange("max_fees", parseInt(maxFees));
+    const minValue = minFees ? parseInt(minFees) : undefined;
+    const maxValue = maxFees ? parseInt(maxFees) : undefined;
+
+    if (onFeeRangeChange) {
+      onFeeRangeChange(minValue, maxValue);
+    } else if (onFilterChange) {
+      if (minValue) onFilterChange("min_fees", minValue);
+      if (maxValue) onFilterChange("max_fees", maxValue);
     }
   };
 
-  const handleStreamChange = (streamId: string) => {
-    const id = streamId === "all" ? null : parseInt(streamId);
-    setSelectedStreamId(id);
+  const handleStreamChange = (streamName: string) => {
+    const name = streamName === "all" ? "" : streamName;
+    setSelectedStreamName(name);
     if (onFilterChange) {
-      onFilterChange("stream", id || "");
+      onFilterChange("stream", name);
     }
   };
 
@@ -219,7 +230,7 @@ export function EnhancedFilterSection({
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
-              {currentFilters?.stateid && availableFilters?.state && (
+              {currentFilters?.statename && availableFilters?.state && (
                 <Badge
                   variant="secondary"
                   onClick={() => {
@@ -231,15 +242,14 @@ export function EnhancedFilterSection({
                   }}
                   className="text-xs cursor-pointer"
                 >
-                  {
-                    availableFilters.state.find(
-                      (s: any) => s.id === currentFilters.stateid
-                    )?.name
-                  }
+                  State:{" "}
+                  {availableFilters.state.find(
+                    (s: any) => s.slug === currentFilters.statename
+                  )?.name || currentFilters.statename}
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
-              {currentFilters?.streamid && availableFilters?.stream && (
+              {currentFilters?.streamname && availableFilters?.stream && (
                 <Badge
                   variant="secondary"
                   onClick={() => {
@@ -251,15 +261,14 @@ export function EnhancedFilterSection({
                   }}
                   className="text-xs cursor-pointer"
                 >
-                  {
-                    availableFilters.stream.find(
-                      (s: any) => s.id === currentFilters.streamid
-                    )?.name
-                  }
+                  Stream:{" "}
+                  {availableFilters.stream.find(
+                    (s: any) => s.slug === currentFilters.streamname
+                  )?.name || currentFilters.streamname}
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
-              {currentFilters?.courseid && availableFilters?.courses && (
+              {currentFilters?.coursename && availableFilters?.courses && (
                 <Badge
                   variant="secondary"
                   onClick={() => {
@@ -271,11 +280,10 @@ export function EnhancedFilterSection({
                   }}
                   className="text-xs cursor-pointer"
                 >
-                  {
-                    availableFilters.courses.find(
-                      (c: any) => c.id === currentFilters.courseid
-                    )?.name
-                  }
+                  Course:{" "}
+                  {availableFilters.courses.find(
+                    (c: any) => c.slug === currentFilters.coursename
+                  )?.course_name || currentFilters.coursename}
                   <X className="w-3 h-3 ml-1" />
                 </Badge>
               )}
@@ -331,7 +339,7 @@ export function EnhancedFilterSection({
               State/Province
             </label>
             <Select
-              value={selectedStateId?.toString() || "all"}
+              value={selectedStateName || "all"}
               onValueChange={handleStateChange}
             >
               <SelectTrigger className="w-full">
@@ -340,7 +348,7 @@ export function EnhancedFilterSection({
               <SelectContent>
                 <SelectItem value="all">All States</SelectItem>
                 {availableFilters.state.map((state: any) => (
-                  <SelectItem key={state.id} value={state.id.toString()}>
+                  <SelectItem key={state.id} value={state.slug}>
                     {state.name}
                   </SelectItem>
                 ))}
@@ -354,7 +362,7 @@ export function EnhancedFilterSection({
           <div className="space-y-2 w-full">
             <label className="text-sm font-medium text-gray-700">Stream</label>
             <Select
-              value={selectedStreamId?.toString() || "all"}
+              value={selectedStreamName || "all"}
               onValueChange={handleStreamChange}
             >
               <SelectTrigger className="w-full">
@@ -363,7 +371,7 @@ export function EnhancedFilterSection({
               <SelectContent>
                 <SelectItem value="all">All Streams</SelectItem>
                 {availableFilters.stream.map((stream: any) => (
-                  <SelectItem key={stream.id} value={stream.id.toString()}>
+                  <SelectItem key={stream.id} value={stream.slug}>
                     {stream.name}
                   </SelectItem>
                 ))}
@@ -377,7 +385,7 @@ export function EnhancedFilterSection({
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Course</label>
             <Select
-              value={selectedCourseId?.toString() || "all"}
+              value={selectedCourseName || "all"}
               onValueChange={handleCourseChange}
             >
               <SelectTrigger>
@@ -386,8 +394,8 @@ export function EnhancedFilterSection({
               <SelectContent>
                 <SelectItem value="all">All Courses</SelectItem>
                 {availableFilters.courses.map((course: any) => (
-                  <SelectItem key={course.id} value={course.id.toString()}>
-                    {course.name}
+                  <SelectItem key={course.id} value={course.slug}>
+                    {course.course_name}
                   </SelectItem>
                 ))}
               </SelectContent>

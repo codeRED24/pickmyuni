@@ -143,23 +143,25 @@ export function UniversityCard({ university }: any) {
           <Button
             variant="outline"
             size="sm"
-            className="text-brand-primary border-blue-800 hover:bg-blue-50 text-xs sm:text-sm"
+            className="w-full sm:w-auto text-brand-primary border-blue-800 hover:bg-blue-50 text-xs sm:text-sm py-2 px-3"
             onClick={() => window.open(university.brochure_url, "_blank")}
           >
             <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
             Download Brochure
           </Button>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              className="bg-brand-primary text-white hover:text-white border-blue-600 hover:bg-blue-900 px-4 sm:px-6 text-xs sm:text-sm"
+          <div className="flex flex-row gap-2">
+            <Link
+              href={`/university/${university.slug}-${university.id}`}
+              className="hover:text-blue-600 transition-colors flex-1"
             >
-              More Details
-            </Button>
+              <Button size="sm" className="w-full">
+                More Details
+              </Button>
+            </Link>
             <Button
               size="sm"
               variant={"secondary"}
+              className="flex-1"
               onClick={() => setShowModal(true)}
             >
               Apply Now

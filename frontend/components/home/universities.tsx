@@ -47,10 +47,14 @@ export default function UniversitiesSection() {
     }
   };
 
+  if (error) {
+    return;
+  }
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">
+        <h2 className="text-4xl leading-tight font-semibold text-center mb-8">
           <span className="text-brand-primary">Top Affordable</span>{" "}
           <span className="text-brand-secondary">Universities</span>
         </h2>

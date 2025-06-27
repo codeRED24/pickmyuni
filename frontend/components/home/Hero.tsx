@@ -15,13 +15,13 @@ export default function HeroSection() {
       <div className="container mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="z-10 py-10">
-            <h1 className="font-anton text-4xl md:text-6xl mb-4">
-              TRANSFER TO A BETTER UNI <br />
-              IN AUSTRALIA -{" "}
-              <span className="text-yellow-400">HASSLE-FREE,</span> <br />
-              <span className="text-yellow-400">AFFORDABLE, FAST.</span>
+            <h1 className="font-anton text-4xl sm:text-[53px] sm:leading-[60px] mb-4 max-w-screen-sm">
+              TRANSFER TO A BETTER UNI IN AUSTRALIA -{" "}
+              <span className="text-yellow-400">
+                HASSLE-FREE, AFFORDABLE, FAST.
+              </span>
             </h1>
-            <p className="font-plus_jakarta text-lg mb-6">
+            <p className="font-plus_jakarta text-sm leading-6 sm:text-lg sm:leading-9 mb-6">
               Struggling with high fees or course dissatisfaction? <br />
               We&apos;ll help you transfer to the right university.
             </p>
@@ -37,7 +37,7 @@ export default function HeroSection() {
                   alt="Icon"
                   width={50}
                   height={50}
-                  className="ml-2"
+                  className="-ml-2"
                   priority
                 />
               </Button>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useInfiniteUniversityList } from "@/hooks/useInfiniteUniversityList";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import {
@@ -14,8 +14,30 @@ import { InfiniteScrollLoader } from "@/components/ui/InfiniteScrollLoader";
 import { BackToTopButton } from "@/components/ui/BackToTopButton";
 import { BreadcrumbSchema } from "@/components/seo";
 import { commonBreadcrumbs } from "@/lib/breadcrumbs";
+import { useParams, useRouter } from "next/navigation";
+import { parseSlugToFilters, buildUniversitySlug } from "@/utils/slug";
 
 function UniversityPage() {
+  // Get slug from URL params
+  const paramsRoute = useParams();
+  const router = useRouter();
+  console.log(paramsRoute);
+
+  const slug = Array.isArray(paramsRoute?.slug)
+    ? paramsRoute.slug.join("-")
+    : paramsRoute?.slug || "";
+  // Parse filters from slug
+  const initialParams = parseSlugToFilters(slug);
+
+  console.log("Parsed initial params from slug:", initialParams);
+
+  // Clean up initialParams to remove empty values
+  const cleanInitialParams = Object.fromEntries(
+    Object.entries(initialParams).filter(
+      ([key, value]) => value !== "" && value !== null && value !== undefined
+    )
+  );
+
   const {
     universities,
     filters: availableFilters,
@@ -29,7 +51,7 @@ function UniversityPage() {
     updateSorting,
     clearFilters,
     loadNextPage,
-  } = useInfiniteUniversityList();
+  } = useInfiniteUniversityList(cleanInitialParams);
 
   // Setup infinite scroll
   const { loadingRef } = useInfiniteScroll({
@@ -48,18 +70,68 @@ function UniversityPage() {
     state: "All States",
   });
 
+  // Sync local filters with applied filters from URL/slug
+  useEffect(() => {
+    if (params) {
+      setLocalFilters((prev) => ({
+        ...prev,
+        search: params.searchquery || "",
+        course: params.coursename || "All Courses",
+        state: params.statename || "All States",
+        stream: params.streamname || "All Streams",
+        feesRange:
+          params.min_fees || params.max_fees
+            ? `${params.min_fees || 0} - ${params.max_fees || "∞"}`
+            : "All Fees",
+      }));
+    }
+  }, [params]);
+
   // Get current applied filters from the hook
   const currentFilters = {
-    searchquery:
-      universities.length > 0 || loading ? params?.searchquery : undefined,
-    stateid: universities.length > 0 || loading ? params?.stateid : undefined,
-    courseid: universities.length > 0 || loading ? params?.courseid : undefined,
-    streamid: universities.length > 0 || loading ? params?.streamid : undefined,
-    min_fees: universities.length > 0 || loading ? params?.min_fees : undefined,
-    max_fees: universities.length > 0 || loading ? params?.max_fees : undefined,
+    searchquery: params?.searchquery || "",
+    statename: params?.statename || "",
+    coursename: params?.coursename || "",
+    streamname: params?.streamname || "",
+    min_fees: params?.min_fees,
+    max_fees: params?.max_fees,
   };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState("Top Rated First");
+
+  // Function to update URL based on current filters
+  const updateURL = (newFilters: any) => {
+    const urlFilters: Record<string, any> = {};
+
+    // Only include filters that have explicit values (not undefined)
+    // If a filter is explicitly set to undefined, it means we want to clear it
+    Object.keys(newFilters).forEach((key) => {
+      if (newFilters[key] !== undefined) {
+        urlFilters[key] = newFilters[key];
+      }
+    });
+
+    // Add current params that aren't being updated
+    Object.keys(params || {}).forEach((key) => {
+      if (
+        !(key in newFilters) &&
+        params[key] !== undefined &&
+        params[key] !== ""
+      ) {
+        urlFilters[key] = params[key];
+      }
+    });
+
+    // Remove empty values
+    Object.keys(urlFilters).forEach((key) => {
+      if (urlFilters[key] === undefined || urlFilters[key] === "") {
+        delete urlFilters[key];
+      }
+    });
+
+    const newSlug = buildUniversitySlug(urlFilters);
+    router.replace(newSlug, { scroll: false });
+  };
 
   // Handle sort changes and map to API parameters
   const handleSortChange = (newSortBy: string) => {
@@ -97,73 +169,121 @@ function UniversityPage() {
       state: "All States",
     });
     clearFilters();
+    // Navigate to base URL when clearing all filters
+    router.replace("/university-listing/universities", { scroll: false });
   };
 
   // Clear individual filter
   const clearIndividualFilter = (filterType: string) => {
+    const filterUpdates: Record<string, any> = {};
+
     switch (filterType) {
       case "search":
+        setLocalFilters((prev) => ({ ...prev, search: "" }));
         updateSearch("");
+        filterUpdates.searchquery = undefined;
         break;
       case "state":
-        updateFilters({ stateid: undefined });
+        setLocalFilters((prev) => ({ ...prev, state: "All States" }));
+        updateFilters({ statename: undefined });
+        filterUpdates.statename = undefined;
         break;
       case "course":
-        updateFilters({ courseid: undefined });
+        setLocalFilters((prev) => ({ ...prev, course: "All Courses" }));
+        updateFilters({ coursename: undefined });
+        filterUpdates.coursename = undefined;
         break;
       case "stream":
-        updateFilters({ streamid: undefined });
+        setLocalFilters((prev) => ({ ...prev, stream: "All Streams" }));
+        updateFilters({ streamname: undefined });
+        filterUpdates.streamname = undefined;
         break;
       case "fees":
+        setLocalFilters((prev) => ({ ...prev, feesRange: "All Fees" }));
         updateFilters({ min_fees: undefined, max_fees: undefined });
+        filterUpdates.min_fees = undefined;
+        filterUpdates.max_fees = undefined;
         break;
     }
+
+    // Update URL after clearing filter
+    setTimeout(() => updateURL(filterUpdates), 0);
   };
 
   // Handle search
   const handleSearch = (searchTerm: string) => {
     setLocalFilters((prev) => ({ ...prev, search: searchTerm }));
     updateSearch(searchTerm);
+    // Update URL with search (undefined if empty)
+    const searchQuery = searchTerm.trim() !== "" ? searchTerm : undefined;
+    setTimeout(() => updateURL({ searchquery: searchQuery }), 0);
   };
 
   // Handle filter changes
   const handleFilterChange = (filterType: string, value: string | number) => {
+    const filterUpdates: Record<string, any> = {};
+
     switch (filterType) {
       case "state":
-        updateFilters({
-          stateid: typeof value === "number" ? value : undefined,
-        });
+        const stateName =
+          typeof value === "string" && value !== "" ? value : undefined;
+        updateFilters({ statename: stateName });
+        filterUpdates.statename = stateName;
         break;
       case "course":
-        updateFilters({
-          courseid: typeof value === "number" ? value : undefined,
-        });
+        const courseName =
+          typeof value === "string" && value !== "" ? value : undefined;
+        updateFilters({ coursename: courseName });
+        filterUpdates.coursename = courseName;
         break;
       case "stream":
-        updateFilters({
-          streamid: typeof value === "number" ? value : undefined,
-        });
+        const streamName =
+          typeof value === "string" && value !== "" ? value : undefined;
+        updateFilters({ streamname: streamName });
+        filterUpdates.streamname = streamName;
         break;
       case "min_fees":
-        updateFilters({
-          min_fees: typeof value === "number" ? value : undefined,
-        });
+        const minFees = typeof value === "number" ? value : undefined;
+        updateFilters({ min_fees: minFees });
+        filterUpdates.min_fees = minFees;
+        // Include max_fees in URL update if it exists
+        if (params?.max_fees) {
+          filterUpdates.max_fees = params.max_fees;
+        }
         break;
       case "max_fees":
-        updateFilters({
-          max_fees: typeof value === "number" ? value : undefined,
-        });
+        const maxFees = typeof value === "number" ? value : undefined;
+        updateFilters({ max_fees: maxFees });
+        filterUpdates.max_fees = maxFees;
+        // Include min_fees in URL update if it exists
+        if (params?.min_fees) {
+          filterUpdates.min_fees = params.min_fees;
+        }
         break;
     }
+
+    // Update URL after filter change
+    setTimeout(() => updateURL(filterUpdates), 0);
+  };
+
+  // Handle fee range changes (both min and max together)
+  const handleFeeRangeChange = (minFees?: number, maxFees?: number) => {
+    updateFilters({
+      min_fees: minFees,
+      max_fees: maxFees,
+    });
+
+    const filterUpdates: Record<string, any> = {
+      min_fees: minFees,
+      max_fees: maxFees,
+    };
+
+    // Update URL after fee range change
+    setTimeout(() => updateURL(filterUpdates), 0);
   };
 
   if (loading && !universities.length) {
     return <UniversityLoading />;
-  }
-
-  if (error) {
-    console.error(error);
-    return <h1>Error: {error}</h1>;
   }
 
   return (
@@ -187,6 +307,8 @@ function UniversityPage() {
             onFilterChange={handleFilterChange}
             onSearch={handleSearch}
             onClearIndividualFilter={clearIndividualFilter}
+            onFeeRangeChange={handleFeeRangeChange}
+            onClearAllFilters={clearAllFilters}
           />
 
           {/* University List */}

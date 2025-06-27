@@ -9,7 +9,7 @@ export default function CheckEligibility() {
   return (
     <div className="mt-24 mb-16 bg-[#FAF4F0] rounded-lg p-8 flex flex-col md:flex-row items-center justify-between">
       <div>
-        <h3 className="text-2xl font-bold text-brand-primary mb-2">
+        <h3 className="text-[28px] sm:text-[26px] font-semibold leading-tight text-brand-primary mb-2">
           Check Eligibility for Admission
         </h3>
       </div>

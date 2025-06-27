@@ -39,7 +39,7 @@ export default function ProcessSection() {
   return (
     <section className="py-8 md:py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-16">
+        <h2 className="text-4xl font-semibold leading-tight text-center mb-8 md:mb-16">
           <span className="text-brand-primary">Our Process 4 Simple</span>{" "}
           <span className="text-brand-secondary">Steps</span>
         </h2>
