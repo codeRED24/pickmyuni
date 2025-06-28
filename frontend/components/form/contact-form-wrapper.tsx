@@ -1,48 +1,44 @@
 "use client";
-
-import { useState } from "react";
 import { useContact } from "@/hooks/useContact";
 import ContactForm from "./contact-form";
+import { ContactValidationSchema } from "../modal/contact-modal";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+interface ContactFormData {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  phone: string;
+  message: string;
+}
 
 export default function ContactFormWrapper() {
-  const { submitContactForm, isLoading, error, success, resetState } =
-    useContact();
+  const { submitContactForm, isLoading, error, success } = useContact();
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const resetForm = () => {
-    setFormData({
+  const form = useForm<ContactFormData>({
+    resolver: yupResolver(ContactValidationSchema),
+    defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
       message: "",
-    });
-    resetState();
-  };
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.phone || formData.phone.replace(/\D/g, "").length < 5) {
-      return;
-    }
+  // const resetForm = () => {
+  //   form.reset();
+  //   resetState();
+  // };
+
+  const handleSubmit = async (data: ContactFormData) => {
     try {
-      await submitContactForm(formData);
-      setTimeout(() => {
-        resetForm();
-      }, 2000);
+      await submitContactForm(data);
+      toast.success("Request sent successfully!");
     } catch (error) {
-      // Error state handled by hook
+      console.error("Failed to submit contact form:", error);
     }
   };
 
@@ -59,9 +55,8 @@ export default function ContactFormWrapper() {
 
   return (
     <ContactForm
-      formData={formData}
-      handleInputChange={handleInputChange}
-      handleSubmit={handleSubmit}
+      form={form}
+      handleSubmit={form.handleSubmit(handleSubmit)}
       isLoading={isLoading}
       error={error}
     />

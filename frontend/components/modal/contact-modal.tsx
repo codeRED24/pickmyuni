@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,12 +9,56 @@ import {
 } from "@/components/ui/dialog";
 import { useContact } from "@/hooks/useContact";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import ContactForm from "@/components/form/contact-form";
 
 interface ConsultationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+interface ContactFormData {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+export const ContactValidationSchema: yup.ObjectSchema<ContactFormData> = yup
+  .object()
+  .shape({
+    firstName: yup.string().required("First name is required"),
+    lastName: yup.string().optional(),
+    email: yup
+      .string()
+      .required("Email is required")
+      .test(
+        "email-validation",
+        "Please enter a valid email address",
+        function (value) {
+          if (!value) return false;
+          // More strict email validation
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          return emailRegex.test(value);
+        }
+      ),
+    phone: yup
+      .string()
+      .test(
+        "phone-validation",
+        "Please enter a valid phone number",
+        function (value) {
+          if (!value) return false;
+          const phoneDigits = value.replace(/\D/g, "");
+          return phoneDigits.length >= 8;
+        }
+      )
+      .required("Phone number is required"),
+    message: yup.string().required("Message is required"),
+  });
 
 export function ConsultationModal({
   open,
@@ -23,53 +67,31 @@ export function ConsultationModal({
   const { submitContactForm, isLoading, error, success, resetState } =
     useContact();
 
-  const [phoneChanged, setPhoneChanged] = React.useState(0);
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    if (field === "phone") {
-      setPhoneChanged((prev) => prev + 1);
-    }
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const resetForm = () => {
-    setFormData({
+  const form = useForm<ContactFormData>({
+    resolver: yupResolver(ContactValidationSchema),
+    defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
       message: "",
-    });
+    },
+  });
+
+  const resetForm = () => {
+    form.reset();
     resetState();
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.phone || formData.phone.replace(/\D/g, "").length < 5) {
-      toast.error("Please enter a valid phone number");
-      return;
-    }
-
+  const handleSubmit = async (data: ContactFormData) => {
     try {
-      // Submit new data with phone to API
-      await submitContactForm(formData);
-      // Success - show toast and close modal
+      await submitContactForm(data);
       toast.success("Request sent successfully!");
       setTimeout(() => {
         onOpenChange(false);
         resetForm();
-      }, 2000); // Close modal after 2 seconds
+      }, 2000);
     } catch (error) {
-      // Error state will be handled by the hook
       console.error("Failed to submit contact form:", error);
     }
   };
@@ -100,12 +122,10 @@ export function ConsultationModal({
           </div>
         ) : (
           <ContactForm
-            formData={formData}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
+            form={form}
+            handleSubmit={form.handleSubmit(handleSubmit)}
             isLoading={isLoading}
             error={error}
-            phoneChanged={phoneChanged}
           />
         )}
       </DialogContent>
