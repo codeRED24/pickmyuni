@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Filter, Search } from "lucide-react";
+import { Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useComprehensiveSearch } from "@/hooks/useComprehensiveSearch";
 import { College, Course, Article } from "@/types/search";
@@ -94,7 +94,10 @@ export default function SearchBar() {
       <div className="container mx-auto">
         <div className="relative" ref={searchRef}>
           <div className="relative flex items-center bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button className="absolute left-4 text-gray-400 z-10 cursor-default">
+            <button
+              aria-label="filter"
+              className="absolute left-4 text-gray-400 z-10 cursor-default"
+            >
               <Filter
                 size={20}
                 fill="currentColor"

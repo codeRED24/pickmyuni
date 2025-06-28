@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -23,6 +23,8 @@ export function ConsultationModal({
   const { submitContactForm, isLoading, error, success, resetState } =
     useContact();
 
+  const [phoneChanged, setPhoneChanged] = React.useState(0);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,6 +34,9 @@ export function ConsultationModal({
   });
 
   const handleInputChange = (field: string, value: string) => {
+    if (field === "phone") {
+      setPhoneChanged((prev) => prev + 1);
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -78,7 +83,7 @@ export function ConsultationModal({
 
   return (
     <Dialog open={open} onOpenChange={handleModalChange}>
-      <DialogContent className="max-w-lg w-full mx-4 p-8">
+      <DialogContent className="max-w-lg w-full p-8">
         <DialogHeader className="text-center mb-6">
           <DialogTitle className="text-2xl font-bold text-brand-primary mb-2">
             Request a Free{" "}
@@ -100,6 +105,7 @@ export function ConsultationModal({
             handleSubmit={handleSubmit}
             isLoading={isLoading}
             error={error}
+            phoneChanged={phoneChanged}
           />
         )}
       </DialogContent>

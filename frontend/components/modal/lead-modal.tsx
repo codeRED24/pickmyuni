@@ -43,7 +43,12 @@ export function ApplicationModal({
     visa: "",
   });
 
+  const [phoneChanged, setPhoneChanged] = useState(0);
+
   const handleInputChange = (field: string, value: string | Date | null) => {
+    if (field === "phn_no") {
+      setPhoneChanged((prev) => prev + 1);
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -54,6 +59,7 @@ export function ApplicationModal({
       formData.last_name.trim() !== "" &&
       formData.email.trim() !== "" &&
       formData.phn_no.trim() !== "" &&
+      formData.phn_no.length > 10 &&
       formData.course_preference.trim() !== ""
     );
   };
@@ -154,9 +160,9 @@ export function ApplicationModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl w-full mx-4 p-8">
-        <DialogHeader className="text-center mb-6">
-          <DialogTitle className="text-2xl font-bold text-brand-primary mb-4">
+      <DialogContent className="max-w-2xl w-full p-8">
+        <DialogHeader className="">
+          <DialogTitle className="text-2xl font-bold text-center text-brand-primary mb-4">
             Apply Now
           </DialogTitle>
 
@@ -174,25 +180,42 @@ export function ApplicationModal({
           )}
 
           {/* Step Indicators */}
-          <div className="flex items-center justify-center space-x-2 mb-6">
-            <div
-              onClick={handleBack}
-              className={`px-4 py-2 rounded-full cursor-pointer text-sm font-medium ${
-                step === 1
-                  ? "bg-brand-secondary text-white"
-                  : "bg-brand-primary text-white"
-              }`}
-            >
-              STEP 1
-            </div>
-            <div
-              className={`px-4 py-2 rounded-full text-sm font-medium ${
-                step === 2
-                  ? "bg-brand-secondary text-white"
-                  : "bg-orange-200 text-orange-600"
-              }`}
-            >
-              STEP 2
+          <div className="flex items-center mb-6">
+            <div className="flex items-center relative">
+              {/* Step 1 */}
+              <div
+                onClick={handleBack}
+                className={`relative z-10 px-8 py-3 cursor-pointer text-sm font-bold uppercase tracking-wide transition-all duration-300 ${
+                  step === 1
+                    ? "bg-slate-700 text-white"
+                    : "bg-slate-600 text-white"
+                }`}
+                style={{
+                  clipPath:
+                    "polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%)",
+                  minWidth: "0px",
+                  textAlign: "center",
+                }}
+              >
+                STEP 1
+              </div>
+              {/* Step 2 */}
+              <div
+                className={`relative z-10 px-8 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-300 ${
+                  step === 2
+                    ? "bg-orange-500 text-white"
+                    : "bg-orange-300 text-white"
+                }`}
+                style={{
+                  clipPath:
+                    "polygon(20px 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,20px 100%, 30% 50%",
+                  marginLeft: "-32px",
+                  minWidth: "120px",
+                  textAlign: "right",
+                }}
+              >
+                STEP 2
+              </div>
             </div>
           </div>
         </DialogHeader>
@@ -229,13 +252,15 @@ export function ApplicationModal({
                 isLoading ? "disabled" : ""
               }`}
             >
-              {formData.phn_no.length < 8 && (
-                <div className="text-sm text-red-500">
-                  Please enter a valid phone number
-                </div>
-              )}
+              {formData.phn_no &&
+                formData.phn_no.length < 10 &&
+                phoneChanged > 2 && (
+                  <div className="text-sm text-red-500">
+                    Please enter a valid phone number
+                  </div>
+                )}
               <PhoneInput
-                defaultCountry="aus"
+                defaultCountry="au"
                 value={formData.phn_no}
                 onChange={(phone) => handleInputChange("phn_no", phone)}
                 disabled={isLoading}

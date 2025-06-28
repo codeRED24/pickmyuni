@@ -6,6 +6,7 @@ import SubscriptionRouter from "./subscriptions/subscriptions";
 import ContactUsRouter from "./contactUs/contactUs";
 import ArticleRouter from "./articles/articles";
 import CityRouter from "./city/city";
+import CoursesRouter from "./courses/courses";
 
 const router = express.Router();
 
@@ -26,6 +27,8 @@ const router = express.Router();
  *     description: Articles management endpoints
  *   - name: City
  *     description: City management endpoints
+ *   - name: Courses
+ *     description: Course management endpoints
  */
 
 router.use("/college", CollegeRouter);
@@ -35,5 +38,6 @@ router.use("/subscriptions", SubscriptionRouter);
 router.use("/contact-us", ContactUsRouter);
 router.use("/articles", ArticleRouter);
 router.use("/city", CityRouter);
+router.use("/courses", CoursesRouter);
 
 export default router;

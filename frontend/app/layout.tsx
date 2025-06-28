@@ -99,6 +99,7 @@ export default function RootLayout({
             <a
               href="tel:+61433502082"
               className="bg-blue-500 p-3 rounded-full hover:bg-blue-600 transition-colors"
+              aria-label="call"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -119,6 +120,7 @@ export default function RootLayout({
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 bg-green-500  rounded-full hover:bg-green-600 transition-colors"
+              aria-label="whatsapp"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

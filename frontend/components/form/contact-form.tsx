@@ -14,6 +14,7 @@ function ContactForm({
   handleSubmit,
   isLoading,
   error,
+  phoneChanged,
 }: any) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,13 +59,13 @@ function ContactForm({
           isLoading ? "disabled" : ""
         }`}
       >
-        {formData.phone.length < 8 && (
+        {formData.phone && formData.phone.length < 10 && phoneChanged > 2 && (
           <div className="text-sm text-red-500">
             Please enter a valid phone number
           </div>
         )}
         <PhoneInput
-          defaultCountry="in"
+          defaultCountry="au"
           value={formData.phone}
           onChange={(phone) => handleInputChange("phone", phone)}
           disabled={isLoading}

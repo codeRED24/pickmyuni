@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
+import NodeCache from "node-cache";
 
 /**
  * @swagger
@@ -66,8 +67,18 @@ import { prisma } from "../../lib/prisma";
  *         description: Internal server error
  */
 
+export const collegeListCache = new NodeCache({ stdTTL: 300 });
+
 export const getCollegeList = async (req: Request, res: Response) => {
   try {
+    // Create a cache key based on query params
+    const cacheKey = JSON.stringify(req.query);
+    const cachedData = collegeListCache.get(cacheKey);
+    if (cachedData) {
+      console.log("Cache hit for college list");
+      return res.status(200).json(cachedData);
+    }
+
     const {
       page = 1,
       limit = 10,
@@ -232,7 +243,8 @@ export const getCollegeList = async (req: Request, res: Response) => {
         },
       },
     };
-
+    // Cache the response
+    collegeListCache.set(cacheKey, response);
     res.status(200).json(response);
   } catch (error) {
     console.error("Error fetching college list:", error);
