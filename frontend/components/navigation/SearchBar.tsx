@@ -73,7 +73,7 @@ export default function SearchBar() {
     if (type === "college") {
       const college = item as College;
       setShowDropdown(false);
-      router.push(`/university/${college.slug}-${college.id}`);
+      router.push(`/university/${college.slug}-${college.id}/info`);
     } else if (type === "course") {
       const course = item as Course;
       setShowDropdown(false);

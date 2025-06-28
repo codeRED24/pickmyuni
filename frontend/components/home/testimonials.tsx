@@ -105,7 +105,7 @@ export default function TestimonialsSection() {
           {testimonialsData.map((testimonial, index) => (
             <div key={testimonial._id} className="flex flex-col flex-shrink-0">
               {/* Testimonial speech bubble */}
-              <div className="relative max-w-[320px]  min-h-[200px] bg-white rounded-2xl p-6 mb-6 shadow-lg ">
+              <div className="relative max-w-[320px] sm:max-w-[400px] bg-white rounded-2xl p-6 mb-6 shadow-lg ">
                 {testimonial.hasVideo ? (
                   <div className="size-full">
                     <iframe

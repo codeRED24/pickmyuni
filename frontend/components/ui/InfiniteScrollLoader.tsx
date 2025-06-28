@@ -1,4 +1,5 @@
 import React from "react";
+import { UniversityCardSkeleton } from "../skeleton/university-skeleton";
 
 interface InfiniteScrollLoaderProps {
   isLoading: boolean;
@@ -21,11 +22,10 @@ export const InfiniteScrollLoader: React.FC<InfiniteScrollLoaderProps> =
 
     if (isLoading || hasNextPage) {
       return (
-        <div className="flex justify-center py-8">
-          <div className="flex items-center space-x-2 text-gray-500">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-            <span>Loading more universities...</span>
-          </div>
+        <div className="space-y-4">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <UniversityCardSkeleton key={index} />
+          ))}
         </div>
       );
     }

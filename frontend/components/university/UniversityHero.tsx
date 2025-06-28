@@ -9,7 +9,14 @@ export function UniversityHero({
 }: any) {
   return (
     <div className="relative h-64 md:h-80 lg:h-96">
-      <Image src={imageSrc} alt={imageAlt} fill className="object-cover" />
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        className="object-cover"
+        priority
+      />
+
       <div className="absolute inset-0 bg-black/40" />
       <div className="absolute inset-0 flex items-end">
         <div className="container mx-auto pb-8">

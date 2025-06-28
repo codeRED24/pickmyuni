@@ -6,7 +6,6 @@ import {
   UniversityCard,
   UniversityHero,
   UniversityListHeader,
-  UniversityLoading,
 } from "@/components/university";
 import { UniversityCardSkeleton } from "@/components/skeleton/university-skeleton";
 import { EnhancedFilterSection } from "@/components/university/EnhancedFilterSection";
@@ -23,10 +22,12 @@ function UniversityPage() {
   const router = useRouter();
   console.log(paramsRoute);
 
-  const slug = Array.isArray(paramsRoute?.slug)
-    ? paramsRoute.slug.join("-")
-    : paramsRoute?.slug || "";
+  // Extract slug from either 'slug' or 'slugAndId' parameter
+  const rawSlug = paramsRoute?.slug || paramsRoute?.slugAndId || "";
+  const slug = Array.isArray(rawSlug) ? rawSlug.join("-") : rawSlug;
   // Parse filters from slug
+  console.log({ slug });
+
   const initialParams = parseSlugToFilters(slug);
 
   console.log("Parsed initial params from slug:", initialParams);
@@ -170,7 +171,7 @@ function UniversityPage() {
     });
     clearFilters();
     // Navigate to base URL when clearing all filters
-    router.replace("/university-listing/universities", { scroll: false });
+    router.replace("/university/universities", { scroll: false });
   };
 
   // Clear individual filter
@@ -282,10 +283,6 @@ function UniversityPage() {
     setTimeout(() => updateURL(filterUpdates), 0);
   };
 
-  if (loading && !universities.length) {
-    return <UniversityLoading />;
-  }
-
   return (
     <div className="min-h-screen bg-white">
       <BreadcrumbSchema items={commonBreadcrumbs.university()} />
@@ -294,79 +291,81 @@ function UniversityPage() {
       <UniversityHero />
 
       {/* Main Content */}
-      <div className="container mx-auto py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Filter Section */}
-          <EnhancedFilterSection
-            filters={localFilters}
-            setFilters={setLocalFilters}
-            isOpen={isFilterOpen}
-            setIsOpen={setIsFilterOpen}
-            availableFilters={availableFilters}
-            currentFilters={currentFilters}
-            onFilterChange={handleFilterChange}
-            onSearch={handleSearch}
-            onClearIndividualFilter={clearIndividualFilter}
-            onFeeRangeChange={handleFeeRangeChange}
-            onClearAllFilters={clearAllFilters}
-          />
 
-          {/* University List */}
-          <div className="flex-1 min-w-0">
-            {/* Results Header */}
-            <UniversityListHeader
-              totalCount={pagination.totalItems}
-              sortBy={sortBy}
-              setSortBy={handleSortChange}
+      <>
+        <div className="container mx-auto py-6">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Filter Section */}
+            <EnhancedFilterSection
+              filters={localFilters}
+              setFilters={setLocalFilters}
+              isOpen={isFilterOpen}
+              setIsOpen={setIsFilterOpen}
+              availableFilters={availableFilters}
+              currentFilters={currentFilters}
+              onFilterChange={handleFilterChange}
+              onSearch={handleSearch}
+              onClearIndividualFilter={clearIndividualFilter}
+              onFeeRangeChange={handleFeeRangeChange}
+              onClearAllFilters={clearAllFilters}
             />
 
-            {/* University Cards */}
-            {loading && universities.length === 0 ? (
-              <div className="space-y-4">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <UniversityCardSkeleton key={index} />
-                ))}
-              </div>
-            ) : universities.length > 0 ? (
-              <div className="space-y-4">
-                {universities.map((university: any, index: number) => (
-                  <UniversityCard
-                    key={university.id || index}
-                    university={university}
-                  />
-                ))}
+            {/* University List */}
+            <div className="flex-1 min-w-0">
+              {/* Results Header */}
+              <UniversityListHeader
+                totalCount={pagination.totalItems}
+                sortBy={sortBy}
+                setSortBy={handleSortChange}
+              />
 
-                {/* Infinite scroll trigger and loader */}
-                <div ref={loadingRef}>
-                  <InfiniteScrollLoader
-                    isLoading={loadingMore}
-                    hasNextPage={pagination.hasNextPage}
-                    totalItems={pagination.totalItems}
-                  />
+              {/* University Cards */}
+              {loading && universities.length === 0 ? (
+                <div className="space-y-4">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <UniversityCardSkeleton key={index} />
+                  ))}
                 </div>
-              </div>
-            ) : null}
+              ) : universities.length > 0 ? (
+                <div className="space-y-4">
+                  {universities.map((university: any, index: number) => (
+                    <UniversityCard
+                      key={university.id || index}
+                      university={university}
+                    />
+                  ))}
 
-            {/* No Results */}
-            {universities.length === 0 && !loading && (
-              <div className="flex flex-col items-center justify-center min-h-[400px] py-12">
-                <div className="text-gray-500 text-lg mb-4">
-                  No universities found matching your criteria.
+                  {/* Infinite scroll trigger and loader */}
+                  <div ref={loadingRef}>
+                    <InfiniteScrollLoader
+                      isLoading={loadingMore}
+                      hasNextPage={pagination.hasNextPage}
+                      totalItems={pagination.totalItems}
+                    />
+                  </div>
                 </div>
-                <button
-                  onClick={clearAllFilters}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Clear All Filters
-                </button>
-              </div>
-            )}
+              ) : null}
+
+              {/* No Results */}
+              {universities.length === 0 && !loading && (
+                <div className="flex flex-col items-center justify-center min-h-[400px] py-12">
+                  <div className="text-gray-500 text-lg mb-4">
+                    No universities found matching your criteria.
+                  </div>
+                  <button
+                    onClick={clearAllFilters}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Clear All Filters
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Back to Top Button */}
-      <BackToTopButton />
+        <BackToTopButton />
+      </>
     </div>
   );
 }

@@ -58,7 +58,7 @@ export function buildUniversitySlug(filters: {
     );
   }
 
-  return `/university-listing/${parts.join("-")}`;
+  return `/university/${parts.join("-")}`;
 }
 
 export function parseSlugToFilters(slug: string) {

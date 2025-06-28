@@ -121,25 +121,20 @@ export default function UniversitiesSection() {
                   className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
                 >
                   <div className="p-6 flex-1">
-                    <div className="flex items-center mb-4">
-                      <div
-                        className="rounded-full overflow-hidden mr-4 bg-gray-200 flex items-center justify-center"
-                        style={{ width: 60, height: 60 }}
-                      >
-                        <Image
-                          src={
-                            "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/" +
-                              uni?.logo_url || "/vercel.svg"
-                          }
-                          alt={uni?.college_name}
-                          width={60}
-                          height={60}
-                          className="object-contain"
-                        />
-                      </div>
+                    <div className="flex items-center mb-4 gap-4">
+                      <Image
+                        src={
+                          "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/" +
+                            uni?.logo_url || "/vercel.svg"
+                        }
+                        alt={uni?.college_name}
+                        width={60}
+                        height={60}
+                        className="object-contain rounded-full"
+                      />
                       <div>
-                        <Link href={`/university/${uni.slug}-${uni.id}`}>
-                          <h3 className="font-bold text-brand-primary text-lg">
+                        <Link href={`/university/${uni.slug}-${uni.id}/info`}>
+                          <h3 className="font-bold text-brand-primary text-lg leading-tight">
                             {uni.college_name}
                           </h3>
                         </Link>

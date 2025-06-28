@@ -53,22 +53,16 @@ export function UniversityCard({ university }: any) {
           {/* University Logo */}
           <div className="flex-shrink-0 self-center sm:self-start">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center overflow-hidden">
-              {university.logo_url ? (
-                <Image
-                  src={
-                    "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/" +
-                    university.logo_url
-                  }
-                  alt={university.college_name}
-                  width={80}
-                  height={80}
-                  className="rounded-lg object-cover"
-                />
-              ) : (
-                <span className="text-white font-bold text-lg sm:text-xl">
-                  {university.college_name.substring(0, 3).toUpperCase()}
-                </span>
-              )}
+              <Image
+                src={
+                  "https://pickmyuni-bucket.s3.ap-southeast-2.amazonaws.com/collegelogo/" +
+                    university.logo_url.trim() || "/vercel.svg"
+                }
+                alt={university.college_name}
+                width={80}
+                height={80}
+                className="rounded-lg object-cover"
+              />
             </div>
           </div>
 
@@ -78,7 +72,7 @@ export function UniversityCard({ university }: any) {
               <div className="flex-1 min-w-0 sm:pr-4">
                 {/* University Name */}
                 <Link
-                  href={`/university/${university.slug}-${university.id}`}
+                  href={`/university/${university.slug}-${university.id}/info`}
                   className="hover:text-blue-600 transition-colors"
                 >
                   <h3 className="text-lg sm:text-xl font-bold text-brand-primary mb-1 line-clamp-2 sm:line-clamp-1">
