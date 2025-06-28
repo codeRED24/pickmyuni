@@ -56,7 +56,15 @@ const completeSchema: yup.ObjectSchema<ApplicationFormData> = yup
       ),
     phn_no: yup
       .string()
-      .min(10, "Phone number must be at least 10 digits")
+      .test(
+        "phone-validation",
+        "Please enter a valid phone number",
+        function (value) {
+          if (!value) return false;
+          const phoneDigits = value.replace(/\D/g, "");
+          return phoneDigits.length >= 8;
+        }
+      )
       .required("Phone number is required"),
     course_preference: yup.string().required("Course preference is required"),
     gender: yup.string().required("Gender is required"),
