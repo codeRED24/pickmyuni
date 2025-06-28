@@ -106,8 +106,8 @@ export function ConsultationModal({
   return (
     <Dialog open={open} onOpenChange={handleModalChange}>
       <DialogContent className="max-w-lg w-full p-8">
-        <DialogHeader className="text-center mb-6">
-          <DialogTitle className="text-2xl font-bold text-brand-primary mb-2">
+        <DialogHeader>
+          <DialogTitle className="text-3xl font-semibold text-center text-brand-primary">
             Request a Free{" "}
             <span className="text-brand-secondary">Consultation</span>
           </DialogTitle>

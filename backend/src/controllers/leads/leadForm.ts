@@ -77,7 +77,6 @@ export const createLeadForm = async (req: Request, res: Response) => {
 
     if (
       !first_name ||
-      !last_name ||
       !email ||
       !phn_no ||
       !course_preference ||
