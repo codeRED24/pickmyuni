@@ -49,7 +49,7 @@ export function UniversityCard({ university }: any) {
   return (
     <Card className="hover:shadow-lg transition-shadow duration-200 border border-gray-200 bg-gray-50 rounded-2xl">
       <CardContent className="">
-        <div className="flex flex-row sm:flex-col gap-4 sm:gap-6">
+        <div className="flex flex-row gap-4 sm:gap-6">
           {/* University Logo */}
           <div className="flex-shrink-0 self-center sm:self-start">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center overflow-hidden">
