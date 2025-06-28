@@ -4,9 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { Phone, Mail, MapPin } from "lucide-react"; // Added Phone, Mail, MapPin
 import { Card, CardContent } from "@/components/ui/card";
-import ContactForm from "@/components/form/contact-form";
 import { useContact } from "@/hooks/useContact";
 import { toast } from "sonner";
+import ContactFormWrapper from "./form/contact-form-wrapper";
 
 export default function ContactPage() {
   const { submitContactForm, isLoading, error, success, resetState } =
@@ -98,24 +98,7 @@ export default function ContactPage() {
 
           {/* Right Form Content */}
           <div className="lg:w-3/5">
-            {success ? (
-              <div className="text-center py-8">
-                <div className="text-green-600 text-lg font-semibold mb-2">
-                  ✅ Request sent successfully!
-                </div>
-                <p className="text-gray-600">
-                  We&apos;ll get back to you soon.
-                </p>
-              </div>
-            ) : (
-              <ContactForm
-                formData={formData}
-                handleInputChange={handleInputChange}
-                handleSubmit={handleSubmit}
-                isLoading={isLoading}
-                error={error}
-              />
-            )}
+            <ContactFormWrapper />
           </div>
         </div>
 

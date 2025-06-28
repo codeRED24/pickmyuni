@@ -37,23 +37,13 @@ export default function ArticlesSection() {
   }
 
   if (error) {
-    return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            <span className="text-brand-primary">Recent</span>{" "}
-            <span className="text-brand-secondary">Articles</span>
-          </h2>
-          <div className="text-center text-red-500">Error: {error}</div>
-        </div>
-      </section>
-    );
+    return;
   }
 
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">
+        <h2 className="text-4xl font-semibold leading-tight text-center mb-12">
           <span className="text-brand-primary">Recent</span>{" "}
           <span className="text-brand-secondary">Articles</span>
         </h2>

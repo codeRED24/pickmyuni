@@ -3,7 +3,7 @@ import axios from "axios";
 
 interface ContactData {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   email: string;
   phone: string;
   message: string;
@@ -32,7 +32,7 @@ export const useContact = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/contact-us`,
         {
           fname: data.firstName,
-          lname: data.lastName,
+          lname: data.lastName || "",
           email: data.email,
           phn_no: data.phone,
           user_msg: data.message,

@@ -16,7 +16,7 @@ export default function NavigationHeader() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="w-full bg-white shadow-sm">
+    <div className="bg-white shadow-sm">
       <div className="container mx-auto py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
@@ -26,6 +26,7 @@ export default function NavigationHeader() {
                 alt="Logo"
                 width={150}
                 height={150}
+                className="h-12 w-auto"
               />
             </div>
           </Link>
@@ -79,7 +80,11 @@ export default function NavigationHeader() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="xl:hidden" onClick={() => setIsOpen(!isOpen)}>
+          <button
+            aria-label="menu-toggle"
+            className="xl:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             <svg
               className="w-6 h-6"
               fill="none"

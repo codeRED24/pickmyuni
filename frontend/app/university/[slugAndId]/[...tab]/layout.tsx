@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import UniLayout from "@/components/university/UniLayout";
 import QuickFacts from "@/components/QuickFacts";
 import { Metadata } from "next";
-import TabsWithUrlContainer from "../../../components/university/TabsWithUrlContainer";
+import TabsWithUrlContainer from "../../../../components/university/TabsWithUrlContainer";
 
 // Generate metadata for SEO
 export async function generateMetadata({

@@ -106,7 +106,7 @@ export default function CitiesSection() {
   if (loading) {
     return (
       <section className="flex flex-col container mt-10 md:mt-16">
-        <h2 className="text-3xl font-bold mb-6 text-center">
+        <h2 className="text-4xl font-semibold leading-tight text-center">
           <span className="text-brand-primary">Top Cities</span>{" "}
           <span className="text-brand-secondary">In Australia</span>
         </h2>

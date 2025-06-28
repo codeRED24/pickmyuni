@@ -1,20 +1,14 @@
-import Link from "next/link";
+import { Illustration, NotFound } from "@/components/ui/not-found";
 
-export default function NotFound() {
+export default function Page() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Not Found</h2>
-        <p className="text-gray-600 mb-8 max-w-md">
-          The page you're looking for doesn't exist or may have been moved.
-        </p>
-        <Link
-          href="/"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
-        >
-          Go back home
-        </Link>
+    <div className="relative flex flex-col w-full justify-center min-h-svh bg-background p-6 md:p-10">
+      <div className="relative max-w-5xl mx-auto w-full">
+        <Illustration className="absolute inset-0 w-full h-[50vh] opacity-[0.04] dark:opacity-[0.03] text-foreground" />
+        <NotFound
+          title="Page not found"
+          description="Page may have been moved or deleted or you may have mistyped the address."
+        />
       </div>
     </div>
   );

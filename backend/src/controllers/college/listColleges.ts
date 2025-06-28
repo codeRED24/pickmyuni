@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
+import NodeCache from "node-cache";
 
 /**
  * @swagger
@@ -16,20 +17,15 @@ import { prisma } from "../../lib/prisma";
  *           type: string
  *         description: Search colleges by name
  *       - in: query
- *         name: cityid
+ *         name: statename
  *         schema:
  *           type: string
- *         description: Filter colleges by city id
+ *         description: Filter colleges by state name
  *       - in: query
- *         name: stateid
+ *         name: coursename
  *         schema:
  *           type: string
- *         description: Filter colleges by state id
- *       - in: query
- *         name: courseid
- *         schema:
- *           type: string
- *         description: Filter colleges by course id
+ *         description: Filter colleges by course name
  *       - in: query
  *         name: min_fees
  *         schema:
@@ -60,10 +56,10 @@ import { prisma } from "../../lib/prisma";
  *           default: score_desc
  *         description: Sort colleges by score or rating
  *       - in: query
- *         name: streamid
+ *         name: streamname
  *         schema:
  *           type: string
- *         description: Filter colleges by stream id
+ *         description: Filter colleges by stream name
  *     responses:
  *       200:
  *         description: Successfully retrieved college list
@@ -71,17 +67,27 @@ import { prisma } from "../../lib/prisma";
  *         description: Internal server error
  */
 
+export const collegeListCache = new NodeCache({ stdTTL: 300 });
+
 export const getCollegeList = async (req: Request, res: Response) => {
   try {
+    // Create a cache key based on query params
+    const cacheKey = JSON.stringify(req.query);
+    const cachedData = collegeListCache.get(cacheKey);
+    if (cachedData) {
+      console.log("Cache hit for college list");
+      return res.status(200).json(cachedData);
+    }
+
     const {
       page = 1,
       limit = 10,
       searchquery,
-      stateid,
-      courseid,
+      statename,
+      coursename,
       min_fees,
       max_fees,
-      streamid,
+      streamname,
       sortBy = "score_desc",
     } = req.query;
 
@@ -99,27 +105,34 @@ export const getCollegeList = async (req: Request, res: Response) => {
       };
     }
 
-    if (stateid) {
+    if (statename) {
       whereClause.state = {
-        id: {
-          equals: Number(stateid),
+        slug: {
+          contains: String(statename),
+          mode: "insensitive",
         },
       };
     }
 
-    if (courseid) {
+    if (coursename) {
       whereClause.CollegesCourses = {
         some: {
-          course_id: {
-            equals: Number(courseid),
+          course: {
+            slug: {
+              contains: String(coursename),
+              mode: "insensitive",
+            },
           },
         },
       };
     }
 
-    if (streamid) {
-      whereClause.streamId = {
-        equals: Number(streamid),
+    if (streamname) {
+      whereClause.primary_stream = {
+        slug: {
+          contains: String(streamname),
+          mode: "insensitive",
+        },
       };
     }
 
@@ -198,28 +211,20 @@ export const getCollegeList = async (req: Request, res: Response) => {
     const [streams, states, courses] = await Promise.all([
       prisma.stream.findMany({
         where: { Colleges: { some: {} } },
-        select: { id: true, name: true },
+        select: { id: true, name: true, slug: true },
         orderBy: { name: "asc" },
       }),
       prisma.state.findMany({
         where: { Colleges: { some: {} } },
-        select: { id: true, name: true },
+        select: { id: true, name: true, slug: true },
         orderBy: { name: "asc" },
       }),
       prisma.courses.findMany({
         where: { CollegesCourses: { some: {} } },
-        select: { id: true, course_name: true },
+        select: { id: true, course_name: true, slug: true },
         orderBy: { course_name: "asc" },
       }),
     ]);
-
-    // Transform filter data to include both id and name
-    const streamOptions = streams.map((s) => ({ id: s.id, name: s.name }));
-    const stateOptions = states.map((s) => ({ id: s.id, name: s.name }));
-    const courseOptions = courses.map((c) => ({
-      id: c.id,
-      name: c.course_name,
-    }));
 
     const response = {
       success: true,
@@ -232,13 +237,14 @@ export const getCollegeList = async (req: Request, res: Response) => {
           itemsPerPage: Number(limit),
         },
         filters: {
-          stream: streamOptions,
-          state: stateOptions,
-          courses: courseOptions,
+          stream: streams,
+          state: states,
+          courses: courses,
         },
       },
     };
-
+    // Cache the response
+    collegeListCache.set(cacheKey, response);
     res.status(200).json(response);
   } catch (error) {
     console.error("Error fetching college list:", error);

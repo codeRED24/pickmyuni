@@ -87,7 +87,7 @@ export default function CostComparisonSection() {
       <section className="bg-brand-secondary py-16">
         <div className="container mx-auto mb-12">
           <div className="flex flex-row justify-center md:justify-between">
-            <h2 className="text-3xl font-bold mb-2 text-center md:text-start text-white">
+            <h2 className="text-4xl leading-[100%] font-semibold text-center md:text-start text-white">
               Compare Your Uni Costs
             </h2>
             <Link href="/compare">
@@ -195,12 +195,12 @@ export default function CostComparisonSection() {
             />
           </div>
           <div className="flex flex-col md:w-2/3">
-            <h2 className="text-3xl font-bold mb-6 text-center md:text-left">
+            <h2 className="text-4xl leading-tight font-semibold mb-3 text-center md:text-left">
               <span className="text-brand-primary">Why Choose</span>{" "}
               <br className="md:hidden" />
               <span className="text-brand-secondary">PickMyUni</span>
             </h2>
-            <p className="text-brand-primary mb-8 font-normal text-center md:text-left">
+            <p className="text-brand-primary text-xl mb-8 font-normal text-center md:text-left">
               We’ve helped{" "}
               <span className="font-bold">1000+ international students</span>{" "}
               successfully transfer and save money on education in Australia.”
@@ -210,8 +210,10 @@ export default function CostComparisonSection() {
               {benefits.map((benefit, index) => (
                 <div key={index}>
                   <Card className="flex items-start">
-                    <CardContent className="flex gap-2">
-                      <div className="text-brand-secondary">{benefit.icon}</div>
+                    <CardContent className="flex gap-2 items-center">
+                      <div className="text-brand-secondary bg-brand-secondary rounded-full p-2 text-white">
+                        {benefit.icon}
+                      </div>
                       <h3 className="font-bold text-brand-primary">
                         {benefit.title}
                       </h3>

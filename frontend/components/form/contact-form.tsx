@@ -7,14 +7,35 @@ import { AlertCircle, Loader2, Send } from "lucide-react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { Textarea } from "../ui/textarea";
+import { UseFormReturn } from "react-hook-form";
+import { Controller } from "react-hook-form";
+
+interface ContactFormData {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+interface ContactFormProps {
+  form: UseFormReturn<ContactFormData>;
+  handleSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  isLoading: boolean;
+  error: string | null;
+}
 
 function ContactForm({
-  formData,
-  handleInputChange,
+  form,
   handleSubmit,
   isLoading,
   error,
-}: any) {
+}: ContactFormProps) {
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = form;
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
@@ -25,66 +46,87 @@ function ContactForm({
       )}
 
       <div className="grid grid-cols-2 gap-4">
-        <Input
-          placeholder="First Name"
-          value={formData.firstName}
-          onChange={(e) => handleInputChange("firstName", e.target.value)}
-          className="h-12 bg-gray-100 border-0 placeholder:text-gray-500 rounded-md"
-          required
-          disabled={isLoading}
-        />
-        <Input
-          placeholder="Last Name"
-          value={formData.lastName}
-          onChange={(e) => handleInputChange("lastName", e.target.value)}
-          className="h-12 bg-gray-100 border-0 placeholder:text-gray-500 rounded-md"
-          required
-          disabled={isLoading}
-        />
+        <div className="space-y-1">
+          <Input
+            placeholder="First Name"
+            {...register("firstName")}
+            className="h-12 bg-gray-100 border-0 placeholder:text-gray-500 rounded-md"
+            disabled={isLoading}
+          />
+          {errors.firstName && (
+            <span className="text-sm text-red-500">
+              {errors.firstName.message}
+            </span>
+          )}
+        </div>
+        <div className="space-y-1">
+          <Input
+            placeholder="Last Name"
+            {...register("lastName")}
+            className="h-12 bg-gray-100 border-0 placeholder:text-gray-500 rounded-md"
+            disabled={isLoading}
+          />
+          {errors.lastName && (
+            <span className="text-sm text-red-500">
+              {errors.lastName.message}
+            </span>
+          )}
+        </div>
       </div>
 
-      <Input
-        placeholder="Email Address"
-        type="email"
-        value={formData.email}
-        onChange={(e) => handleInputChange("email", e.target.value)}
-        className="h-12 bg-gray-100 border-0 placeholder:text-gray-500 rounded-md"
-        required
-        disabled={isLoading}
-      />
-
-      <div
-        className={`flex flex-col-reverse react-international-phone-input-container ${
-          isLoading ? "disabled" : ""
-        }`}
-      >
-        {formData.phone.length < 8 && (
-          <div className="text-sm text-red-500">
-            Please enter a valid phone number
-          </div>
+      <div className="space-y-1">
+        <Input
+          placeholder="Email Address"
+          type="email"
+          {...register("email")}
+          className="h-12 bg-gray-100 border-0 placeholder:text-gray-500 rounded-md"
+          disabled={isLoading}
+        />
+        {errors.email && (
+          <span className="text-sm text-red-500">{errors.email.message}</span>
         )}
-        <PhoneInput
-          defaultCountry="in"
-          value={formData.phone}
-          onChange={(phone) => handleInputChange("phone", phone)}
-          disabled={isLoading}
-          placeholder="Phone Number"
-          inputProps={{
-            required: true,
-            minLength: 8, // Minimum length for most international phone numbers
-          }}
-          name="phone"
-        />
       </div>
 
-      <Textarea
-        placeholder="How may help you"
-        value={formData.message}
-        onChange={(e) => handleInputChange("message", e.target.value)}
-        className="w-full h-24 px-4 py-3 bg-gray-100 border-0 rounded-md text-gray-700 placeholder:text-gray-500 resize-none focus:ring-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-        required
-        disabled={isLoading}
-      />
+      <div className="space-y-1">
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <div
+              className={`react-international-phone-input-container ${
+                isLoading ? "disabled" : ""
+              }`}
+            >
+              <PhoneInput
+                defaultCountry="au"
+                value={field.value}
+                onChange={field.onChange}
+                disabled={isLoading}
+                placeholder="Phone Number"
+                inputProps={{
+                  minLength: 8,
+                }}
+                name="phone"
+              />
+            </div>
+          )}
+        />
+        {errors.phone && (
+          <span className="text-sm text-red-500">{errors.phone.message}</span>
+        )}
+      </div>
+
+      <div className="space-y-1">
+        <Textarea
+          placeholder="How may help you"
+          {...register("message")}
+          className="w-full h-24 px-4 py-3 bg-gray-100 border-0 rounded-md text-gray-700 placeholder:text-gray-500 resize-none focus:ring-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isLoading}
+        />
+        {errors.message && (
+          <span className="text-sm text-red-500">{errors.message.message}</span>
+        )}
+      </div>
 
       <div className="flex justify-end mt-6">
         <Button

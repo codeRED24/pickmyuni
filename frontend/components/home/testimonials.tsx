@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
-// Hard-coded testimonials data based on the image
 const testimonialsData = [
   {
     _id: "1",
@@ -74,7 +73,7 @@ export default function TestimonialsSection() {
   return (
     <section className="py-28 bg-brand-primary flex flex-col">
       <div className="container mx-auto flex justify-between items-center mb-12">
-        <h2 className="text-2xl md:text-4xl font-bold text-white">
+        <h2 className=" text-4xl sm:text-[42px] leading-tight font-semibold text-white">
           What Students <span className="text-brand-secondary">Say!</span>
         </h2>
         <div className="flex space-x-2">
@@ -106,7 +105,7 @@ export default function TestimonialsSection() {
           {testimonialsData.map((testimonial, index) => (
             <div key={testimonial._id} className="flex flex-col flex-shrink-0">
               {/* Testimonial speech bubble */}
-              <div className="relative max-w-[320px]  min-h-[200px] bg-white rounded-2xl p-6 mb-6 shadow-lg ">
+              <div className="relative max-w-[320px] sm:max-w-[400px] bg-white rounded-2xl p-6 mb-6 shadow-lg ">
                 {testimonial.hasVideo ? (
                   <div className="size-full">
                     <iframe
@@ -120,7 +119,7 @@ export default function TestimonialsSection() {
                 ) : (
                   <div className="">
                     <Quote className="text-gray-400 text-5xl font-serif leading-none h-8 opacity-50 mb-1" />
-                    <p className="text-black text-sm leading-relaxed">
+                    <p className="text-black leading-relaxed">
                       {testimonial.testimonial}
                     </p>
                   </div>
