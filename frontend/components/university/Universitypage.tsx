@@ -291,81 +291,79 @@ function UniversityPage() {
       <UniversityHero />
 
       {/* Main Content */}
+      <div className="container mx-auto py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Filter Section */}
+          <EnhancedFilterSection
+            filters={localFilters}
+            setFilters={setLocalFilters}
+            isOpen={isFilterOpen}
+            setIsOpen={setIsFilterOpen}
+            availableFilters={availableFilters}
+            currentFilters={currentFilters}
+            onFilterChange={handleFilterChange}
+            onSearch={handleSearch}
+            onClearIndividualFilter={clearIndividualFilter}
+            onFeeRangeChange={handleFeeRangeChange}
+            onClearAllFilters={clearAllFilters}
+          />
 
-      <>
-        <div className="container mx-auto py-6">
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Filter Section */}
-            <EnhancedFilterSection
-              filters={localFilters}
-              setFilters={setLocalFilters}
-              isOpen={isFilterOpen}
-              setIsOpen={setIsFilterOpen}
-              availableFilters={availableFilters}
-              currentFilters={currentFilters}
-              onFilterChange={handleFilterChange}
-              onSearch={handleSearch}
-              onClearIndividualFilter={clearIndividualFilter}
-              onFeeRangeChange={handleFeeRangeChange}
-              onClearAllFilters={clearAllFilters}
+          {/* University List */}
+          <div className="flex-1 min-w-0">
+            {/* Results Header */}
+            <UniversityListHeader
+              totalCount={pagination.totalItems}
+              sortBy={sortBy}
+              setSortBy={handleSortChange}
             />
 
-            {/* University List */}
-            <div className="flex-1 min-w-0">
-              {/* Results Header */}
-              <UniversityListHeader
-                totalCount={pagination.totalItems}
-                sortBy={sortBy}
-                setSortBy={handleSortChange}
-              />
+            {/* University Cards */}
+            {loading && universities.length === 0 ? (
+              <div className="space-y-4">
+                {Array.from({ length: 2 }).map((_, index) => (
+                  <UniversityCardSkeleton key={index} />
+                ))}
+              </div>
+            ) : universities.length > 0 ? (
+              <div className="space-y-4">
+                {universities.map((university: any, index: number) => (
+                  <UniversityCard
+                    key={university.id || index}
+                    university={university}
+                  />
+                ))}
 
-              {/* University Cards */}
-              {loading && universities.length === 0 ? (
-                <div className="space-y-4">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <UniversityCardSkeleton key={index} />
-                  ))}
+                {/* Infinite scroll trigger and loader */}
+                <div ref={loadingRef}>
+                  <InfiniteScrollLoader
+                    isLoading={loadingMore}
+                    hasNextPage={pagination.hasNextPage}
+                    totalItems={pagination.totalItems}
+                  />
                 </div>
-              ) : universities.length > 0 ? (
-                <div className="space-y-4">
-                  {universities.map((university: any, index: number) => (
-                    <UniversityCard
-                      key={university.id || index}
-                      university={university}
-                    />
-                  ))}
+              </div>
+            ) : null}
 
-                  {/* Infinite scroll trigger and loader */}
-                  <div ref={loadingRef}>
-                    <InfiniteScrollLoader
-                      isLoading={loadingMore}
-                      hasNextPage={pagination.hasNextPage}
-                      totalItems={pagination.totalItems}
-                    />
-                  </div>
+            {/* No Results */}
+            {universities.length === 0 && !loading && (
+              <div className="flex flex-col items-center justify-center min-h-[400px] py-12">
+                <div className="text-gray-500 text-lg mb-4">
+                  No universities found matching your criteria.
                 </div>
-              ) : null}
-
-              {/* No Results */}
-              {universities.length === 0 && !loading && (
-                <div className="flex flex-col items-center justify-center min-h-[400px] py-12">
-                  <div className="text-gray-500 text-lg mb-4">
-                    No universities found matching your criteria.
-                  </div>
-                  <button
-                    onClick={clearAllFilters}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    Clear All Filters
-                  </button>
-                </div>
-              )}
-            </div>
+                <button
+                  onClick={clearAllFilters}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        <BackToTopButton />
-      </>
+      {/* Back to Top Button */}
+      <BackToTopButton />
     </div>
   );
 }

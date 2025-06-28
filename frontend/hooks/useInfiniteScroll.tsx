@@ -16,7 +16,7 @@ export const useInfiniteScroll = ({
   fetchNextPage,
   threshold = 0.1,
   rootMargin = "100px",
-  debounceMs = 100,
+  debounceMs = 1000,
 }: UseInfiniteScrollOptions) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadingRef = useRef<HTMLDivElement | null>(null);
