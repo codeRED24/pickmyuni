@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +17,13 @@ import { ChevronDown, Send, Calendar, ArrowLeft } from "lucide-react";
 import { useApplicationLead } from "@/hooks/useApplicationLead";
 import { toast } from "sonner";
 import { PhoneInput } from "react-international-phone";
+import dynamic from "next/dynamic";
 import "react-international-phone/style.css";
+
+// @ts-expect-error
+const DatePicker = dynamic(() => import("react-datepicker"), {
+  ssr: false,
+});
 
 // Form data interface
 interface ApplicationFormData {

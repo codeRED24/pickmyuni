@@ -11,6 +11,7 @@ export default function HeroSection() {
         fill
         priority
         className="object-cover"
+        fetchPriority="high"
       />
       <div className="container mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center">
@@ -37,7 +38,7 @@ export default function HeroSection() {
                   alt="Icon"
                   width={50}
                   height={50}
-                  className="-ml-2"
+                  className="-ml-2 w-12 h-12"
                   priority
                 />
               </Button>
@@ -51,8 +52,9 @@ export default function HeroSection() {
               height={800}
               className="relative z-10"
               priority
-              quality={85}
-              sizes="(max-width: 768px) 100vw, 450px"
+              quality={55}
+              fetchPriority="high"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
         </div>
