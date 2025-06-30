@@ -20,7 +20,7 @@ import { PhoneInput } from "react-international-phone";
 import dynamic from "next/dynamic";
 import "react-international-phone/style.css";
 
-// @ts-ignore
+// @ts-expect-error
 const DatePicker = dynamic(() => import("react-datepicker"), {
   ssr: false,
 });
