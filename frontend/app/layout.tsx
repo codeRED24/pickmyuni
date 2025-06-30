@@ -74,7 +74,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://pickmyuni.com"),
   verification: {
-    google: "_134iCeEhMsA_BfemTw79UdPXJBPisBshFgSGCqVZfA",
+    google: "A-61aul204Nb7CaxrhQPyVea-gn_b6oLc3tgVJ1bsQs",
   },
 };
 
