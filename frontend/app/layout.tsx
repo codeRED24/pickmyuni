@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { OrganizationSchema } from "@/components/seo";
+import Script from "next/script";
 
 const anton = Anton({
   weight: "400",
@@ -73,7 +74,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://pickmyuni.com"),
   verification: {
-    google: "_134iCeEhMsA_BfemTw79UdPXJBPisBshFgSGCqVZfAG-S11SC3CBZ1",
+    google: "_134iCeEhMsA_BfemTw79UdPXJBPisBshFgSGCqVZfA",
   },
 };
 
@@ -137,6 +138,19 @@ export default function RootLayout({
         <main className="flex-grow">{children}</main>
         <Toaster />
         <Footer />
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-25ZL17BREH"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-25ZL17BREH');
+        `}
+        </Script>
       </body>
     </html>
   );
