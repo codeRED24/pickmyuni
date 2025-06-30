@@ -4,9 +4,22 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ApplicationModal } from "@/components/modal/lead-modal";
-import { ConsultationModal } from "@/components/modal/contact-modal";
 import { cn } from "@/lib/utils";
+import dynamic from "next/dynamic";
+
+// Lazy load the modal components only when needed
+const LeadWrapper = dynamic(() => import("../modal/lead-wrapper"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const ContactWrapper = dynamic(
+  () => import("@/components/modal/contact-wrapper"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 export default function NavigationHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -162,11 +175,16 @@ export default function NavigationHeader() {
         </div>
       </div>
 
-      <ApplicationModal open={isModalOpen} onOpenChange={setIsModalOpen} />
-      <ConsultationModal
-        open={isConsultationModalOpen}
-        onOpenChange={setIsConsultationModalOpen}
-      />
+      {/* Conditionally render modals only when they are opened */}
+      {isModalOpen && (
+        <LeadWrapper open={isModalOpen} onOpenChange={setIsModalOpen} />
+      )}
+      {isConsultationModalOpen && (
+        <ContactWrapper
+          open={isConsultationModalOpen}
+          onOpenChange={setIsConsultationModalOpen}
+        />
+      )}
     </div>
   );
 }
