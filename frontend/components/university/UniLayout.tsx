@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { redirect } from "next/navigation";
-import { ApplicationModal } from "../modal/lead-modal";
+import ContactWrapper from "../modal/contact-wrapper";
 
 interface UniLayoutProps {
   college: any;
@@ -91,7 +91,7 @@ function UniLayout({ college, slugAndId }: UniLayoutProps) {
       </div>
 
       {/* Application Modal */}
-      <ApplicationModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <ContactWrapper open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }

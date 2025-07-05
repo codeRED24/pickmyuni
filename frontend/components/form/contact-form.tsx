@@ -98,6 +98,7 @@ function ContactForm({
               }`}
             >
               <PhoneInput
+                className="flex-grow"
                 defaultCountry="au"
                 value={field.value}
                 onChange={field.onChange}

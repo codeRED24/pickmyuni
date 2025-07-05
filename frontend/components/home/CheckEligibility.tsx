@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ApplicationModal } from "@/components/modal/lead-modal";
+import ContactWrapper from "../modal/contact-wrapper";
 
 export default function CheckEligibility() {
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function CheckEligibility() {
           className="ml-4 md:flex w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44"
           loading="lazy"
         />
-        <ApplicationModal open={open} onOpenChange={setOpen} />
+        <ContactWrapper open={open} onOpenChange={setOpen} />
       </div>
     </div>
   );

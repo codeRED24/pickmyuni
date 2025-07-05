@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ApplicationModal } from "./modal/lead-modal";
+import ContactWrapper from "./modal/contact-wrapper";
 
 function GetInTouch() {
   const [open, setOpen] = React.useState(false);
@@ -15,7 +15,7 @@ function GetInTouch() {
         Get in touch with us today and make your university transfer journey
         smooth and successful!
       </button>
-      <ApplicationModal open={open} onOpenChange={setOpen} />
+      <ContactWrapper open={open} onOpenChange={setOpen} />
     </div>
   );
 }

@@ -134,9 +134,9 @@ export default function TestimonialsSection() {
               {/* Profile section */}
               <div className="flex items-center space-x-4 max-w-[320px]">
                 <div>
-                  <h4 className="font-semibold text-white text-base mb-1">
+                  <p className="font-semibold text-white text-base mb-1">
                     {testimonial.name}
-                  </h4>
+                  </p>
                   <p className="text-white/80 text-sm">{testimonial.role}</p>
                 </div>
               </div>
