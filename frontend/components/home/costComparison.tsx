@@ -125,9 +125,9 @@ export default function CostComparisonSection() {
                   <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Suggested Uni
                   </TableHead>
-                  <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
+                  {/* <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Course
-                  </TableHead>
+                  </TableHead> */}
                   <TableHead className="text-h4 bg-orange-100 text-gray-600 border-x-2 border-[#ff882e]">
                     Course Fee
                   </TableHead>
@@ -156,9 +156,9 @@ export default function CostComparisonSection() {
                     <TableCell className="border-x-2 border-[#ff882e]">
                       {row.suggestedUni}
                     </TableCell>
-                    <TableCell className="border-x-2 border-[#ff882e]">
+                    {/* <TableCell className="border-x-2 border-[#ff882e]">
                       {row.suggestedCourse}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell className="border-x-2 border-[#ff882e]">
                       {row.suggestedFee}
                     </TableCell>

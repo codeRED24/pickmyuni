@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 
 // Lazy load the modal components only when needed
-const LeadWrapper = dynamic(() => import("../modal/lead-wrapper"), {
-  ssr: false,
-  loading: () => null,
-});
+// const LeadWrapper = dynamic(() => import("../modal/lead-wrapper"), {
+//   ssr: false,
+//   loading: () => null,
+// });
 
 const ContactWrapper = dynamic(
   () => import("@/components/modal/contact-wrapper"),
@@ -23,7 +23,6 @@ const ContactWrapper = dynamic(
 
 export default function NavigationHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
@@ -56,10 +55,10 @@ export default function NavigationHeader() {
                 Compare
               </Link>
               <Link
-                href="/pr-path"
+                href="/pr-courses-in-australia"
                 className="text-gray-600 hover:text-blue-800"
               >
-                PR Pathway
+                PR Courses
               </Link>
               <Link
                 href="/transfer-assistance"
@@ -77,12 +76,12 @@ export default function NavigationHeader() {
 
             {/* CTA Buttons */}
             <div className="hidden xl:flex items-center space-x-3">
-              <Button
+              {/* <Button
                 onClick={() => setIsModalOpen(true)}
                 className="bg-blue-800 hover:bg-blue-900 text-white"
               >
                 Apply Now
-              </Button>
+              </Button> */}
               <Button
                 onClick={() => setIsConsultationModalOpen(true)}
                 className="bg-orange-500 hover:bg-orange-600 text-white"
@@ -133,11 +132,11 @@ export default function NavigationHeader() {
               Compare
             </Link>
             <Link
-              href="/pr-path"
+              href="/pr-courses-in-australia"
               className="text-gray-600 hover:text-blue-800"
               onClick={closeMenu}
             >
-              PR Pathway
+              PR Courses
             </Link>
             <Link
               href="/transfer-assistance"
@@ -153,7 +152,7 @@ export default function NavigationHeader() {
             >
               Student Resources
             </Link>
-            <Button
+            {/* <Button
               onClick={() => {
                 setIsModalOpen(true);
                 closeMenu();
@@ -161,7 +160,7 @@ export default function NavigationHeader() {
               className="bg-blue-800 hover:bg-blue-900 text-white w-full"
             >
               Apply Now
-            </Button>
+            </Button> */}
             <Button
               onClick={() => {
                 setIsConsultationModalOpen(true);
@@ -176,9 +175,9 @@ export default function NavigationHeader() {
       </div>
 
       {/* Conditionally render modals only when they are opened */}
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <LeadWrapper open={isModalOpen} onOpenChange={setIsModalOpen} />
-      )}
+      )} */}
       {isConsultationModalOpen && (
         <ContactWrapper
           open={isConsultationModalOpen}
